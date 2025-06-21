@@ -1,0 +1,95 @@
+---
+title: 'Navigation'
+description: 'Structure your documentation with effective navigation'
+---
+
+Learn how to organize your documentation with clear navigation structure.
+
+## Navigation Structure
+
+Your navigation is defined in `mint.json`:
+
+```json
+"navigation": [
+  {
+    "group": "Get Started",
+    "pages": [
+      "introduction",
+      "quickstart",
+      "development"
+    ]
+  },
+  {
+    "group": "Essentials", 
+    "pages": [
+      "essentials/markdown",
+      "essentials/code",
+      "essentials/images"
+    ]
+  }
+]
+```
+
+## Navigation Groups
+
+### Group Organization
+
+Organize related pages into logical groups:
+
+```json
+{
+  "group": "API Reference",
+  "pages": [
+    "api-reference/introduction",
+    "api-reference/authentication",
+    "api-reference/endpoints"
+  ]
+}
+```
+
+### Nested Pages
+
+Create hierarchical navigation with folders:
+
+```
+docs/
+├── essentials/
+│   ├── markdown.mdx
+│   ├── code.mdx
+│   └── images.mdx
+└── api-reference/
+    ├── introduction.mdx
+    └── endpoints/
+        ├── users.mdx
+        └── posts.mdx
+```
+
+## Page Structure
+
+### File Naming
+
+- Use lowercase with hyphens: `getting-started.mdx`
+- Match file paths to navigation entries
+- Keep URLs clean and readable
+
+### Page Metadata
+
+Each page should have frontmatter:
+
+```yaml
+---
+title: 'Page Title'
+description: 'Brief description for SEO'
+---
+```
+
+## Navigation Best Practices
+
+1. **Logical Grouping**: Group related content together
+2. **Clear Labels**: Use descriptive group and page names  
+3. **Proper Hierarchy**: Order from basic to advanced concepts
+4. **Consistent Structure**: Follow the same pattern throughout
+
+<Tip>
+Keep navigation shallow - avoid going more than 2-3 levels deep
+</Tip> 

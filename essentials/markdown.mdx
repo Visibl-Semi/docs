@@ -1,0 +1,80 @@
+---
+title: 'Markdown'
+description: 'Learn how to write content with Markdown and MDX'
+---
+
+Mintlify supports [Markdown](https://www.markdownguide.org/) and [MDX](https://mdxjs.com/) syntax for writing content.
+
+## Basic Markdown
+
+### Headers
+
+Use `#` for headers. The number of `#` determines the header level:
+
+```markdown
+# H1 Header
+## H2 Header  
+### H3 Header
+#### H4 Header
+##### H5 Header
+###### H6 Header
+```
+
+### Text Formatting
+
+- **Bold text** with `**bold**` or `__bold__`
+- *Italic text* with `*italic*` or `_italic_`
+- ~~Strikethrough~~ with `~~strikethrough~~`
+- `Inline code` with backticks
+
+### Lists
+
+Unordered lists:
+```markdown
+- Item 1
+- Item 2
+  - Nested item
+- Item 3
+```
+
+Ordered lists:
+```markdown
+1. First item
+2. Second item
+3. Third item
+```
+
+### Links and Images
+
+Links: `[Link text](https://example.com)`
+Images: `![Alt text](/path/to/image.png)`
+
+### Code Blocks
+
+Use triple backticks for code blocks:
+
+```javascript
+function hello() {
+  console.log("Hello, world!");
+}
+```
+
+## MDX Components
+
+Mintlify extends Markdown with React components:
+
+<Note>
+This is a note component
+</Note>
+
+<Warning>
+This is a warning component  
+</Warning>
+
+<Tip>
+This is a tip component
+</Tip>
+
+<Info>
+This is an info component
+</Info> 

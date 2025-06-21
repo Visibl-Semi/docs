@@ -1,0 +1,75 @@
+---
+title: 'Code Blocks'
+description: 'Display code with syntax highlighting and copy functionality'
+---
+
+Code blocks are essential for technical documentation. Mintlify provides enhanced code block features.
+
+## Basic Code Blocks
+
+Use triple backticks with a language identifier:
+
+```javascript
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+```
+
+```python
+def greet(name):
+    return f"Hello, {name}!"
+```
+
+```bash
+npm install package-name
+```
+
+## Code Groups
+
+Display multiple code examples with tabs:
+
+<CodeGroup>
+
+```javascript JavaScript
+const response = await fetch('/api/users');
+const users = await response.json();
+```
+
+```python Python
+import requests
+
+response = requests.get('/api/users')
+users = response.json()
+```
+
+```curl cURL
+curl -X GET https://api.example.com/users
+```
+
+</CodeGroup>
+
+## Inline Code
+
+Use single backticks for `inline code` within sentences.
+
+## Code with Titles
+
+You can add titles to code blocks:
+
+```javascript hello.js
+function sayHello() {
+  console.log("Hello from Mintlify!");
+}
+```
+
+## Highlighted Lines
+
+Highlight specific lines in your code:
+
+```javascript {2,4}
+function calculate(x, y) {
+  const sum = x + y; // highlighted
+  const product = x * y;
+  return { sum, product }; // highlighted
+}
+``` 

@@ -1,0 +1,70 @@
+---
+title: 'Images'
+description: 'Learn how to add and optimize images in your documentation'
+---
+
+Images make your documentation more engaging and help explain complex concepts visually.
+
+## Basic Image Syntax
+
+Use standard Markdown syntax for images:
+
+```markdown
+![Alt text](path/to/image.png)
+```
+
+## Image Components
+
+Mintlify provides enhanced image components:
+
+### Frame Component
+
+Wrap images in frames for better presentation:
+
+```mdx
+<Frame>
+  <img src="/images/example.png" alt="Example image" />
+</Frame>
+```
+
+### Responsive Images
+
+Images automatically scale to fit the container:
+
+```mdx
+<img 
+  src="/images/screenshot.png" 
+  alt="Application screenshot"
+  style={{ borderRadius: '0.5rem' }}
+/>
+```
+
+## Image Optimization Tips
+
+1. **Use appropriate formats**: 
+   - PNG for screenshots and images with transparency
+   - JPEG for photographs
+   - SVG for icons and simple graphics
+
+2. **Optimize file sizes**: Compress images to reduce loading times
+
+3. **Add alt text**: Always include descriptive alt text for accessibility
+
+4. **Use relative paths**: Store images in a `/images` or `/assets` folder
+
+## Dark Mode Images
+
+Show different images for light and dark modes:
+
+```mdx
+<img 
+  className="block dark:hidden" 
+  src="/images/light-mode.png" 
+  alt="Light mode interface" 
+/>
+<img 
+  className="hidden dark:block" 
+  src="/images/dark-mode.png" 
+  alt="Dark mode interface" 
+/>
+``` 

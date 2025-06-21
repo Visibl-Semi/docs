@@ -1,0 +1,82 @@
+---
+title: 'DELETE /users/{id}'
+description: 'Delete a user account'
+---
+
+Delete a user account by ID.
+
+## Delete User
+
+<CodeGroup>
+```bash cURL
+curl -X DELETE https://api.example.com/v1/users/user_123 \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+```javascript JavaScript
+const response = await fetch('https://api.example.com/v1/users/user_123', {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY'
+  }
+});
+const result = await response.json();
+```
+
+```python Python
+import requests
+
+headers = {
+    'Authorization': 'Bearer YOUR_API_KEY'
+}
+
+response = requests.delete('https://api.example.com/v1/users/user_123', 
+                          headers=headers)
+result = response.json()
+```
+</CodeGroup>
+
+## Path Parameters
+
+| Parameter | Type   | Required | Description        |
+|-----------|--------|----------|--------------------|
+| id        | string | Yes      | User ID to delete  |
+
+### Response
+
+```json
+{
+  "success": true,
+  "message": "User deleted successfully"
+}
+```
+
+## Error Responses
+
+### 404 Not Found
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "USER_NOT_FOUND",
+    "message": "User with the specified ID was not found"
+  }
+}
+```
+
+### 403 Forbidden
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "INSUFFICIENT_PERMISSIONS",
+    "message": "You don't have permission to delete this user"
+  }
+}
+```
+
+<Warning>
+This action is irreversible. Once a user is deleted, all associated data will be permanently removed.
+</Warning> 
