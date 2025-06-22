@@ -1,178 +1,110 @@
 ---
 title: FAQ
-description: Frequently asked questions about Visibl
+description: Common questions about data privacy, AI models, HDL support, and chip design workflows in Visibl with troubleshooting help
 ---
 
-# Frequently Asked Questions
-
-Find answers to common questions about Visibl. Can't find what you're looking for? [Contact support](mailto:hi@visiblsemi.com).
-
-## General Questions
-
 <AccordionGroup>
-  <Accordion title="What is Visibl?">
-    Visibl is a modern documentation platform designed to help teams create beautiful, searchable, and maintainable documentation. It's built specifically for technical documentation with features like API references, code syntax highlighting, and version control integration.
-  </Accordion>
-  
-  <Accordion title="Is Visibl free to use?">
-    Yes! Visibl offers a generous free tier that includes:
-    - Unlimited public documentation sites
-    - Up to 3 team members
-    - Basic analytics
-    - Community support
+
+  <Accordion title="How does Visibl protect my IP and design data?">
+   
+    For maximum IP protection, we offer 100% local processing options:
+    - **On-device**: All AI processing happens locally on your machine
+    - **On-premises server**: Deploy Visibl on your own infrastructure 
+    - **Air-gapped environments**: Full offline operation for maximum security
+    ---
+     Visibl offers multiple deployment options based on your data sensitivity requirements:
+    - **Public models**: Connect to traditional cloud AI services if you're not data sensitive
     
-    For larger teams and advanced features, check out our [pricing page](https://visiblsemi.com/pricing).
+    
+    Your RTL, verification code, and design documentation never touch external servers unless you explicitly enable and choose public models.
   </Accordion>
-  
-  <Accordion title="Can I use custom domains?">
-    Absolutely! All Visibl plans support custom domains. You can connect your own domain (e.g., docs.yourcompany.com) to your documentation site.
+
+  <Accordion title="Can I use my own AI models and API providers?">
+    Yes! Visibl provides full API provider control. You can:
+    - Connect to traditional endpoints if you're not data sensitive and want to use large foundational models served by others
+    
+    ---
+    
+    - Connect to your own cloud provider or custom API endpoints
+    - Use locally hosted models like Gemma, Llama, CodeLlama, or StarCoder
+    - Configure different models for different tasks (code generation, documentation, verification)
+    - Set up model routing based on project sensitivity levels
+    
+    This gives you complete control over costs, performance, and data handling.
   </Accordion>
-  
-  <Accordion title="Do you support private documentation?">
-    Yes, Visibl supports private documentation with authentication. You can control access using:
-    - Password protection
-    - SSO integration
-    - Custom authentication providers
+
+  <Accordion title="What HDL languages and verification methodologies does Visibl support?">
+    Visibl works with all major hardware description languages and verification frameworks:
+    - **HDLs**: SystemVerilog, Verilog, VHDL, Chisel, SpinalHDL
+    - **Verification**: UVM, SVA, PSL, Cocotb, formal verification
+    - **High-level synthesis**: HLS C++, Bluespec
+    - **Documentation**: Markdown, reStructuredText, Sphinx integration
+    
+    Our AI models are specifically trained on chip design patterns and best practices.
   </Accordion>
+
+  <Accordion title="How do you keep the AI models up-to-date with latest standards and IP?">
+    Visibl leverages the latest foundational models like Claude 4, o3 and the suite of on-prem models we configure for your users, enhanced with chip design expertise. 
+    
+    Integration of external documentations and @web search coming soon to enable access to the most current standard information. We're keeping our eye on emerging standards like RISC-V extensions, UCIe, and CXL protocols.
+  </Accordion>
+
+  <Accordion title="How do I share context between multiple chip projects and IP blocks?">
+    Currently, the simplest method is to place related repositories in the same directory and launch Visibl from there. This allows cross-referencing between:
+    - Different IP blocks in the same SoC
+    - Testbench and RTL repositories  
+    - Documentation and implementation
+    
+    We're actively developing improved support for managing multiple project hierarchies and IP dependencies.
+  </Accordion>
+
+  <Accordion title="Does Visibl integrate with EDA tools and design flows?">
+    Coming soon! Contact hi@visiblsemi.com to request integration with your specific EDA tools and design flows.
+  </Accordion>
+
+  <Accordion title="How does Visibl handle large codebases and complex SoC designs?">
+    Visibl is optimized for large-scale chip designs:
+    - **Incremental indexing**: Only re-index changed files for fast updates
+    - **Hierarchical navigation**: Browse complex module hierarchies efficiently  
+    - **Selective context**: Include only relevant modules in AI conversations
+    - **Memory optimization**: Handle multi-million gate designs without performance issues
+    
+    Visibl's codebase indexing proposes no limits - we automatically adjust to serve any design size or complexity. If you encounter any issues, contact [hi@visiblsemi.com](mailto:hi@visiblsemi.com).
+  </Accordion>
+
+  <Accordion title="How do Visibl updates work?">
+    Visibl provides automatic updates with rollback capability. Updates never compromise your data privacy or require external connectivity.
+  </Accordion>
+
+  <Accordion title="Why haven't I received the latest release yet?">
+    All users receive automatic updates within 15 mins - 1 hour of release. Update rollouts are gradual to ensure stability.
+    
+    You can manually check for updates in Settings → About.
+  </Accordion>
+
+  <Accordion title="How can I delete my data?">
+    Data deletion depends on your deployment:
+    - **Local/on-premises**: Simply delete the application data folder
+    - **Cloud deployment**: Contact [hi@visiblsemi.com](mailto:hi@visiblsemi.com) for account deletion
+    - **Hybrid setups**: Local data is deleted automatically; cloud data requires request
+    
+    All cached models and indices are stored locally and removed with uninstallation.
+  </Accordion>
+
 </AccordionGroup>
 
-## Technical Questions
+## Additional resources
 
-<AccordionGroup>
-  <Accordion title="What file formats does Visibl support?">
-    Visibl primarily uses MDX (Markdown with JSX) for content. This allows you to:
-    - Write in standard Markdown
-    - Use React components for interactive content
-    - Embed code with syntax highlighting
-    - Include images, videos, and other media
-  </Accordion>
-  
-  <Accordion title="Can I import my existing documentation?">
-    Yes! Visibl provides migration tools for:
-    - GitHub Wiki
-    - GitBook
-    - Docusaurus
-    - ReadTheDocs
-    - Plain Markdown files
-    
-    See our [migration guide](/migration) for details.
-  </Accordion>
-  
-  <Accordion title="How do I add API documentation?">
-    Visibl can automatically generate API documentation from:
-    - OpenAPI/Swagger specifications
-    - GraphQL schemas
-    - Postman collections
-    
-    Simply add your API spec file to your project and reference it in your `mint.json`.
-  </Accordion>
-  
-  <Accordion title="Is version control supported?">
-    Yes! Visibl is built with Git in mind. You can:
-    - Track changes to your documentation
-    - Collaborate with team members
-    - Create branches for different versions
-    - Deploy automatically from GitHub/GitLab
-  </Accordion>
-</AccordionGroup>
-
-## Customization Questions
-
-<AccordionGroup>
-  <Accordion title="Can I customize the design?">
-    Yes! You can customize:
-    - Colors and branding
-    - Fonts and typography
-    - Logo and favicon
-    - Page layouts
-    - Custom CSS
-    
-    All customization is done through the `mint.json` configuration file.
-  </Accordion>
-  
-  <Accordion title="Can I add custom components?">
-    While Visibl provides many built-in components, you can also:
-    - Use any React component in MDX files
-    - Create custom component libraries
-    - Embed third-party widgets
-    - Add custom scripts
-  </Accordion>
-  
-  <Accordion title="Is multi-language support available?">
-    Yes! Visibl supports internationalization (i18n) with:
-    - Multiple language versions
-    - Automatic language detection
-    - Language switcher component
-    - RTL language support
-  </Accordion>
-</AccordionGroup>
-
-## Deployment Questions
-
-<AccordionGroup>
-  <Accordion title="How do I deploy my documentation?">
-    Visibl offers multiple deployment options:
-    - **Visibl Cloud** - One-click deployment (recommended)
-    - **GitHub Pages** - Free hosting with GitHub
-    - **Vercel/Netlify** - Popular hosting platforms
-    - **Self-hosted** - Deploy on your own infrastructure
-  </Accordion>
-  
-  <Accordion title="Is there a build step required?">
-    For development, no build step is required - just run `visibl dev`. For production deployment, run `visibl build` to create an optimized static site.
-  </Accordion>
-  
-  <Accordion title="Can I set up automatic deployments?">
-    Yes! Visibl integrates with CI/CD pipelines. You can set up automatic deployments when you:
-    - Push to main branch
-    - Merge pull requests
-    - Create new releases
-    - Tag specific versions
-  </Accordion>
-</AccordionGroup>
-
-## Troubleshooting
-
-<AccordionGroup>
-  <Accordion title="My changes aren't showing up">
-    Try these steps:
-    1. Clear your browser cache
-    2. Restart the development server
-    3. Check for syntax errors in your MDX files
-    4. Ensure your `mint.json` is valid JSON
-  </Accordion>
-  
-  <Accordion title="I'm getting build errors">
-    Common causes include:
-    - Invalid MDX syntax
-    - Missing dependencies
-    - Incorrect file paths
-    - Malformed `mint.json`
-    
-    Check the error message for specific details.
-  </Accordion>
-  
-  <Accordion title="Search isn't working">
-    Search indexing happens automatically, but may take a few minutes after deployment. If search still isn't working:
-    - Check that search is enabled in `mint.json`
-    - Ensure your content is properly structured
-    - Contact support if the issue persists
-  </Accordion>
-</AccordionGroup>
-
-## Still Have Questions?
+- **[Common Issues](/troubleshooting)** - Solutions to frequently encountered problems
+- **[Keyboard Shortcuts](/settings)** - Complete list of keybindings and shortcuts  
+- **[EDA Integration](/api-reference)** - Connect with your existing tool flow
+- **[Security Guide](/essentials)** - Best practices for IP protection
 
 <CardGroup cols={2}>
   <Card title="Contact Support" icon="envelope" href="mailto:hi@visiblsemi.com">
-    Email us directly for personalized help
+    Email us directly for chip design questions
   </Card>
   <Card title="Join Community" icon="discord" href="https://discord.gg/visibl">
-    Get help from the Visibl community
-  </Card>
-  <Card title="Documentation" icon="book" href="/welcome">
-    Browse our complete documentation
-  </Card>
-  <Card title="GitHub Issues" icon="github" href="https://github.com/visibl/visibl">
-    Report bugs or request features
+    Connect with other chip designers using Visibl
   </Card>
 </CardGroup> 
