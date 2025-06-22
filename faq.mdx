@@ -1,0 +1,178 @@
+---
+title: FAQ
+description: Frequently asked questions about Visibl
+---
+
+# Frequently Asked Questions
+
+Find answers to common questions about Visibl. Can't find what you're looking for? [Contact support](mailto:hi@visiblsemi.com).
+
+## General Questions
+
+<AccordionGroup>
+  <Accordion title="What is Visibl?">
+    Visibl is a modern documentation platform designed to help teams create beautiful, searchable, and maintainable documentation. It's built specifically for technical documentation with features like API references, code syntax highlighting, and version control integration.
+  </Accordion>
+  
+  <Accordion title="Is Visibl free to use?">
+    Yes! Visibl offers a generous free tier that includes:
+    - Unlimited public documentation sites
+    - Up to 3 team members
+    - Basic analytics
+    - Community support
+    
+    For larger teams and advanced features, check out our [pricing page](https://visiblsemi.com/pricing).
+  </Accordion>
+  
+  <Accordion title="Can I use custom domains?">
+    Absolutely! All Visibl plans support custom domains. You can connect your own domain (e.g., docs.yourcompany.com) to your documentation site.
+  </Accordion>
+  
+  <Accordion title="Do you support private documentation?">
+    Yes, Visibl supports private documentation with authentication. You can control access using:
+    - Password protection
+    - SSO integration
+    - Custom authentication providers
+  </Accordion>
+</AccordionGroup>
+
+## Technical Questions
+
+<AccordionGroup>
+  <Accordion title="What file formats does Visibl support?">
+    Visibl primarily uses MDX (Markdown with JSX) for content. This allows you to:
+    - Write in standard Markdown
+    - Use React components for interactive content
+    - Embed code with syntax highlighting
+    - Include images, videos, and other media
+  </Accordion>
+  
+  <Accordion title="Can I import my existing documentation?">
+    Yes! Visibl provides migration tools for:
+    - GitHub Wiki
+    - GitBook
+    - Docusaurus
+    - ReadTheDocs
+    - Plain Markdown files
+    
+    See our [migration guide](/migration) for details.
+  </Accordion>
+  
+  <Accordion title="How do I add API documentation?">
+    Visibl can automatically generate API documentation from:
+    - OpenAPI/Swagger specifications
+    - GraphQL schemas
+    - Postman collections
+    
+    Simply add your API spec file to your project and reference it in your `mint.json`.
+  </Accordion>
+  
+  <Accordion title="Is version control supported?">
+    Yes! Visibl is built with Git in mind. You can:
+    - Track changes to your documentation
+    - Collaborate with team members
+    - Create branches for different versions
+    - Deploy automatically from GitHub/GitLab
+  </Accordion>
+</AccordionGroup>
+
+## Customization Questions
+
+<AccordionGroup>
+  <Accordion title="Can I customize the design?">
+    Yes! You can customize:
+    - Colors and branding
+    - Fonts and typography
+    - Logo and favicon
+    - Page layouts
+    - Custom CSS
+    
+    All customization is done through the `mint.json` configuration file.
+  </Accordion>
+  
+  <Accordion title="Can I add custom components?">
+    While Visibl provides many built-in components, you can also:
+    - Use any React component in MDX files
+    - Create custom component libraries
+    - Embed third-party widgets
+    - Add custom scripts
+  </Accordion>
+  
+  <Accordion title="Is multi-language support available?">
+    Yes! Visibl supports internationalization (i18n) with:
+    - Multiple language versions
+    - Automatic language detection
+    - Language switcher component
+    - RTL language support
+  </Accordion>
+</AccordionGroup>
+
+## Deployment Questions
+
+<AccordionGroup>
+  <Accordion title="How do I deploy my documentation?">
+    Visibl offers multiple deployment options:
+    - **Visibl Cloud** - One-click deployment (recommended)
+    - **GitHub Pages** - Free hosting with GitHub
+    - **Vercel/Netlify** - Popular hosting platforms
+    - **Self-hosted** - Deploy on your own infrastructure
+  </Accordion>
+  
+  <Accordion title="Is there a build step required?">
+    For development, no build step is required - just run `visibl dev`. For production deployment, run `visibl build` to create an optimized static site.
+  </Accordion>
+  
+  <Accordion title="Can I set up automatic deployments?">
+    Yes! Visibl integrates with CI/CD pipelines. You can set up automatic deployments when you:
+    - Push to main branch
+    - Merge pull requests
+    - Create new releases
+    - Tag specific versions
+  </Accordion>
+</AccordionGroup>
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="My changes aren't showing up">
+    Try these steps:
+    1. Clear your browser cache
+    2. Restart the development server
+    3. Check for syntax errors in your MDX files
+    4. Ensure your `mint.json` is valid JSON
+  </Accordion>
+  
+  <Accordion title="I'm getting build errors">
+    Common causes include:
+    - Invalid MDX syntax
+    - Missing dependencies
+    - Incorrect file paths
+    - Malformed `mint.json`
+    
+    Check the error message for specific details.
+  </Accordion>
+  
+  <Accordion title="Search isn't working">
+    Search indexing happens automatically, but may take a few minutes after deployment. If search still isn't working:
+    - Check that search is enabled in `mint.json`
+    - Ensure your content is properly structured
+    - Contact support if the issue persists
+  </Accordion>
+</AccordionGroup>
+
+## Still Have Questions?
+
+<CardGroup cols={2}>
+  <Card title="Contact Support" icon="envelope" href="mailto:hi@visiblsemi.com">
+    Email us directly for personalized help
+  </Card>
+  <Card title="Join Community" icon="discord" href="https://discord.gg/visibl">
+    Get help from the Visibl community
+  </Card>
+  <Card title="Documentation" icon="book" href="/welcome">
+    Browse our complete documentation
+  </Card>
+  <Card title="GitHub Issues" icon="github" href="https://github.com/visibl/visibl">
+    Report bugs or request features
+  </Card>
+</CardGroup> 

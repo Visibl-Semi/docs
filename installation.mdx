@@ -1,0 +1,176 @@
+---
+title: Installation
+description: Learn how to install and set up Visibl for your documentation
+---
+
+# Installation
+
+Get Visibl up and running in just a few minutes. This guide will walk you through the installation process step by step.
+
+## Prerequisites
+
+Before you begin, make sure you have the following installed:
+
+<CardGroup cols={2}>
+  <Card title="Node.js" icon="node">
+    Version 18.0 or higher
+  </Card>
+  <Card title="Git" icon="git-alt">
+    For version control
+  </Card>
+</CardGroup>
+
+## Quick Start
+
+<Steps>
+  <Step title="Install Visibl CLI">
+    Install the Visibl command-line interface globally:
+    
+    ```bash
+    npm install -g visibl
+    ```
+  </Step>
+  
+  <Step title="Create a New Project">
+    Create a new documentation project:
+    
+    ```bash
+    visibl init my-docs
+    cd my-docs
+    ```
+  </Step>
+  
+  <Step title="Start Development Server">
+    Run the development server:
+    
+    ```bash
+    visibl dev
+    ```
+    
+    Your documentation will be available at `http://localhost:3000`
+  </Step>
+</Steps>
+
+## Installation Options
+
+### npm
+
+```bash
+npm install -g visibl
+```
+
+### yarn
+
+```bash
+yarn global add visibl
+```
+
+### pnpm
+
+```bash
+pnpm add -g visibl
+```
+
+## Project Structure
+
+After initialization, your project will have the following structure:
+
+```
+my-docs/
+├── mint.json          # Configuration file
+├── introduction.mdx   # Home page
+├── api-reference/     # API documentation
+│   └── ...
+├── essentials/        # Core documentation
+│   └── ...
+└── logo/             # Logo assets
+    ├── light.svg
+    └── dark.svg
+```
+
+## Configuration
+
+The `mint.json` file contains all your documentation settings:
+
+```json
+{
+  "name": "My Documentation",
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "colors": {
+    "primary": "#000000",
+    "light": "#FFFFFF"
+  }
+}
+```
+
+## Common Commands
+
+### Development
+
+```bash
+# Start development server
+visibl dev
+
+# Start on a specific port
+visibl dev --port 3001
+```
+
+### Build
+
+```bash
+# Build for production
+visibl build
+
+# Preview production build
+visibl preview
+```
+
+### Update
+
+```bash
+# Update Visibl to latest version
+visibl update
+```
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Port already in use">
+    If port 3000 is already in use, Visibl will automatically try the next available port. You can also specify a port manually:
+    
+    ```bash
+    visibl dev --port 3001
+    ```
+  </Accordion>
+  
+  <Accordion title="Permission errors">
+    If you encounter permission errors during global installation, try using a package manager that doesn't require sudo:
+    
+    ```bash
+    npx visibl init my-docs
+    ```
+  </Accordion>
+  
+  <Accordion title="Module not found">
+    Clear your npm cache and reinstall:
+    
+    ```bash
+    npm cache clean --force
+    npm install -g visibl
+    ```
+  </Accordion>
+</AccordionGroup>
+
+## Next Steps
+
+Now that you have Visibl installed:
+
+- Customize your [mint.json](/configuration) file
+- Start [writing content](/writing-content)
+- Learn about [components](/components)
+- [Deploy your docs](/deployment)
+
+Need help? Check out our [FAQ](/faq) or join our [community](https://discord.gg/visibl). 

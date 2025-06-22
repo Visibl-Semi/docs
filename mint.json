@@ -2,23 +2,27 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Documentation",
   "logo": {
-    "dark": "/logo/dark.png",
-    "light": "/logo/light.png"
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
   },
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#000000",
-    "light": "#000000",
-    "dark": "#ffffff",
+    "light": "#FFFFFF",
+    "dark": "#000000",
     "anchors": {
       "from": "#000000",
-      "to": "#ffffff"
+      "to": "#333333"
     }
   },
   "topbarLinks": [
     {
+      "name": "Website",
+      "url": "https://mintlify.com"
+    },
+    {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:hi@visiblsemi.com"
     }
   ],
   "topbarCtaButton": {
@@ -27,58 +31,112 @@
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
+      "name": "Chip Design Examples",
+      "url": "design-examples"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "Website",
+      "icon": "globe",
+      "url": "https://visiblsemi.com"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "Forum",
+      "icon": "comments",
+      "url": "https://forum.visiblsemi.com"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "name": "Support",
+      "icon": "headset",
+      "url": "mailto:hi@visiblsemi.com"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
       "pages": [
-        "introduction",
-        "quickstart",
-        "development"
+        "welcome",
+        "installation",
+        "faq"
       ]
     },
     {
-      "group": "Essentials",
+      "group": "Editor",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation"
+        "editor/overview",
+        "editor/writing",
+        "editor/components",
+        "editor/formatting"
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Context",
       "pages": [
-        "api-reference/introduction"
+        "context/overview",
+        "context/variables",
+        "context/templates",
+        "context/personalization"
       ]
     },
     {
-      "group": "Endpoint Examples",
+      "group": "Account",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "account/models",
+        "account/rate-limits",
+        "account/plans",
+        "account/business",
+        "account/dashboard",
+        "account/billing",
+        "account/privacy",
+        "account/security"
+      ]
+    },
+    {
+      "group": "Settings",
+      "pages": [
+        "settings/custom-api-keys",
+        "settings/early-access-program"
+      ]
+    },
+    {
+      "group": "Troubleshooting",
+      "pages": [
+        "troubleshooting/common-issues",
+        "troubleshooting/troubleshooting-guide",
+        "troubleshooting/getting-a-request-id"
+      ]
+    }
+  ],
+  "design-examples": [
+    {
+      "group": "Design Examples Introduction",
+      "pages": [
+        "design-examples/overview"
+      ]
+    },
+    {
+      "group": "FPGA Design",
+      "pages": [
+        "design-examples/fpga"
+      ]
+    },
+    {
+      "group": "ASIC Design", 
+      "pages": [
+        "design-examples/asic"
+      ]
+    },
+    {
+      "group": "CPU Design",
+      "pages": [
+        "design-examples/cpu"
+      ]
+    },
+    {
+      "group": "GPU Design",
+      "pages": [
+        "design-examples/gpu"
       ]
     }
   ],
