@@ -29,18 +29,6 @@
     "name": "Get Started",
     "url": "https://visiblsemi.com/license"
   },
-  "anchors": [
-    {
-      "name": "Website",
-      "icon": "globe",
-      "url": "https://visiblsemi.com"
-    },
-    {
-      "name": "Support",
-      "icon": "headset",
-      "url": "mailto:hi@visiblsemi.com"
-    }
-  ],
   "navigation": [
     {
       "group": "Overview",
