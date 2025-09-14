@@ -1,11 +1,15 @@
 ---
 title: Visibl CLI
-description: AI-powered command-line assistant for silicon engineering
+description: AI-powered command-line-interface assistant for silicon engineering
 ---
 
 # Visibl CLI
 
-The Visibl CLI is an AI-powered coding assistant built specifically for silicon engineering teams. It provides context-aware help with RTL design, verification, documentation, and EDA tool integration.
+The Visibl CLI is an AI-powered coding assistant for silicon engineering teams. It delivers context-aware help for RTL design, verification, documentation, and EDA tool integration—running against your local Visibl LLM Service.
+
+<Callout type="warning" title="Privacy first">
+The CLI never sends your code or designs to external APIs. All inference happens on your infrastructure via the local Visibl LLM Service.
+</Callout>
 
 ## What It Does
 
@@ -38,17 +42,31 @@ The Visibl CLI acts as your AI pair programmer, understanding:
 
 ## How It Works
 
-1. **Connects** to your local Visibl LLM Service for complete privacy
-2. **Analyzes** your project structure and design context
-3. **Provides** intelligent assistance through natural language interaction
-4. **Executes** tasks directly in your development environment
+<Steps>
+  <Step title="Connects to your local service">
+    Uses an OpenAI-compatible endpoint exposed by the Visibl LLM Service.
+  </Step>
+  <Step title="Understands your project">
+    Analyzes your repository structure, technologies, and design constraints.
+  </Step>
+  <Step title="Assists in natural language">
+    Generates RTL, testbenches, constraints, scripts, and documentation with silicon-aware guidance.
+  </Step>
+  <Step title="Executes tasks safely">
+    Reads/writes files and runs commands you approve—keeping changes local.
+  </Step>
+</Steps>
 
 ## Security & Privacy
 
-- **Local Processing**: All AI inference happens on your infrastructure
-- **No External Calls**: Zero data sent to external services
-- **Project Isolation**: Works entirely within your development environment
-- **Secure by Design**: Built for enterprise security requirements
+- **Local processing**: All AI inference happens on your infrastructure
+- **No external calls**: Zero data sent to third-party services
+- **Project isolation**: Operates within your development environment
+- **Secure by design**: Aligns with enterprise security requirements
+
+<Callout type="info" title="Tip">
+Use smaller, focused prompts tied to specific files or modules to get the most accurate, synthesizable RTL and verification assets.
+</Callout>
 
 ## Common Use Cases
 

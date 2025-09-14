@@ -5,7 +5,8 @@ description: Enterprise-grade local LLM infrastructure for silicon engineering
 
 # Visibl LLM Service
 
-The Visibl LLM Service provides a production-ready, GPU-optimized AI infrastructure that runs entirely on your servers. Built on vLLM with enterprise features and silicon engineering optimizations.
+The Visibl LLM Service provides a production-ready, GPU-optimized AI infrastructure that runs entirely on your servers. It is built on vLLM with enterprise features and silicon-aware optimizations.
+
 
 ## Features
 
@@ -59,6 +60,10 @@ The service runs as a containerized vLLM server with:
 - **Memory management** with intelligent utilization settings
 - **Process isolation** via Docker containers
 - **Systemd integration** for reliable service management
+
+<Callout type="info" title="Observability">
+Health checks and logs are included by default. Integrate with your existing monitoring via systemd and container metrics.
+</Callout>
 
 ## Next Steps
 

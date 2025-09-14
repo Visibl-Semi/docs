@@ -7,6 +7,10 @@ description: Deploy Visibl LLM Service on your infrastructure
 
 Deploy the Visibl LLM Service on your infrastructure with our automated installer.
 
+<Callout type="warning" title="Prerequisites">
+Ensure your server meets the minimum requirements and that you can run Docker with GPU access. See System Requirements in the LLM Service overview.
+</Callout>
+
 ## Quick Install
 
 Run the one-line installer as root on your target server:
@@ -21,6 +25,10 @@ The installer will:
 3. **Configure** Docker for GPU access
 4. **Deploy** the LLM service with optimal settings
 5. **Start** the service automatically
+
+<Callout type="info" title="Air-gapped?">
+If your environment is air-gapped, pre-load the container images and model weights, then run the installer with the offline flag provided by your Visibl representative.
+</Callout>
 
 ## Model Selection
 
@@ -41,6 +49,10 @@ curl -fsSL "https://visiblsemi.com/api/install-llm-nl?model=heavy" | sudo bash
 - **Dual GPU** (2x A100-40GB recommended)
 - **Advanced reasoning** capabilities  
 - **Best for**: Complex design problems, architecture decisions
+
+<Callout type="success" title="Model selection guidance">
+Start with the Fast model for most workflows. Switch to Heavy when you need deeper multi-step reasoning or long-context analysis.
+</Callout>
 
 
 ## Post-Installation
@@ -91,6 +103,10 @@ visibl-llm len 32000        # Set max context length
 visibl-llm util 0.90        # Set GPU memory utilization
 visibl-llm custom-ar on     # Enable custom all-reduce
 ```
+
+<Callout type="warning" title="Performance note">
+Increasing utilization may improve throughput but can reduce headroom and stability on memory-constrained GPUs. Adjust gradually.
+</Callout>
 
 ## Configuration
 
@@ -149,3 +165,7 @@ For technical support:
 ## Next Steps
 
 With the LLM service running, you can now [install the CLI tool](/cli/installation) to start using Visibl for your silicon engineering projects.
+
+<Callout type="info" title="API quick test">
+The service exposes an OpenAI-compatible endpoint. Try a short request with your preferred SDK to confirm connectivity.
+</Callout>
