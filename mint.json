@@ -3,41 +3,41 @@
   "name": "Visibl Documentation",
   "logo": {
     "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "light": "/logo/light.svg",
+    "href": "https://visiblsemi.com"
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#000000",
-    "light": "#FFFFFF",
-    "dark": "#000000",
+    "primary": "#8B5CF6",
+    "light": "#A78BFA",
+    "dark": "#7C3AED",
     "anchors": {
-      "from": "#000000",
-      "to": "#333333"
+      "from": "#8B5CF6",
+      "to": "#A78BFA"
     }
   },
-  "topbarLinks": [
-    {
-      "name": "Website",
-      "url": "https://visiblsemi.com"
-    },
-    {
-      "name": "Support",
-      "url": "mailto:hi@visiblsemi.com"
+  "icons": {
+    "library": "lucide"
+  },
+  "theme": "quill",
+  "navbar": {
+    "primary": {
+      "type": "button",
+      "label": "Get started",
+      "href": "https://visiblsemi.com/contact"
     }
-  ],
-  "topbarCtaButton": {
-    "name": "Get Started",
-    "url": "https://visiblsemi.com/license"
   },
   "navigation": [
     {
-      "group": "Overview",
+      "group": "Getting started",
+      "icon": "rocket",
       "pages": [
-        "overview"
+        "getting-started"
       ]
     },
     {
-      "group": "Visibl LLM Service",
+      "group": "LLM Service",
+      "icon": "server",
       "pages": [
         "llm-service/overview",
         "llm-service/installation",
@@ -45,16 +45,91 @@
       ]
     },
     {
-      "group": "Visibl CLI",
+      "group": "CLI Tool",
+      "icon": "terminal",
       "pages": [
         "cli/overview",
         "cli/installation",
         "cli/silicon-examples"
       ]
+    },
+    {
+      "group": "Updates",
+      "icon": "clock",
+      "pages": [
+        "changelog"
+      ]
     }
   ],
-  "footerSocials": {
-    "github": "https://github.com/Visibl-Semi",
-    "linkedin": "https://www.linkedin.com/company/visibl-semiconductors"
+  "footer": {
+    "socials": {
+      "github": "https://github.com/Visibl-Semi",
+      "linkedin": "https://www.linkedin.com/company/visibl-semiconductors"
+    },
+    "links": [
+      {
+        "header": "Platform",
+        "links": [
+          {
+            "label": "LLM Service",
+            "url": "/llm-service/overview"
+          },
+          {
+            "label": "CLI Tool",
+            "url": "/cli/overview"
+          },
+          {
+            "label": "Quick Start",
+            "url": "/quickstart"
+          }
+        ]
+      },
+      {
+        "header": "Resources",
+        "links": [
+          {
+            "label": "Examples",
+            "url": "/cli/silicon-examples"
+          },
+          {
+            "label": "Installation",
+            "url": "/llm-service/installation"
+          },
+          {
+            "label": "Changelog",
+            "url": "/changelog"
+          },
+          {
+            "label": "Support",
+            "url": "mailto:support@visiblsemi.com"
+          }
+        ]
+      },
+      {
+        "header": "Company",
+        "links": [
+          {
+            "label": "About",
+            "url": "https://visiblsemi.com"
+          },
+          {
+            "label": "Contact",
+            "url": "mailto:support@visiblsemi.com"
+          }
+        ]
+      }
+    ]
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "integrations": {
+    "analytics": {
+      "enabled": true
+    }
   }
 }

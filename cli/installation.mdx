@@ -24,35 +24,75 @@ The installer will:
 
 ## Manual Installation
 
-### Package Managers
+<Tabs>
+<Tab title="Package Managers">
+Install through your preferred package manager:
 
-**Homebrew (macOS/Linux):**
-```bash
+<CodeGroup>
+```bash Homebrew (macOS/Linux)
 brew install visibl/tap/visibl
 ```
 
-**NPM:**
-```bash
+```bash NPM (Cross-platform)
 npm install -g visibl-cli@latest
 ```
 
-**Arch Linux:**
-```bash
+```bash Arch Linux (AUR)
 paru -S visibl-bin
 ```
 
-### Direct Download
+```bash Cargo (Rust)
+cargo install visibl-cli
+```
+</CodeGroup>
+</Tab>
 
-Download from GitHub releases:
-```bash
-# Set your platform
-export PLATFORM="linux-x64"  # or darwin-x64, darwin-arm64, etc.
+<Tab title="Direct Download">
+Download pre-built binaries from GitHub releases:
 
-# Download and install
-wget https://github.com/Visibl-Semi/Releases/releases/latest/download/visibl-${PLATFORM}.zip
-unzip visibl-${PLATFORM}.zip
+<CodeGroup>
+```bash Linux x64
+curl -L https://github.com/Visibl-Semi/releases/latest/download/visibl-linux-x64.tar.gz | tar xz
 sudo mv visibl /usr/local/bin/
 ```
+
+```bash macOS x64
+curl -L https://github.com/Visibl-Semi/releases/latest/download/visibl-darwin-x64.tar.gz | tar xz  
+sudo mv visibl /usr/local/bin/
+```
+
+```bash macOS ARM64
+curl -L https://github.com/Visibl-Semi/releases/latest/download/visibl-darwin-arm64.tar.gz | tar xz
+sudo mv visibl /usr/local/bin/
+```
+
+```bash Windows
+# Download from: https://github.com/Visibl-Semi/releases/latest/download/visibl-win-x64.zip
+# Extract and add to PATH
+```
+</CodeGroup>
+</Tab>
+
+<Tab title="From Source">
+Build from source code:
+
+```bash
+# Clone repository
+git clone https://github.com/Visibl-Semi/visibl-cli.git
+cd visibl-cli
+
+# Build with Rust
+cargo build --release
+
+# Install
+cargo install --path .
+```
+
+<Info>
+**Requirements**: Rust 1.70+ and Node.js 18+ for building from source
+</Info>
+</Tab>
+</Tabs>
 
 ## Configuration
 
@@ -191,34 +231,122 @@ Create `.visibl/config.json` for project-specific settings:
 
 ## Troubleshooting
 
-### Connection Issues
-```bash
-# Check LLM service status
-curl http://127.0.0.1:58180/health
-
-# View configuration
-visibl config show
-
-# Reset configuration
-rm ~/.config/visibl/visibl.json
-visibl config init
-```
-
-### Permission Issues
-```bash
-# If installed to ~/.visibl/bin, ensure it's in PATH
-export PATH="$HOME/.visibl/bin:$PATH"
-echo 'export PATH="$HOME/.visibl/bin:$PATH"' >> ~/.bashrc
-```
-
-### Model Detection
-```bash
-# List available models
-curl http://127.0.0.1:58180/v1/models
-
-# Update configuration with detected models
-visibl config refresh-models
-```
+<AccordionGroup>
+  <Accordion title="Connection Issues">
+    **CLI can't connect to LLM service**
+    
+    <CodeGroup>
+    ```bash Check Service Health
+    # Verify LLM service is running
+    curl http://127.0.0.1:58180/health
+    
+    # Expected response:
+    # {"status": "healthy", "model": "visibl-70b"}
+    ```
+    
+    ```bash View Configuration  
+    # Check current configuration
+    visibl config show
+    
+    # Verify endpoint settings
+    visibl config get llm-endpoint
+    ```
+    
+    ```bash Reset Configuration
+    # Reset to defaults
+    rm ~/.config/visibl/visibl.json
+    visibl config init
+    
+    # Manual endpoint configuration
+    visibl config set-llm-endpoint 192.168.1.100:58180
+    ```
+    </CodeGroup>
+  </Accordion>
+  
+  <Accordion title="Installation Issues">
+    **Permission or PATH problems**
+    
+    <CodeGroup>
+    ```bash PATH Issues
+    # Add to PATH if installed locally
+    export PATH="$HOME/.visibl/bin:$PATH"
+    echo 'export PATH="$HOME/.visibl/bin:$PATH"' >> ~/.bashrc
+    source ~/.bashrc
+    ```
+    
+    ```bash Permission Issues
+    # Fix permissions
+    chmod +x ~/.visibl/bin/visibl
+    
+    # Or install system-wide
+    sudo mv ~/.visibl/bin/visibl /usr/local/bin/
+    ```
+    
+    ```bash Verification
+    # Test installation
+    which visibl
+    visibl --version
+    ```
+    </CodeGroup>
+  </Accordion>
+  
+  <Accordion title="Model Detection">
+    **CLI can't detect available models**
+    
+    <CodeGroup>
+    ```bash List Available Models
+    # Check what models are running
+    curl http://127.0.0.1:58180/v1/models
+    ```
+    
+    ```bash Refresh Configuration  
+    # Update CLI with detected models
+    visibl config refresh-models
+    
+    # Set specific model
+    visibl config set-model visibl-70b
+    ```
+    
+    ```bash Test Model Access
+    # Test model connection
+    visibl run "test connection"
+    
+    # Check model info
+    visibl config get model
+    ```
+    </CodeGroup>
+  </Accordion>
+  
+  <Accordion title="Performance Issues">
+    **Slow responses or timeouts**
+    
+    <CodeGroup>
+    ```bash Check Service Load
+    # Monitor service logs
+    visibl-llm logs -f
+    
+    # Check GPU utilization
+    nvidia-smi
+    ```
+    
+    ```bash Optimize Settings
+    # Increase timeout
+    visibl config set timeout 120
+    
+    # Switch to faster model
+    visibl config set-model visibl-7b
+    ```
+    
+    ```bash Network Issues
+    # Test network connectivity
+    ping $(visibl config get llm-host)
+    
+    # Use local loopback
+    visibl config set-llm-endpoint 127.0.0.1:58180
+    ```
+    </CodeGroup>
+  </Accordion>
+</AccordionGroup>
 
 ## Environment Variables
 

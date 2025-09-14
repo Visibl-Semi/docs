@@ -1,93 +1,292 @@
 ---
-title: Visibl CLI
-description: AI-powered command-line-interface assistant for silicon engineering
+title: "Visibl CLI"
+description: "AI-powered command-line assistant for silicon engineering teams"
+icon: "terminal"
 ---
 
 # Visibl CLI
 
-The Visibl CLI is an AI-powered coding assistant for silicon engineering teams. It delivers context-aware help for RTL design, verification, documentation, and EDA tool integration—running against your local Visibl LLM Service.
+The Visibl CLI is an AI-powered coding assistant specifically designed for silicon engineering teams. It delivers context-aware assistance for RTL design, verification, documentation, and EDA tool integration—all while running entirely on your local infrastructure.
 
-<Callout type="warning" title="Privacy first">
-The CLI never sends your code or designs to external APIs. All inference happens on your infrastructure via the local Visibl LLM Service.
-</Callout>
+<Frame>
+  <img src="/assets/cli.png" alt="Visibl CLI interface showing interactive AI assistance for silicon engineering" />
+</Frame>
 
-## What It Does
+<Info>
+**Privacy first**: The CLI never sends your code or designs to external APIs. All AI processing happens on your infrastructure via the local Visibl LLM Service, ensuring complete data security.
+</Info>
 
-The Visibl CLI acts as your AI pair programmer, understanding:
-- **RTL Languages**: Verilog, SystemVerilog, VHDL
-- **Verification**: UVM, SystemC, formal verification
-- **EDA Tools**: Synopsys, Cadence, Mentor workflows
-- **Design Flows**: Synthesis, P&R, timing analysis
-- **Industry Standards**: AXI, PCIe, DDR, USB protocols
+## What makes it special
 
-## Key Features
+**Silicon Engineering Intelligence**: Understands RTL languages, verification methodologies, EDA tools, and industry protocols. Trained specifically on silicon engineering best practices.
 
-### Context-Aware Assistance
-- **Project Understanding**: Analyzes your entire codebase for context
-- **Smart Suggestions**: Provides relevant solutions based on your design
-- **Code Generation**: Creates RTL, testbenches, and constraints
-- **Bug Detection**: Identifies common design and verification issues
+**Complete Security**: All processing happens locally on your infrastructure. No code or designs ever leave your network, meeting the highest enterprise security requirements.
 
-### Silicon Engineering Expertise
-- **RTL Best Practices**: Follows industry coding standards
-- **Synthesis Awareness**: Generates synthesizable, optimized code
-- **Timing Considerations**: Understands clock domains and timing constraints
-- **Verification Patterns**: Creates comprehensive testbenches and assertions
+**Context-Aware**: Analyzes your entire project structure, understands your coding patterns, and provides relevant suggestions based on your specific design requirements.
 
-### Integrated Workflow
-- **File Operations**: Read, write, and edit files in your project
-- **Tool Integration**: Execute EDA tools and analyze results
-- **Documentation**: Generate and maintain design documentation
-- **Code Review**: Analyze code for quality and compliance
+**Integrated Workflow**: Works seamlessly with your existing EDA tools, development environment, and silicon engineering workflows without disruption.
 
-## How It Works
+## Supported technologies
 
-<Steps>
-  <Step title="Connects to your local service">
-    Uses an OpenAI-compatible endpoint exposed by the Visibl LLM Service.
-  </Step>
-  <Step title="Understands your project">
-    Analyzes your repository structure, technologies, and design constraints.
-  </Step>
-  <Step title="Assists in natural language">
-    Generates RTL, testbenches, constraints, scripts, and documentation with silicon-aware guidance.
-  </Step>
-  <Step title="Executes tasks safely">
-    Reads/writes files and runs commands you approve—keeping changes local.
-  </Step>
-</Steps>
+### RTL Languages
 
-## Security & Privacy
+- **SystemVerilog** - Full IEEE 1800 standard support
+- **Verilog** - IEEE 1364 compliance  
+- **VHDL** - IEEE 1076 standard support
+- **Chisel** - Scala-based hardware construction
+- **SpinalHDL** - Modern HDL alternative
 
-- **Local processing**: All AI inference happens on your infrastructure
-- **No external calls**: Zero data sent to third-party services
-- **Project isolation**: Operates within your development environment
-- **Secure by design**: Aligns with enterprise security requirements
-
-<Callout type="info" title="Tip">
-Use smaller, focused prompts tied to specific files or modules to get the most accurate, synthesizable RTL and verification assets.
-</Callout>
-
-## Common Use Cases
-
-### RTL Development
-- Generate module templates and interfaces
-- Debug timing issues and synthesis warnings
-- Optimize code for area and performance
-- Create comprehensive documentation
+```systemverilog
+// Example: Generated AXI4 Interface
+interface axi4_if #(
+    parameter ADDR_WIDTH = 32,
+    parameter DATA_WIDTH = 64
+)(
+    input logic aclk,
+    input logic aresetn
+);
+    // AXI4 write address channel
+    logic                      awvalid;
+    logic                      awready;
+    logic [ADDR_WIDTH-1:0]     awaddr;
+    logic [7:0]                awlen;
+    // ... complete interface definition
+endinterface
+```
 
 ### Verification
-- Build UVM testbenches and environments
-- Generate directed and random test cases
-- Create assertions and coverage models
-- Debug simulation failures
 
-### Integration & Automation
-- Create build and simulation scripts
-- Integrate with CI/CD pipelines
-- Automate repetitive tasks
-- Generate reports and metrics
+- **UVM** - Universal Verification Methodology
+- **SystemC** - Transaction-level modeling
+- **SVA** - SystemVerilog Assertions
+- **Formal Verification** - Property checking
+- **Coverage** - Functional and code coverage
 
-## Next Steps
+```systemverilog
+// Example: Generated UVM Agent
+class uart_agent extends uvm_agent;
+    `uvm_component_utils(uart_agent)
+    
+    uart_driver      m_driver;
+    uart_monitor     m_monitor;
+    uart_sequencer   m_sequencer;
+    
+    function new(string name = "uart_agent", uvm_component parent);
+        super.new(name, parent);
+    endfunction
+    
+    virtual function void build_phase(uvm_phase phase);
+        super.build_phase(phase);
+        m_driver = uart_driver::type_id::create("m_driver", this);
+        m_monitor = uart_monitor::type_id::create("m_monitor", this);
+        m_sequencer = uart_sequencer::type_id::create("m_sequencer", this);
+    endfunction
+endclass
+```
 
-Ready to get started? Follow our [installation guide](/cli/installation) and explore [silicon-specific examples](/cli/silicon-examples).
+### EDA Tools
+
+- **Synopsys** - Design Compiler, VCS, PrimeTime
+- **Cadence** - Genus, Xcelium, Innovus  
+- **Mentor** - ModelSim, Questa, Calibre
+- **Open Source** - Yosys, Verilator, GHDL
+- **Simulation** - All major simulators
+
+```bash
+# Example: Generated VCS simulation script
+#!/bin/bash
+# VCS simulation script generated by Visibl
+
+# Compile design files
+vcs -full64 -sverilog -timescale=1ns/1ps \
+    +incdir+$RTL_DIR/include \
+    $RTL_DIR/cpu_core.sv \
+    $RTL_DIR/alu.sv \
+    $TB_DIR/cpu_tb.sv \
+    -o cpu_sim
+
+# Run simulation
+./cpu_sim +UVM_TESTNAME=cpu_basic_test
+```
+
+### Industry Protocols
+
+- **AXI/ACE** - ARM AMBA bus protocols
+- **PCIe** - PCI Express interface
+- **DDR** - Memory controller interfaces
+- **USB** - Universal Serial Bus
+- **Ethernet** - Network protocols
+
+```systemverilog
+// Example: Generated PCIe TLP decoder
+always_comb begin
+    case (tlp_header[31:29])  // Format field
+        3'b000: tlp_type = MEM_READ_REQUEST;
+        3'b001: tlp_type = MEM_WRITE_REQUEST;
+        3'b010: tlp_type = IO_READ_REQUEST;
+        3'b011: tlp_type = IO_WRITE_REQUEST;
+        3'b100: tlp_type = CONFIG_READ_REQUEST;
+        3'b101: tlp_type = CONFIG_WRITE_REQUEST;
+        default: tlp_type = UNSUPPORTED;
+    endcase
+end
+```
+
+## How it works
+
+<Steps>
+<Step title="Secure connection">
+The CLI automatically discovers and connects to your Visibl LLM Service running on your infrastructure. Uses OpenAI-compatible APIs for seamless integration.
+
+```bash
+# Auto-discovery
+visibl --version
+> Visibl CLI v1.2.0
+> Connected to: visibl-llm@192.168.1.100:58180
+
+# Manual configuration if needed
+visibl config set-llm-endpoint 10.0.1.50:58180
+```
+</Step>
+
+<Step title="Project understanding">
+Scans your project structure, identifies RTL modules, testbenches, and design patterns to provide contextually relevant assistance.
+
+```bash
+# Initialize project understanding
+cd /path/to/your/rtl/project
+visibl init
+```
+
+<Check>
+Creates `.visibl/` directory with project context and configuration
+</Check>
+</Step>
+
+<Step title="AI assistance">
+Generate RTL modules, verification assets, constraints, and documentation with deep understanding of silicon engineering best practices.
+
+**Interactive mode:**
+```bash
+visibl
+> Help me create a FIFO with gray code pointers
+> Now add overflow/underflow protection  
+> Generate a testbench for this FIFO
+```
+
+**Direct commands:**
+```bash
+visibl run "Create an AXI4-Lite slave interface"
+visibl edit cpu_core.sv "Add pipeline stage"
+```
+</Step>
+
+<Step title="Safe execution">
+All file operations and command executions happen locally with your approval. No external dependencies or security risks.
+
+<Warning>
+**Safety**: Always review generated RTL for synthesis compatibility, timing requirements, and coding standards before production use.
+</Warning>
+</Step>
+</Steps>
+
+## Key capabilities
+
+### RTL Design & Generation
+
+- **Module Templates** - Parameterized RTL modules with proper interfaces
+- **State Machines** - FSM and complex control logic generation
+- **Datapath Design** - ALUs, multipliers, and arithmetic units  
+- **Memory Interfaces** - SRAM, DRAM, and cache controllers
+- **Clock Domain Crossing** - Safe CDC circuits and synchronizers
+- **Protocol Interfaces** - AXI, PCIe, USB, and custom protocols
+
+```bash
+visibl run "Create a 4-stage pipeline processor with hazard detection"
+```
+
+### Verification & Testing
+
+- **UVM Testbenches** - Complete verification environments with agents and sequences
+- **Directed Tests** - Specific test scenarios for targeted validation
+- **Random Testing** - Constrained random stimulus generation
+- **Coverage Models** - Functional and code coverage analysis
+- **Assertions** - SystemVerilog assertions for protocol checking
+- **Formal Verification** - Property-based verification setup
+
+```bash
+visibl run "Generate UVM testbench for my cache controller with coverage"
+```
+
+### EDA Tool Integration
+
+- **Synthesis Scripts** - Design Compiler, Genus optimization flows
+- **Simulation Setup** - VCS, Questa, Xcelium run scripts
+- **Timing Analysis** - PrimeTime, Tempus constraint generation
+- **Physical Design** - Place & route scripts and constraints
+- **Build Systems** - Makefiles and CI/CD integration
+- **Report Generation** - Automated metrics and analysis
+
+```bash
+visibl run "Create synthesis script for my design with timing constraints"
+```
+
+### Documentation & Analysis
+
+- **Module Documentation** - Automatic interface and behavior description
+- **Design Reviews** - Code quality and best practices analysis
+- **Architecture Diagrams** - Block diagrams and flow charts  
+- **Specification Updates** - Design specification maintenance
+- **Code Comments** - Intelligent inline documentation
+- **User Guides** - Usage and integration instructions
+
+```bash
+visibl run "Analyze my RTL for coding standard compliance"
+```
+
+## Usage modes
+
+### Interactive Mode
+Start a session and have natural language conversations about your design challenges:
+
+```bash
+visibl
+```
+
+### Direct Commands
+Execute specific tasks with direct commands, perfect for automation:
+
+```bash
+visibl run "task description"
+```
+
+### File Operations
+Edit specific files with AI assistance, understanding your existing code structure:
+
+```bash
+visibl edit file.sv "modification request"
+```
+
+## Getting started
+
+<CardGroup cols={2}>
+  <Card title="Installation Guide" icon="download" href="/cli/installation">
+    Step-by-step installation instructions for all platforms and package managers
+  </Card>
+  
+  <Card title="Silicon Examples" icon="code" href="/cli/silicon-examples">
+    Practical examples of RTL generation, verification, and EDA tool integration
+  </Card>
+  
+  <Card title="LLM Service" icon="server" href="/llm-service/overview">
+    Learn about the local AI infrastructure that powers the CLI
+  </Card>
+  
+  <Card title="Get Support" icon="messages-square" href="mailto:support@visiblsemi.com">
+    Contact our team for technical support and assistance
+  </Card>
+</CardGroup>
+
+<Tip>
+**Best practices**: For optimal results, initialize Visibl in your project directory and provide specific, detailed prompts about your requirements and constraints.
+</Tip>
