@@ -1,0 +1,65 @@
+---
+title: Visibl LLM Service
+description: Enterprise-grade local LLM infrastructure for silicon engineering
+---
+
+# Visibl LLM Service
+
+The Visibl LLM Service provides a production-ready, GPU-optimized AI infrastructure that runs entirely on your servers. Built on vLLM with enterprise features and silicon engineering optimizations.
+
+## Features
+
+### Enterprise-Grade Infrastructure
+- **Production deployment** with systemd service management
+- **GPU optimization** for NVIDIA A100, H100, and compatible hardware
+- **Automatic scaling** with tensor parallelism for large models
+- **Health monitoring** and automatic recovery
+- **Resource management** with intelligent memory allocation
+
+### Security & Isolation
+- **Complete data isolation** - no external network calls
+- **Local processing** - all inference happens on your hardware
+- **No telemetry** - zero usage statistics sent externally
+- **Network isolation** ready for air-gapped environments
+
+### Model Options
+
+#### Fast - Visibl-7B
+- **Single GPU** deployment (24GB+ VRAM)
+- **Low latency** responses
+- **Ideal for** quick queries and code assistance
+
+#### Heavy - Visibl-70B
+- **Dual GPU** deployment (2x A100-40GB recommended)
+- **Advanced reasoning** capabilities
+- **Best for** complex design problems and architecture decisions
+
+
+## System Requirements
+
+### Minimum Requirements
+- **OS**: RHEL 8.x (recommended) or compatible Linux
+- **Docker**: Version 26.x
+- **GPU**: NVIDIA A100, H100, or compatible with 40GB+ VRAM
+- **RAM**: 64GB+ system memory
+- **Storage**: 100GB+ available space
+- **Network**: Outbound HTTPS for initial model download
+
+### Recommended Production Setup
+- **GPU**: 2x NVIDIA A100-40GB for 70B models
+- **RAM**: 128GB+ system memory  
+- **Storage**: 500GB+ SSD storage
+- **Network**: Dedicated network interface for service access
+
+## Architecture
+
+The service runs as a containerized vLLM server with:
+- **OpenAI-compatible API** for seamless integration
+- **Automatic GPU detection** and optimal configuration
+- **Memory management** with intelligent utilization settings
+- **Process isolation** via Docker containers
+- **Systemd integration** for reliable service management
+
+## Next Steps
+
+Ready to deploy? Follow our [installation guide](/llm-service/installation) to get started.

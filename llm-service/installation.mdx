@@ -1,0 +1,151 @@
+---
+title: LLM Service Installation
+description: Deploy Visibl LLM Service on your infrastructure
+---
+
+# Installation
+
+Deploy the Visibl LLM Service on your infrastructure with our automated installer.
+
+## Quick Install
+
+Run the one-line installer as root on your target server:
+
+```bash
+curl -fsSL https://visiblsemi.com/api/install-llm-nl | sudo bash
+```
+
+The installer will:
+1. **Validate** your system meets requirements
+2. **Install** NVIDIA Container Toolkit if needed
+3. **Configure** Docker for GPU access
+4. **Deploy** the LLM service with optimal settings
+5. **Start** the service automatically
+
+## Model Selection
+
+Choose your model during installation by appending a model parameter:
+
+### Fast Model - Visibl-7B
+```bash
+curl -fsSL "https://visiblsemi.com/api/install-llm-nl?model=fast" | sudo bash
+```
+- **Single GPU** (24GB+ VRAM)
+- **Low latency** for quick assistance
+- **Best for**: Code completion, simple queries
+
+### Heavy Model - Visibl-70B (Default)
+```bash
+curl -fsSL "https://visiblsemi.com/api/install-llm-nl?model=heavy" | sudo bash
+```
+- **Dual GPU** (2x A100-40GB recommended)
+- **Advanced reasoning** capabilities  
+- **Best for**: Complex design problems, architecture decisions
+
+
+## Post-Installation
+
+### Verify Installation
+Check service status:
+```bash
+visibl-llm status
+```
+
+Test the API:
+```bash
+curl -s http://127.0.0.1:58180/health
+```
+
+### View Logs
+Monitor service logs:
+```bash
+visibl-llm logs -f
+```
+
+## Management Commands
+
+The `visibl-llm` CLI provides complete service management:
+
+### Service Control
+```bash
+visibl-llm start    # Start the service
+visibl-llm stop     # Stop the service  
+visibl-llm restart  # Restart the service
+visibl-llm status   # Check service status
+```
+
+### Model Switching
+```bash
+visibl-llm fast     # Switch to Visibl-7B model
+visibl-llm heavy    # Switch to Visibl-70B model
+```
+
+### Custom Models
+```bash
+visibl-llm use <huggingface-repo> --served <name> --awq-marlin
+```
+
+### Performance Tuning
+```bash
+visibl-llm len 32000        # Set max context length
+visibl-llm util 0.90        # Set GPU memory utilization
+visibl-llm custom-ar on     # Enable custom all-reduce
+```
+
+## Configuration
+
+### Service Configuration
+The service configuration is stored in `/etc/visibl/model.env`:
+
+```bash
+MODEL=visibl-70b
+SERVED_NAME=visibl-70b
+EXTRA_VLLM_ARGS="--quantization awq_marlin"
+TOOLS_ENABLED=0
+```
+
+### Network Configuration
+The service runs on port `58180` by default. To change:
+
+```bash
+export SERVICE_PORT=8080
+systemctl restart visibl-llm
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**GPU Not Detected**
+```bash
+# Check GPU visibility
+nvidia-smi
+# Restart Docker service
+sudo systemctl restart docker
+```
+
+**Out of Memory Errors**
+```bash
+# Switch to smaller model
+visibl-llm fast
+# Or reduce GPU utilization
+visibl-llm util 0.85
+```
+
+**Service Won't Start**
+```bash
+# Check logs for details
+visibl-llm logs
+# Reset service configuration
+sudo systemctl reset-failed visibl-llm
+```
+
+### Getting Help
+
+For technical support:
+- **Email**: [hi@visiblsemi.com](mailto:hi@visiblsemi.com)
+- **Logs**: Always include output from `visibl-llm logs` when reporting issues
+
+## Next Steps
+
+With the LLM service running, you can now [install the CLI tool](/cli/installation) to start using Visibl for your silicon engineering projects.

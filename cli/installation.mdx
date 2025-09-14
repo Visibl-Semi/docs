@@ -1,0 +1,243 @@
+---
+title: CLI Installation
+description: Install and configure the Visibl CLI
+---
+
+# Installation
+
+Install the Visibl CLI on your development machine and connect it to your local LLM service.
+
+## Quick Install
+
+Run the one-line installer:
+
+```bash
+curl -fsSL https://visiblsemi.com/api/install-nl | bash
+```
+
+The installer will:
+1. **Download** the latest CLI version for your platform
+2. **Install** to the appropriate directory (`/usr/local/bin` or `~/.visibl/bin`)
+3. **Configure** your shell PATH
+4. **Detect** local LLM services automatically
+5. **Create** secure configuration files
+
+## Manual Installation
+
+### Package Managers
+
+**Homebrew (macOS/Linux):**
+```bash
+brew install visibl/tap/visibl
+```
+
+**NPM:**
+```bash
+npm install -g visibl-cli@latest
+```
+
+**Arch Linux:**
+```bash
+paru -S visibl-bin
+```
+
+### Direct Download
+
+Download from GitHub releases:
+```bash
+# Set your platform
+export PLATFORM="linux-x64"  # or darwin-x64, darwin-arm64, etc.
+
+# Download and install
+wget https://github.com/Visibl-Semi/Releases/releases/latest/download/visibl-${PLATFORM}.zip
+unzip visibl-${PLATFORM}.zip
+sudo mv visibl /usr/local/bin/
+```
+
+## Configuration
+
+### Automatic Configuration
+
+If you have a local LLM service running, the installer will detect it automatically:
+
+```bash
+# The installer detects services on:
+# - localhost:58180 (default visibl-llm port)
+# - systemd service: visibl-llm
+# - Docker containers named: visibl-llm
+```
+
+### Manual Configuration
+
+If automatic detection fails, configure manually:
+
+```bash
+# Set LLM endpoint
+visibl config set-llm-endpoint 192.168.1.100:58180
+
+# Or set environment variables
+export VISIBL_LLM_HOST=192.168.1.100
+export VISIBL_LLM_PORT=58180
+```
+
+### Configuration File
+
+The CLI creates a configuration file at `~/.config/visibl/visibl.json`:
+
+```json
+{
+  "provider": {
+    "visibl-local": {
+      "name": "Visibl Local LLM",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:58180/v1",
+        "apiKey": "visibl-local-key"
+      },
+      "models": {
+        "visibl-70b": {
+          "id": "visibl-70b",
+          "name": "Visibl Heavy",
+          "limit": { "context": 16000, "output": 2048 },
+          "tool_call": true
+        }
+      }
+    }
+  },
+  "model": "visibl-local/visibl-70b",
+  "disabled_providers": ["openai", "anthropic", "google"]
+}
+```
+
+## Verification
+
+### Test Installation
+```bash
+# Check version
+visibl --version
+
+# Test connection to LLM service
+visibl run "Hello, can you help me with RTL design?"
+```
+
+### Run Basic Commands
+```bash
+# Get help
+visibl --help
+
+# Start interactive session
+visibl
+
+# Run with specific message
+visibl run "Explain the difference between blocking and non-blocking assignments"
+```
+
+## Shell Integration
+
+### Set Default Editor
+The installer automatically detects and configures your editor:
+
+```bash
+# VS Code (preferred)
+export EDITOR="code --wait"
+
+# Vim
+export EDITOR="vim"
+
+# Nano
+export EDITOR="nano"
+```
+
+### Shell Completions
+Enable tab completion for your shell:
+
+```bash
+# Bash
+echo 'eval "$(visibl completion bash)"' >> ~/.bashrc
+
+# Zsh  
+echo 'eval "$(visibl completion zsh)"' >> ~/.zshrc
+
+# Fish
+visibl completion fish > ~/.config/fish/completions/visibl.fish
+```
+
+## Workspace Setup
+
+### Initialize Project
+In your RTL project directory:
+
+```bash
+# Initialize visibl for this project
+visibl init
+
+# This creates .visibl/ directory with:
+# - Project-specific configuration
+# - Context files for better AI assistance
+# - Custom agents and workflows
+```
+
+### Project Configuration
+Create `.visibl/config.json` for project-specific settings:
+
+```json
+{
+  "language": "systemverilog",
+  "testbench_framework": "uvm",
+  "synthesis_tool": "design_compiler",
+  "simulator": "vcs"
+}
+```
+
+## Troubleshooting
+
+### Connection Issues
+```bash
+# Check LLM service status
+curl http://127.0.0.1:58180/health
+
+# View configuration
+visibl config show
+
+# Reset configuration
+rm ~/.config/visibl/visibl.json
+visibl config init
+```
+
+### Permission Issues
+```bash
+# If installed to ~/.visibl/bin, ensure it's in PATH
+export PATH="$HOME/.visibl/bin:$PATH"
+echo 'export PATH="$HOME/.visibl/bin:$PATH"' >> ~/.bashrc
+```
+
+### Model Detection
+```bash
+# List available models
+curl http://127.0.0.1:58180/v1/models
+
+# Update configuration with detected models
+visibl config refresh-models
+```
+
+## Environment Variables
+
+Key environment variables for customization:
+
+```bash
+# LLM Service Connection
+export VISIBL_LLM_HOST=127.0.0.1
+export VISIBL_LLM_PORT=58180
+export VISIBL_LLM_ENDPOINT=127.0.0.1:58180
+
+# Configuration
+export VISIBL_CONFIG_DIR=~/.config/visibl
+export VISIBL_DATA_DIR=~/.local/share/visibl
+
+# Installation
+export VISIBL_INSTALL_DIR=/usr/local/bin
+```
+
+## Next Steps
+
+With the CLI installed and configured, explore our [silicon engineering examples](/cli/silicon-examples) to see how Visibl can accelerate your RTL development workflow.

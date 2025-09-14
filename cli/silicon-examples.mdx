@@ -1,0 +1,318 @@
+---
+title: Silicon Engineering Examples
+description: Practical examples of using Visibl CLI for RTL design and verification
+---
+
+# Silicon Engineering Examples
+
+Discover how the Visibl CLI accelerates common silicon engineering tasks with AI-powered assistance.
+
+## RTL Design Examples
+
+### Creating a FIFO Module
+
+Generate a parameterized FIFO with proper error handling:
+
+```bash
+visibl run "Create a parameterized FIFO module with the following specs:
+- Configurable width and depth
+- Standard FIFO interface (push, pop, full, empty)
+- Gray code pointers for clock domain crossing
+- Proper reset handling and assertions"
+```
+
+**Generated SystemVerilog:**
+```systemverilog
+module fifo #(
+    parameter WIDTH = 32,
+    parameter DEPTH = 16,
+    parameter ADDR_WIDTH = $clog2(DEPTH)
+) (
+    input  logic                clk,
+    input  logic                rst_n,
+    input  logic                push,
+    input  logic                pop,
+    input  logic [WIDTH-1:0]    data_in,
+    output logic [WIDTH-1:0]    data_out,
+    output logic                full,
+    output logic                empty,
+    output logic [ADDR_WIDTH:0] count
+);
+
+    logic [ADDR_WIDTH:0] wr_ptr, rd_ptr;
+    logic [ADDR_WIDTH:0] wr_ptr_next, rd_ptr_next;
+    logic [WIDTH-1:0] mem [0:DEPTH-1];
+    
+    // Gray code pointer generation
+    always_ff @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            wr_ptr <= '0;
+            rd_ptr <= '0;
+        end else begin
+            if (push && !full) wr_ptr <= wr_ptr_next;
+            if (pop && !empty) rd_ptr <= rd_ptr_next;
+        end
+    end
+    
+    // Next pointer calculation
+    assign wr_ptr_next = (wr_ptr == DEPTH-1) ? '0 : wr_ptr + 1'b1;
+    assign rd_ptr_next = (rd_ptr == DEPTH-1) ? '0 : rd_ptr + 1'b1;
+    
+    // Status flags
+    assign full = (wr_ptr_next == rd_ptr);
+    assign empty = (wr_ptr == rd_ptr);
+    assign count = (wr_ptr >= rd_ptr) ? (wr_ptr - rd_ptr) : 
+                   (DEPTH - rd_ptr + wr_ptr);
+    
+    // Memory operations
+    always_ff @(posedge clk) begin
+        if (push && !full) begin
+            mem[wr_ptr[ADDR_WIDTH-1:0]] <= data_in;
+        end
+    end
+    
+    assign data_out = mem[rd_ptr[ADDR_WIDTH-1:0]];
+    
+    // Assertions
+    `ifdef SIMULATION
+        assert property (@(posedge clk) disable iff (!rst_n)
+            push && full |-> ##1 $stable(wr_ptr))
+        else $error("Push to full FIFO");
+        
+        assert property (@(posedge clk) disable iff (!rst_n)
+            pop && empty |-> ##1 $stable(rd_ptr))
+        else $error("Pop from empty FIFO");
+    `endif
+
+endmodule
+```
+
+### AXI4 Interface Implementation
+
+Create an AXI4-Lite slave interface:
+
+```bash
+visibl run "Generate an AXI4-Lite slave interface for a register bank with:
+- 32-bit data width
+- 16 registers with read/write capability
+- Proper response handling
+- Address decoding and error responses"
+```
+
+### Clock Domain Crossing
+
+Design a safe CDC circuit:
+
+```bash
+visibl run "Create a multi-bit clock domain crossing circuit using:
+- Gray code for counters
+- Two-flop synchronizer for control signals
+- Proper timing constraints
+- Formal verification properties"
+```
+
+## Verification Examples
+
+### UVM Testbench Creation
+
+Generate a complete UVM environment:
+
+```bash
+visibl run "Create a UVM testbench for my UART module including:
+- UVM agent with driver, monitor, sequencer
+- Scoreboard for data checking
+- Coverage model for protocol states
+- Base test class and directed tests"
+```
+
+**Generated Structure:**
+```
+uart_tb/
+├── uart_agent/
+│   ├── uart_driver.sv
+│   ├── uart_monitor.sv
+│   ├── uart_sequencer.sv
+│   └── uart_agent.sv
+├── uart_env/
+│   ├── uart_scoreboard.sv
+│   ├── uart_coverage.sv
+│   └── uart_env.sv
+├── sequences/
+│   └── uart_sequences.sv
+└── tests/
+    ├── uart_base_test.sv
+    └── uart_directed_tests.sv
+```
+
+### Assertion-Based Verification
+
+Create SVA properties:
+
+```bash
+visibl run "Generate SystemVerilog assertions for my AXI4 interface to check:
+- Valid/ready handshake protocol
+- Address alignment requirements
+- Response ordering rules
+- Burst transaction properties"
+```
+
+### Coverage Models
+
+Build functional coverage:
+
+```bash
+visibl run "Create a coverage model for my cache controller covering:
+- Cache hit/miss scenarios
+- Different request types (read/write)
+- Cache line states (MESI protocol)
+- Cross coverage between address ranges and operations"
+```
+
+## EDA Tool Integration
+
+### Synthesis Script Generation
+
+Create DC synthesis scripts:
+
+```bash
+visibl run "Generate a Design Compiler synthesis script for my processor core with:
+- Multi-corner timing constraints
+- Power optimization settings
+- Area constraints
+- Clock gating insertion"
+```
+
+### Timing Analysis
+
+Generate timing reports:
+
+```bash
+visibl run "Create a PrimeTime script to analyze timing for my design:
+- Setup and hold analysis
+- Clock skew analysis
+- Path group reporting
+- Critical path identification"
+```
+
+### Physical Design Constraints
+
+Create SDC constraints:
+
+```bash
+visibl run "Generate SDC constraints for my SoC design including:
+- Clock definitions and relationships
+- I/O timing constraints
+- False paths and multicycle paths
+- Power domain constraints"
+```
+
+## Debugging Examples
+
+### Simulation Debug
+
+Analyze waveforms and logs:
+
+```bash
+visibl run "Help me debug this simulation failure. The testbench is reporting:
+'ASSERTION FAILED: AXI write response timeout'
+Looking at the waveform, I see the AWVALID is high but AWREADY never goes high."
+```
+
+### Synthesis Issues
+
+Resolve synthesis warnings:
+
+```bash
+visibl run "My synthesis is reporting these warnings:
+'Warning: Latch inferred for signal data_reg'
+'Warning: Clock gating check failed'
+Help me identify and fix these issues in my RTL."
+```
+
+### Timing Closure
+
+Fix timing violations:
+
+```bash
+visibl run "I have setup timing violations on these paths:
+- CPU/ALU/adder_inst (slack: -0.5ns)
+- Memory_controller/arbiter (slack: -0.3ns)
+Suggest RTL modifications and constraint changes to fix these."
+```
+
+## Advanced Workflows
+
+### Custom Agents
+
+Create specialized agents for your team:
+
+```bash
+visibl agent create "Create an agent specialized in PCIe protocol implementation with knowledge of:
+- PCIe TLP packet formats
+- Configuration space handling
+- Link training sequences
+- Error handling mechanisms"
+```
+
+### Project Templates
+
+Generate project structures:
+
+```bash
+visibl run "Create a complete RTL project structure for a RISC-V core including:
+- Directory organization
+- Makefile for simulation and synthesis
+- CI/CD pipeline configuration
+- Documentation templates"
+```
+
+### Code Review
+
+Automated code analysis:
+
+```bash
+visibl run "Review my SystemVerilog module for:
+- Coding standard compliance
+- Synthesis best practices
+- Potential timing issues
+- Security vulnerabilities"
+```
+
+## Interactive Sessions
+
+Start an interactive session for complex tasks:
+
+```bash
+# Start interactive mode
+visibl
+
+# Then have a conversation:
+> I'm designing a memory controller for DDR4. Can you help me with the refresh logic?
+
+> Now I need to add support for different burst lengths. How should I modify the state machine?
+
+> Can you generate testcases to verify the refresh timing requirements?
+```
+
+## Tips for Best Results
+
+### Provide Context
+- Include relevant files in your project
+- Specify your target technology and tools
+- Mention performance and area requirements
+
+### Be Specific
+- Use precise technical terminology
+- Specify interface standards and protocols
+- Include timing and constraint requirements
+
+### Iterate and Refine
+- Start with high-level requirements
+- Refine the implementation through conversation
+- Ask for specific optimizations or modifications
+
+## Next Steps
+
+Ready to start using Visibl in your silicon engineering projects? The CLI integrates seamlessly with your existing EDA tools and development workflows.
+
+For support or questions, contact us at [hi@visiblsemi.com](mailto:hi@visiblsemi.com).
