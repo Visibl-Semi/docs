@@ -6,21 +6,40 @@ icon: "rocket"
 
 Visibl is an AI-powered platform for silicon engineering teams. We provide enterprise-grade tools that accelerate chip design, verification, and documentation—while preserving security and control on your infrastructure.
 
-<Info>
-**Who is Visibl for?** Chip, IP, and systems teams who need AI assistance without sending code or designs to external services. Built by silicon engineers for silicon engineers.
-</Info>
 
 ## Deploy the LLM service
 
-Start by deploying the AI infrastructure on your GPU server. This provides the local, secure AI processing power.
+Start by deploying the AI infrastructure on your server. This provides the local, secure AI processing power.
 
 <Steps>
-<Step title="Install the service">
-Run the one-line installer on your GPU server:
+<Step title="Choose and install your model">
+Select the model that best fits your needs:
+
+<Tabs>
+<Tab title="Visibl Fast (7B)">
+Perfect for day-to-day development:
 
 ```bash
-curl -fsSL https://visiblsemi.com/api/install-llm-nl | sudo bash
+curl -fsSL "https://visiblsemi.com/api/install-llm?model=fast" | sudo bash
 ```
+
+- Single GPU (24GB+ VRAM)
+- Low latency responses
+- Code completion and debugging
+</Tab>
+
+<Tab title="Visibl Heavy (70B)">
+Best for complex reasoning:
+
+```bash
+curl -fsSL "https://visiblsemi.com/api/install-llm?model=heavy" | sudo bash
+```
+
+- Dual GPU (2x A100 recommended)
+- Advanced architecture decisions
+- Complex verification planning
+</Tab>
+</Tabs>
 
 This automatically validates system requirements, installs NVIDIA Container Toolkit, and starts the service on port 58180.
 </Step>
@@ -33,38 +52,10 @@ curl -s http://127.0.0.1:58180/health
 ```
 
 <Check>
-You should see `{"status": "healthy", "model": "visibl-70b"}` from the health check.
+You should see`{"status": "healthy", "model": "visibl-70b"}`from the health check.
 </Check>
 </Step>
 </Steps>
-
-### Model options
-
-<Tabs>
-<Tab title="Fast Model (7B)">
-Perfect for day-to-day development:
-
-```bash
-curl -fsSL "https://visiblsemi.com/api/install-llm-nl?model=fast" | sudo bash
-```
-
-- Single GPU (24GB+ VRAM)
-- Low latency responses
-- Code completion and debugging
-</Tab>
-
-<Tab title="Heavy Model (70B)">
-Best for complex reasoning:
-
-```bash
-curl -fsSL "https://visiblsemi.com/api/install-llm-nl?model=heavy" | sudo bash
-```
-
-- Dual GPU (2x A100 recommended)
-- Advanced architecture decisions
-- Complex verification planning
-</Tab>
-</Tabs>
 
 ## Install the CLI tool
 
@@ -72,11 +63,7 @@ With the LLM service running, install the CLI on your development workstation:
 
 ```bash
 # One-line installer
-curl -fsSL https://visiblsemi.com/api/install-nl | bash
-
-# Or use package managers
-brew install visibl/tap/visibl
-npm install -g visibl-cli@latest
+curl -fsSL https://visiblsemi.com/api/install | bash
 ```
 
 The CLI automatically discovers and connects to your local LLM service.
@@ -100,6 +87,19 @@ You should get a helpful response about RTL design assistance, confirming the CL
 ## Start building with AI
 
 You're now ready to use Visibl for silicon engineering tasks:
+
+
+```bash
+cd your-workspace-root/
+visibl
+```
+
+Then chat naturally:
+```
+> I'm designing a memory controller for DDR4. Can you help me with the refresh logic?
+> Now I need to add support for different burst lengths. How should I modify the state machine?
+> Can you generate testcases to verify the refresh timing requirements?
+```
 
 ### Generate RTL modules
 
@@ -127,20 +127,6 @@ visibl run "Generate SystemVerilog assertions for AXI4 handshake protocol valida
 visibl run "Build functional coverage for my cache controller covering hit/miss scenarios"
 ```
 
-### Interactive assistance
-
-Start a conversation for complex tasks:
-
-```bash
-visibl
-```
-
-Then chat naturally:
-```
-> I'm designing a memory controller for DDR4. Can you help me with the refresh logic?
-> Now I need to add support for different burst lengths. How should I modify the state machine?
-> Can you generate testcases to verify the refresh timing requirements?
-```
 
 ## Project setup
 
@@ -175,39 +161,45 @@ Create `.visibl/config.json`:
 </Step>
 </Steps>
 
-## Key benefits
-
-**Security**: All processing happens on your infrastructure—no external API calls.
-
-**Performance**: GPU-optimized models deliver low-latency responses for complex engineering queries.
-
-**Integration**: Works with your existing EDA tools, flows, and methodologies.
-
-**Expertise**: Silicon-aware assistance grounded in industry standards and best practices.
-
-<Tip>
-Start with the fast 7B model for day-to-day assistance. Switch to the 70B model when you need deeper reasoning for architecture and complex design decisions.
-</Tip>
-
 ## What's next?
 
-<CardGroup cols={2}>
-  <Card title="Explore Examples" icon="code" href="/cli/silicon-examples">
-    See practical examples of RTL generation, verification, and EDA tool integration
-  </Card>
+Now that you have Visibl running, here's the recommended learning path:
+
+<Steps>
+<Step title="Start with practical examples">
+  Jump into real silicon engineering tasks to see Visibl's capabilities in action.
   
-  <Card title="CLI Documentation" icon="terminal" href="/cli/overview">
-    Learn about advanced CLI features and configuration options
+  <Card title="Silicon Engineering Examples" icon="code" href="/cli/examples">
+    RTL generation, UVM testbenches, AXI interfaces, and EDA tool integration
   </Card>
+</Step>
+
+<Step title="Master the CLI tool">
+  Learn advanced CLI features for your development workflow.
   
-  <Card title="LLM Service Management" icon="server" href="/llm-service/overview">
-    Understand service management, monitoring, and performance tuning
+  <Card title="CLI Deep Dive" icon="terminal" href="/cli/overview">
+    Advanced features, project setup, and integration with your tools
   </Card>
+</Step>
+
+<Step title="Optimize your deployment">
+  Fine-tune performance and explore enterprise features.
   
-  <Card title="Get Support" icon="messages-square" href="mailto:support@visiblsemi.com">
-    Contact our team for technical support and custom deployment assistance
-  </Card>
-</CardGroup>
+  <CardGroup cols={2}>
+    <Card title="Service Management" icon="server" href="/llm-service/usage">
+      Performance tuning and monitoring
+    </Card>
+    
+    <Card title="Advanced Deployment" icon="settings" href="/llm-service/installation">
+      Production setup and enterprise configuration
+    </Card>
+  </CardGroup>
+</Step>
+</Steps>
+
+<Tip>
+**Quick start tip**: Begin with `visibl run "Create a simple FIFO module"` to see immediate results, then explore the examples for more complex scenarios.
+</Tip>
 
 ## Troubleshooting
 

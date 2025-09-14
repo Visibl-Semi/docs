@@ -1,15 +1,17 @@
 ---
-title: Silicon Engineering Examples
+title: Examples
 description: Practical examples of using Visibl CLI for RTL design and verification
 ---
 
-# Silicon Engineering Examples
-
 Discover how the Visibl CLI accelerates common silicon engineering tasks with AI-powered assistance.
 
-<Warning>
+<Info>
+**New to Visibl?** Make sure you've completed the [Getting Started guide](/getting-started) to install and configure both the LLM service and CLI tool.
+</Info>
+
+<Info>
 Safety and synthesis: Generated RTL and verification assets should be treated as drafts. Always review for coding standards, synthesizability, clock/reset safety, and verify with your toolchain.
-</Warning>
+</Info>
 
 ## RTL Design Examples
 
@@ -26,7 +28,7 @@ visibl run "Create a parameterized FIFO module with the following specs:
 ```
 
 **Generated SystemVerilog:**
-```systemverilog
+```verilog
 module fifo #(
     parameter WIDTH = 32,
     parameter DEPTH = 16,

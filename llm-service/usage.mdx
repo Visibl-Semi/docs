@@ -1,9 +1,11 @@
 ---
-title: LLM Service Usage
+title: Usage
 description: Using the Visibl LLM Service API and management tools
 ---
 
-# Usage
+<Info>
+**Getting started?** Complete the [basic installation](/getting-started) first, then return here for advanced service management and monitoring.
+</Info>
 
 Once installed, the Visibl LLM Service provides an OpenAI-compatible API for integration with various tools and clients.
 
@@ -100,51 +102,6 @@ visibl-llm util 0.85    # Conservative (leaves headroom)
 ```bash
 visibl-llm custom-ar on     # Enable custom all-reduce (multi-GPU)
 visibl-llm custom-ar off    # Disable for stability
-```
-
-## Integration Examples
-
-### Python Client
-```python
-import openai
-
-client = openai.OpenAI(
-    base_url="http://127.0.0.1:58180/v1",
-    api_key="visibl-local-key"  # Any string works
-)
-
-response = client.chat.completions.create(
-    model="visibl-70b",
-    messages=[
-        {"role": "user", "content": "Review this Verilog module for timing issues"}
-    ],
-    temperature=0.1
-)
-
-print(response.choices[0].message.content)
-```
-
-### curl Examples
-```bash
-# Streaming response
-curl -X POST http://127.0.0.1:58180/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "visibl-70b",
-    "messages": [{"role": "user", "content": "Explain FIFO design principles"}],
-    "stream": true
-  }'
-
-# With system prompt
-curl -X POST http://127.0.0.1:58180/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "visibl-70b",
-    "messages": [
-      {"role": "system", "content": "You are an expert RTL design engineer."},
-      {"role": "user", "content": "Help me debug this clock domain crossing issue"}
-    ]
-  }'
 ```
 
 ## Monitoring & Maintenance

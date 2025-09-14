@@ -1,18 +1,20 @@
 ---
-title: CLI Installation
-description: Install and configure the Visibl CLI
+title: Installation
+description: Advanced CLI installation and workspace configuration
 ---
 
-# Installation
+<Info>
+For basic CLI installation, see the [Getting Started guide](/getting-started) which covers the complete setup process. This guide focuses on advanced configuration and troubleshooting.
+</Info>
 
-Install the Visibl CLI on your development machine and connect it to your local LLM service.
+## Advanced Installation
 
-## Quick Install
+### Quick Install (Standard)
 
 Run the one-line installer:
 
 ```bash
-curl -fsSL https://visiblsemi.com/api/install-nl | bash
+curl -fsSL https://visiblsemi.com/api/install | bash
 ```
 
 The installer will:
@@ -22,77 +24,6 @@ The installer will:
 4. **Detect** local LLM services automatically
 5. **Create** secure configuration files
 
-## Manual Installation
-
-<Tabs>
-<Tab title="Package Managers">
-Install through your preferred package manager:
-
-<CodeGroup>
-```bash Homebrew (macOS/Linux)
-brew install visibl/tap/visibl
-```
-
-```bash NPM (Cross-platform)
-npm install -g visibl-cli@latest
-```
-
-```bash Arch Linux (AUR)
-paru -S visibl-bin
-```
-
-```bash Cargo (Rust)
-cargo install visibl-cli
-```
-</CodeGroup>
-</Tab>
-
-<Tab title="Direct Download">
-Download pre-built binaries from GitHub releases:
-
-<CodeGroup>
-```bash Linux x64
-curl -L https://github.com/Visibl-Semi/releases/latest/download/visibl-linux-x64.tar.gz | tar xz
-sudo mv visibl /usr/local/bin/
-```
-
-```bash macOS x64
-curl -L https://github.com/Visibl-Semi/releases/latest/download/visibl-darwin-x64.tar.gz | tar xz  
-sudo mv visibl /usr/local/bin/
-```
-
-```bash macOS ARM64
-curl -L https://github.com/Visibl-Semi/releases/latest/download/visibl-darwin-arm64.tar.gz | tar xz
-sudo mv visibl /usr/local/bin/
-```
-
-```bash Windows
-# Download from: https://github.com/Visibl-Semi/releases/latest/download/visibl-win-x64.zip
-# Extract and add to PATH
-```
-</CodeGroup>
-</Tab>
-
-<Tab title="From Source">
-Build from source code:
-
-```bash
-# Clone repository
-git clone https://github.com/Visibl-Semi/visibl-cli.git
-cd visibl-cli
-
-# Build with Rust
-cargo build --release
-
-# Install
-cargo install --path .
-```
-
-<Info>
-**Requirements**: Rust 1.70+ and Node.js 18+ for building from source
-</Info>
-</Tab>
-</Tabs>
 
 ## Configuration
 
@@ -368,4 +299,4 @@ export VISIBL_INSTALL_DIR=/usr/local/bin
 
 ## Next Steps
 
-With the CLI installed and configured, explore our [silicon engineering examples](/cli/silicon-examples) to see how Visibl can accelerate your RTL development workflow.
+With the CLI installed and configured, explore our [silicon engineering examples](/cli/examples) to see how Visibl can accelerate your RTL development workflow.

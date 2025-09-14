@@ -50,7 +50,7 @@
       "pages": [
         "cli/overview",
         "cli/installation",
-        "cli/silicon-examples"
+        "cli/examples"
       ]
     },
     {
@@ -89,7 +89,7 @@
         "links": [
           {
             "label": "Examples",
-            "url": "/cli/silicon-examples"
+            "url": "/cli/examples"
           },
           {
             "label": "Installation",

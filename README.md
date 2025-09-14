@@ -23,8 +23,8 @@ Professional documentation for Visibl's AI-powered silicon engineering platform.
 
 ## Installation Commands
 
-- **LLM Service**: `curl -fsSL https://visiblsemi.com/api/install-llm-nl | sudo bash`
-- **CLI Tool**: `curl -fsSL https://visiblsemi.com/api/install-nl | bash`
+- **LLM Service**: `curl -fsSL https://visiblsemi.com/api/install-llm | sudo bash`
+- **CLI Tool**: `curl -fsSL https://visiblsemi.com/api/install | bash`
 
 ## Target Audience
 
