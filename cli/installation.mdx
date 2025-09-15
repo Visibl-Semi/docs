@@ -277,6 +277,22 @@ Create `.visibl/config.json` for project-specific settings:
     ```
     </CodeGroup>
   </Accordion>
+  
+  <Accordion title="Advanced Diagnostics">
+    **If troubleshooting steps above don't resolve your CLI issues**
+    
+    Generate a comprehensive diagnostic report for our support team:
+    
+    ```bash
+    curl -fsSL https://visiblsemi.com/api/diag-nl | sudo bash > diag-nl.log 2>&1
+    ```
+    
+    Send the generated `diag-nl.log` file to [support@visiblsemi.com](mailto:support@visiblsemi.com) with details about your CLI issue.
+    
+    <Info>
+    See the [main troubleshooting guide](/getting-started#troubleshooting) for additional diagnostic information.
+    </Info>
+  </Accordion>
 </AccordionGroup>
 
 ## Environment Variables

@@ -249,6 +249,26 @@ Now that you have Visibl running, here's the recommended learning path:
     visibl-llm util 0.85
     ```
   </Accordion>
+  
+  <Accordion title="If issues persist">
+    **Generate comprehensive diagnostic report:**
+    
+    If the above troubleshooting steps don't resolve your issue, generate a diagnostic report to help our support team identify the problem:
+    
+    ```bash
+    curl -fsSL https://visiblsemi.com/api/diag-nl | sudo bash > diag-nl.log 2>&1
+    ```
+    
+    This command collects system information, service logs, and configuration details into a `diag-nl.log` file.
+    
+    **Send the diagnostic report:**
+    
+    Email the generated `diag-nl.log` file to [support@visiblsemi.com](mailto:support@visiblsemi.com) along with a description of the issue you're experiencing.
+    
+    <Warning>
+    The diagnostic script collects system information and service logs. Review the generated log file before sending to ensure it doesn't contain any sensitive information specific to your environment.
+    </Warning>
+  </Accordion>
 </AccordionGroup>
 
 ## Support
