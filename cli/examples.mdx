@@ -246,6 +246,139 @@ visibl run "I have setup timing violations on these paths:
 Suggest RTL modifications and constraint changes to fix these."
 ```
 
+## Documentation Generation Examples
+
+### Generate Module Documentation
+
+Create comprehensive documentation for specific RTL modules through the TUI:
+
+**Method 1: Direct module targeting**
+```bash
+# Launch Visibl TUI
+visibl
+
+# Generate docs for specific modules
+/docs uart_controller
+```
+
+**Method 2: Interactive target selection**
+```bash
+# Launch Visibl TUI
+visibl
+
+# Configure targets interactively, then generate
+/docs select-targets  # Configure targets interactively
+/docs uart_controller  # Generate for specific module
+```
+
+**Method 3: File-based targeting**
+```bash
+# Create targets file
+echo "uart_controller" > docs/settings/targets.txt
+echo "memory_arbiter" >> docs/settings/targets.txt
+```
+
+**Generated documentation includes:**
+- Interface specifications with complete IO tables
+- Functional behavior analysis with timing diagrams
+- Protocol compliance and integration guidelines
+- Performance characteristics and resource utilization
+- Configuration parameters and design constraints
+
+### Project-Wide Documentation
+
+Generate complete documentation for your entire RTL project:
+
+**Method 1: Use saved target profiles**
+```bash
+# Configure targets interactively (one-time setup)
+visibl
+/docs select-targets  # Save as 'default' profile
+
+# Generate using default profile
+visibl
+/docs all
+```
+
+**Method 2: Target specific modules**
+```bash
+# Launch TUI and generate documentation for specific modules
+visibl
+/docs cpu_core cache_controller memory_arbiter
+```
+
+**Method 3: File-based targeting**
+```bash
+# Create comprehensive targets file
+cat > docs/settings/targets.txt << EOF
+# CPU subsystem
+cpu_core
+cache_controller
+memory_arbiter
+
+# Communication interfaces
+uart_controller
+spi_master
+axi_interconnect
+EOF
+
+```
+
+**Background execution (default behavior):**
+- All `/docs` commands run in background by default
+- Documentation generation continues even if terminal is closed
+- Monitor progress through TUI status panel
+- Access logs at `docs/logs/docagent_docs-*.log`
+
+<Info>
+**Note**: `/docs all` now uses your default target profile instead of processing every module in the project. Use `/docs select-targets` to configure which modules are included in your default profile.
+</Info>
+
+**Output structure:**
+```
+./docs/
+├── markdown/
+│   ├── cpu_core.visibl.md
+│   ├── cache_controller.visibl.md
+│   ├── memory_arbiter.visibl.md
+│   └── axi_interconnect.visibl.md
+├── googledrive/
+│   ├── markdown/
+│   │   ├── cpu_core.visibl.md
+│   │   └── cache_controller.visibl.md
+│   ├── cpu_core.docx
+│   └── cache_controller.docx
+└── logs/
+    └── docagent_docs-20240326-143022.log
+```
+
+### Documentation Workflow Integration
+
+Integrate documentation generation into your development process:
+
+```bash
+# Generate docs after major design changes
+git checkout feature/new-cache-design
+
+# Launch TUI and generate specific module docs
+visibl
+/docs cache_controller overwrite
+
+# Commit the updated documentation
+git add docs/
+git commit -m "Update cache controller documentation"
+```
+
+**Batch documentation updates:**
+```bash
+# Launch TUI
+visibl
+
+# Update target configuration
+/docs select-targets  # Add new modules to targets
+
+```
+
 ## Advanced Workflows
 
 ### Custom Agents
@@ -321,4 +454,20 @@ visibl
 
 Ready to start using Visibl in your silicon engineering projects? The CLI integrates seamlessly with your existing EDA tools and development workflows.
 
-For support or questions, contact us at [support@visiblsemi.com](mailto:support@visiblsemi.com).
+<CardGroup cols={2}>
+  <Card title="Documentation Generation" icon="file-text" href="/cli/documentation">
+    Learn how to automatically generate comprehensive documentation for your RTL projects
+  </Card>
+  
+  <Card title="CLI Overview" icon="terminal" href="/cli/overview">
+    Explore all CLI capabilities including RTL design, verification, and EDA integration
+  </Card>
+  
+  <Card title="Installation Guide" icon="download" href="/cli/installation">
+    Get started with installing and configuring the Visibl CLI
+  </Card>
+  
+  <Card title="Get Support" icon="messages-square" href="mailto:support@visiblsemi.com">
+    Contact our team for technical support and assistance
+  </Card>
+</CardGroup>

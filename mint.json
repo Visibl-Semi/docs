@@ -50,6 +50,7 @@
       "pages": [
         "cli/overview",
         "cli/installation",
+        "cli/documentation",
         "cli/examples"
       ]
     },
@@ -90,6 +91,10 @@
           {
             "label": "Examples",
             "url": "/cli/examples"
+          },
+          {
+            "label": "Documentation",
+            "url": "/cli/documentation"
           },
           {
             "label": "Installation",

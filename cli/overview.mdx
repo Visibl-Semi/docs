@@ -233,7 +233,8 @@ visibl run "Create synthesis script for my design with timing constraints"
 
 ### Documentation & Analysis
 
-- **Module Documentation** - Automatic interface and behavior description
+- **Automated Module Documentation Generation** - Detailed visualizations, Automatic interfeace tables, behavior descriptions and more
+- **Module Documentation** - Automatic interface and behavior description  
 - **Design Reviews** - Code quality and best practices analysis
 - **Architecture Diagrams** - Block diagrams and flow charts  
 - **Specification Updates** - Design specification maintenance
@@ -241,6 +242,16 @@ visibl run "Create synthesis script for my design with timing constraints"
 - **User Guides** - Usage and integration instructions
 
 ```bash
+# Launch TUI for documentation generation
+visibl
+
+# Inside TUI: Generate documentation for specific modules
+/docs module_name1
+
+# Inside TUI: Generate documentation using default target profile
+/docs all
+
+# Analyze RTL for coding standards
 visibl run "Analyze my RTL for coding standard compliance"
 ```
 
@@ -272,6 +283,10 @@ visibl edit file.sv "modification request"
 <CardGroup cols={2}>
   <Card title="Installation Guide" icon="download" href="/cli/installation">
     Step-by-step installation instructions for all platforms and package managers
+  </Card>
+  
+  <Card title="Documentation Generation" icon="file-text" href="/cli/documentation">
+    Automatically generate comprehensive documentation for your RTL modules and projects
   </Card>
   
   <Card title="Silicon Examples" icon="code" href="/cli/examples">
