@@ -47,7 +47,9 @@
       "pages": [
         "cli/overview",
         "cli/installation",
-        "cli/documentation",
+        "cli/chat",
+        "cli/doc-gen",
+        "cli/agent",
         "cli/examples"
       ]
     },

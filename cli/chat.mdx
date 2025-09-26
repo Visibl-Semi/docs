@@ -1,0 +1,215 @@
+---
+title: "Chat"
+description: "Interactive AI chat for RTL code generation with full project context"
+icon: "message-circle"
+---
+
+# Chat
+
+Interactive AI-powered chat interface for RTL code generation, analysis, and assistance. The chat feature provides context-aware conversations about your silicon engineering projects with deep understanding of your codebase, files, and folder structure.
+
+<Info>
+**Context-Aware**: Chat analyzes your entire project structure, understands your coding patterns, and provides relevant suggestions based on your specific design requirements and existing codebase.
+</Info>
+
+## Quick Start
+
+Launch the interactive chat interface:
+
+```bash
+# Start interactive chat session
+visibl
+
+# Direct command execution
+visibl run "Create an AXI4-Lite slave interface"
+
+# Edit specific files with context
+visibl edit cpu_core.sv "Add pipeline stage with hazard detection"
+```
+
+## Key Features
+
+- **Full Project Context** - Understands your entire codebase structure and relationships
+- **RTL Code Generation** - Creates SystemVerilog, Verilog, VHDL, and other HDL code
+- **File-Aware Conversations** - References and modifies existing files intelligently
+- **Design Pattern Recognition** - Learns from your coding style and conventions
+- **Multi-File Operations** - Coordinates changes across multiple related files
+- **Interactive Refinement** - Iterative improvement through natural conversation
+
+## Usage Modes
+
+### Interactive Chat Mode
+
+Start a conversational session for complex design tasks:
+
+```bash
+visibl
+```
+
+**Example conversation:**
+```
+> Help me create a FIFO with gray code pointers
+> Now add overflow/underflow protection  
+> Generate a testbench for this FIFO
+> Add coverage collection to the testbench
+```
+
+### Direct Commands
+
+Execute specific tasks with single commands:
+
+```bash
+# Generate new RTL modules
+visibl run "Create a 4-stage pipeline processor with hazard detection"
+
+# Analyze existing code
+visibl run "Review my cache controller for timing optimization"
+
+# Create verification assets
+visibl run "Generate UVM testbench for my UART module"
+```
+
+### File-Specific Editing
+
+Edit existing files with AI assistance:
+
+```bash
+# Modify specific files with context awareness
+visibl edit memory_controller.sv "Add ECC support"
+visibl edit testbench.sv "Add directed test for corner case"
+```
+
+## Context Understanding
+
+### Project Structure Analysis
+
+Chat automatically understands:
+- **Module Hierarchy** - Parent-child relationships and dependencies
+- **Interface Definitions** - Port connections and protocol usage
+- **File Organization** - Directory structure and naming conventions
+- **Design Patterns** - Your specific coding style and methodologies
+- **Verification Structure** - Testbench organization and coverage models
+
+### Codebase Intelligence
+
+- **Cross-File References** - Understands how modules connect and interact
+- **Parameter Propagation** - Tracks parameters and configurations across hierarchy
+- **Clock Domain Analysis** - Identifies CDC requirements and timing relationships
+- **Protocol Compliance** - Ensures generated code follows industry standards
+- **Coding Standards** - Maintains consistency with your existing code style
+
+## Supported Technologies
+
+### RTL Languages
+- **SystemVerilog** - Full IEEE 1800 standard support
+- **Verilog** - IEEE 1364 compliance  
+- **VHDL** - IEEE 1076 standard support
+- **Chisel** - Scala-based hardware construction
+- **SpinalHDL** - Modern HDL alternative
+
+### Design Capabilities
+- **Module Generation** - Complete RTL modules with proper interfaces
+- **State Machines** - FSM and complex control logic
+- **Datapath Design** - ALUs, multipliers, arithmetic units
+- **Memory Interfaces** - SRAM, DRAM, cache controllers
+- **Protocol Interfaces** - AXI, PCIe, USB, custom protocols
+- **Clock Domain Crossing** - Safe CDC circuits and synchronizers
+
+### Verification Support
+- **UVM Testbenches** - Complete verification environments
+- **Directed Tests** - Specific validation scenarios
+- **Random Testing** - Constrained random stimulus
+- **Coverage Models** - Functional and code coverage
+- **Assertions** - SystemVerilog assertions for protocol checking
+- **Formal Verification** - Property-based verification
+
+## Best Practices
+
+### Effective Prompting
+- **Be Specific** - Provide detailed requirements and constraints
+- **Include Context** - Reference existing modules and interfaces
+- **Specify Standards** - Mention coding standards and methodologies
+- **Define Scope** - Clearly outline what needs to be generated or modified
+
+### Project Setup
+- **Initialize Project** - Run `visibl init` in your project directory
+- **Organize Files** - Maintain clear directory structure for better context
+- **Document Interfaces** - Well-commented interfaces improve AI understanding
+- **Consistent Naming** - Use consistent naming conventions across your project
+
+### Iterative Development
+- **Start Simple** - Begin with basic functionality and add complexity
+- **Review Generated Code** - Always verify generated RTL for correctness
+- **Test Incrementally** - Validate each addition before proceeding
+- **Refine Through Chat** - Use conversation to improve and optimize designs
+
+## Example Workflows
+
+### Creating a New Module
+
+```bash
+visibl
+> Create a parameterized FIFO module with the following specs:
+> - Configurable width and depth
+> - Gray code pointers for CDC safety
+> - Almost full/empty flags
+> - Overflow/underflow protection
+> - AXI4-Stream compatible interface
+```
+
+### Modifying Existing Design
+
+```bash
+visibl edit processor_core.sv "Add branch prediction unit to the fetch stage"
+```
+
+### Verification Development
+
+```bash
+visibl
+> Generate a comprehensive UVM testbench for my cache controller
+> Include directed tests for cache coherency protocols
+> Add functional coverage for all cache states and transitions
+> Create constrained random tests for stress testing
+```
+
+## Integration with Development Flow
+
+### Version Control
+- Generated code integrates seamlessly with Git workflows
+- Maintains proper file headers and documentation
+- Preserves existing code structure and formatting
+
+### EDA Tool Compatibility
+- Generated RTL is synthesis-ready for major EDA tools
+- Follows industry-standard coding practices
+- Compatible with simulation and formal verification tools
+
+### Team Collaboration
+- Consistent code style across team members
+- Documented interfaces and module descriptions
+- Maintainable and readable generated code
+
+## Next Steps
+
+<CardGroup cols={2}>
+<Card title="Doc Gen" icon="file-text" href="/cli/doc-gen">
+Generate comprehensive documentation for your RTL modules
+</Card>
+
+<Card title="Agent" icon="robot" href="/cli/agent">
+Learn about autonomous tool calling and file operations
+</Card>
+
+<Card title="Examples" icon="code" href="/cli/examples">
+See practical examples of chat-based RTL development
+</Card>
+
+<Card title="Installation" icon="download" href="/cli/installation">
+Get started with Visibl CLI installation
+</Card>
+</CardGroup>
+
+<Tip>
+**Pro tip**: For best results, provide specific requirements, constraints, and context about your existing design when starting conversations.
+</Tip>
