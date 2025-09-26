@@ -7,7 +7,7 @@ button,
 input[type="button"],
 input[type="submit"],
 input[type="reset"] {
-  border-radius: 4px !important;
+  border-radius: 8px !important;
 }
 
 /* Navigation buttons and links */
@@ -15,7 +15,7 @@ input[type="reset"] {
 .nav-link,
 .sidebar-link,
 .menu-item {
-  border-radius: 4px !important;
+  border-radius: 8px !important;
 }
 
 /* Cards and containers */
@@ -23,19 +23,19 @@ input[type="reset"] {
 .container,
 .box,
 .panel {
-  border-radius: 4px !important;
+  border-radius: 8px !important;
 }
 
 /* Code blocks */
 pre,
 code,
 .code-block {
-  border-radius: 4px !important;
+  border-radius: 8px !important;
 }
 
 /* Images (already handled in documentation but adding global rule) */
 img {
-  border-radius: 4px !important;
+  border-radius: 8px !important;
 }
 
 /* Info boxes, warnings, tips */
@@ -44,14 +44,14 @@ img {
 .tip,
 .note,
 .alert {
-  border-radius: 4px !important;
+  border-radius: 8px !important;
 }
 
 /* Search boxes and inputs */
 input,
 textarea,
 select {
-  border-radius: 4px !important;
+  border-radius: 8px !important;
 }
 
 /* Any element with rounded class */
@@ -59,12 +59,37 @@ select {
 .rounded-lg,
 .rounded-md,
 .rounded-sm {
-  border-radius: 4px !important;
+  border-radius: 8px !important;
 }
 
 /* Mintlify specific elements */
 .mintlify-button,
 .mintlify-card,
 .mintlify-container {
-  border-radius: 4px !important;
+  border-radius: 8px !important;
+}
+
+/* Navigation alignment fixes */
+.nav-group,
+.navigation-group,
+.sidebar-group {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* Ensure all navigation items are at the same level */
+.nav-item,
+.navigation-item,
+.sidebar-item {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  text-indent: 0 !important;
+}
+
+/* Fix any indentation issues with group headers */
+.group-header,
+.nav-group-header,
+.sidebar-group-header {
+  margin-left: 0 !important;
+  padding-left: 0 !important;
 }

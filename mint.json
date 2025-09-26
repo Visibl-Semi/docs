@@ -46,17 +46,17 @@
       ]
     },
     {
+      "group": "Documentation Generation",
+      "pages": [
+        "cli/documentation"
+      ]
+    },
+    {
       "group": "Visibl CLI Overview",
       "pages": [
         "cli/overview",
         "cli/installation",
         "cli/examples"
-      ]
-    },
-    {
-      "group": "Documentation Generation",
-      "pages": [
-        "cli/documentation"
       ]
     },
     {
