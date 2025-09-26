@@ -36,8 +36,7 @@
       ]
     },
     {
-      "group": "LLM Service",
-      "icon": "server",
+      "group": "Visibl LLM Service Overview",
       "pages": [
         "llm-service/overview",
         "llm-service/installation",
@@ -45,8 +44,7 @@
       ]
     },
     {
-      "group": "CLI Tool",
-      "icon": "terminal",
+      "group": "Visibl CLI Overview",
       "pages": [
         "cli/overview",
         "cli/installation",
