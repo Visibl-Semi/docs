@@ -55,7 +55,6 @@
     },
     {
       "group": "Updates",
-      "icon": "clock",
       "pages": [
         "changelog"
       ]
