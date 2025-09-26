@@ -6,143 +6,77 @@ icon: "file-text"
 
 # Documentation Generation
 
-The Visibl CLI includes powerful documentation generation capabilities that can automatically create comprehensive documentation for your RTL modules and entire projects. Generate both Markdown and Google Docs formats for seamless integration with your existing documentation workflows.
+Generate comprehensive AI-powered documentation for your RTL modules and projects with Markdown and Google Docs output formats.
 
-<Info>
-**AI-Powered Analysis**: The documentation generator uses AI to understand your RTL code structure, interfaces, functionality, and design patterns to create meaningful, accurate documentation.
-</Info>
+## Quick Start
 
-## Overview
+Launch the Visibl TUI and use these key commands:
 
-The documentation generation system works through the Visibl TUI and CLI, providing comprehensive documentation for Verilog/SystemVerilog modules. The system supports multiple targeting modes and runs in the background by default for long operations.
-
-**Key Features:**
-- **AI-Powered Analysis** - Uses the Visibl LLM service (no API keys required)
-- **Multiple Output Formats** - Markdown, Google Drive-friendly folders, and optional DOCX export
-- **Background Execution** - Runs survive terminal drops with live logging
-- **Smart Parsing** - Uses Slang JSON artifacts when available, falls back to regex parsing
-- **Dependency-Aware** - Generates docs in topological order for better coherence
-
-## Getting Started
-
-### Launch Documentation Generation
-
-Access the documentation system through the Visibl TUI:
-
-**Launch the TUI:**
 ```bash
-# Launch the Visibl TUI
+# Launch Visibl TUI
 visibl
 
-# Then use /docs commands inside the TUI
-/docs
+# Essential documentation commands:
+/docs all                    # Generate docs for configured modules
+/docs module1 module2        # Document specific modules
+/docs select-targets         # Browse and select modules
+/docs configure-targets      # Set up persistent targets
 ```
 
-**Alternative: Project-Focused Launch**
-```bash
-# Launch TUI focused on a specific project file
-visibl docs path/to/project.sv
-
-# Then use /docs commands within the TUI
-/docs
-```
-
-<Info>
-All documentation generation happens through `/docs` commands within the Visibl TUI interface, providing an interactive experience with live logging and status updates.
-</Info>
-
-## Command Reference
-
-### Core Documentation Commands
-
-All documentation commands are used within the Visibl TUI. There are only these targeting methods available:
-
-**1. Use default target profile:**
-```bash
-/docs all
-```
-Generates documentation for modules in your saved default profile.
-
-**2. Target specific modules:**
-```bash
-/docs module1
-```
-Generate documentation only for the explicitly named modules.
-
-**3. Interactive module selection:**
-```bash
-/docs select-targets
-```
-Configure target profiles through interactive selection menu.
-
-### Execution Modes
-
-**Background Execution (Default):**
-- Runs in the background so operations survive terminal drops
-- TUI shows live status and log access
-- Perfect for long documentation generation runs
-
-**Foreground Execution:**
-```bash
-/docs all --foreground
-```
-- Runs inline within the TUI
-- Blocks until completion
-- Use for quick operations or debugging
-
-### Module Targeting
-
-**Target Default Profile:**
-```bash
-/docs all
-```
-
-**Target Specific Modules:**
-```bash
-/docs uart_controller memory_arbiter cache_l1
-```
-Generate documentation only for the specified modules.
-
-
-### Target Profile Management
-
-The system provides flexible targeting through both interactive TUI and file-based methods:
-
-**Profile Storage:**
-- **JSON format**: `docs/settings/targets.json` - stores named profiles with module lists
-- **Text format**: `docs/settings/targets.txt` - simple newline-separated module names for default profile
-
-**Interactive TUI Selection:**
-```bash
-# Launch TUI and use interactive module selector
-visibl
-/docs select-targets
-```
-
-The TUI module selector allows you to:
-- Browse all discovered modules with search/filter
-- Add/remove modules from target lists
-- Save selections to named profiles (e.g., `default`, `cpu_subsystem`)
-- Profiles persist automatically for future use
+### Interactive Module Selection
 
 <img
   src="/assets/module_selector.png"
   alt="Module Selector Interface"
-  style={{ borderRadius: '8px' }}
+  style={{ borderRadius: '4px' }}
 />
 
-**File-Based Targeting:**
-Create or edit `docs/settings/targets.txt` with one module name per line:
+*Browse and select modules for immediate documentation generation.*
+
+### Configure Persistent Targets
+
+<img
+  src="/assets/configure_genration_targets.png"
+  alt="Configure Generation Targets"
+  style={{ borderRadius: '4px' }}
+/>
+
+*Set up which modules to include in your default documentation profile.*
+
+### Remove Targets
+
+<img
+  src="/assets/remove_generation_targets.png"
+  alt="Remove Generation Targets"
+  style={{ borderRadius: '4px' }}
+/>
+
+*Remove modules from your persistent target configuration.*
+
+## Key Features
+
+- **AI-Powered Analysis** - Uses Visibl LLM service (no API keys required)
+- **Multiple Output Formats** - Markdown, Google Drive folders, optional DOCX export
+- **Background Execution** - Survives terminal drops with live logging
+- **Smart Parsing** - Uses Slang JSON artifacts when available
+
+## Execution Modes
+
+**Background (Default):** Runs in background, survives terminal drops
+**Foreground:** Use `/docs all --foreground` for inline execution
+
+## Target Configuration
+
+Edit `docs/settings/targets.txt` with one module name per line:
 ```
-# CPU subsystem modules
 cpu_core
 cache_controller
-memory_arbiter
-
-# Communication interfaces  
 uart_controller
-spi_master
 ```
+
+Configurations stored in:
+- `docs/settings/targets.json` - named profiles
+- `docs/settings/targets.txt` - default profile
 
 ### Output Structure
 
@@ -251,70 +185,6 @@ Each module documentation file (`module_name.visibl.md`) contains:
 - Ready for collaborative editing
 - Compatible with corporate workflows
 
-## Practical Examples
-
-### Document a CPU Design
-
-Generate documentation for a complete CPU implementation:
-
-```bash
-# Configure CPU-related modules as targets
-visibl /docs configure-targets
-# Select: cpu_core, alu, register_file, control_unit, cache_controller
-
-# Generate complete CPU documentation
-visibl /docs all
-```
-
-<img
-  src="/assets/configure_genration_targets.png"
-  alt="Configure Generation Targets"
-  style={{ borderRadius: '8px' }}
-/>
-
-**Generated documentation includes:**
-- CPU architecture overview
-- Instruction set documentation
-- Pipeline stage descriptions
-- Cache hierarchy explanation
-- Integration and usage guide
-
-### Document Individual Interfaces
-
-Focus on specific interface modules:
-
-```bash
-# Document AXI interface implementation
-visibl 
-/docs axi
-# Select: axi4_lite_slave
-
-# Document memory controller
-visibl 
-/docs mem
-# Select: ddr4_controller
-```
-
-### Update Project Documentation
-
-Keep documentation current as your design evolves:
-
-```bash
-# Reconfigure targets to add new modules
-visibl 
-/docs configure-targets
-# Add: new_accelerator_module, updated_interface
-
-# Regenerate all documentation
-visibl 
-/docs all
-```
-
-<img
-  src="/assets/remove_generation_targets.png"
-  alt="Remove Generation Targets"
-  style={{ borderRadius: '8px' }}
-/>
 
 ## Integration Workflows
 
@@ -363,199 +233,62 @@ Share documentation efficiently:
 
 ## Best Practices
 
-### Module Selection Strategy
-
-**For large projects:**
-- Start with top-level modules using `/docs configure-targets`
-- Add critical interfaces and controllers
-- Include modules that interface with external systems
-- Document complex or frequently modified modules first
-
-**For focused documentation:**
+- Start with top-level modules and critical interfaces
+- Use `/docs configure-targets` for persistent project documentation
 - Use `/docs module_name` for specific components
-- Document interfaces before implementation modules
-- Generate docs for modules under active development
-
-### Documentation Maintenance
-
-**Keep documentation current:**
 - Regenerate docs after significant RTL changes
 - Review AI-generated content for accuracy
-- Add manual annotations for design decisions
-- Update target configurations as project evolves
-
-**Quality assurance:**
-- Review generated documentation for technical accuracy
-- Verify interface descriptions match RTL implementation
-- Check that timing and protocol information is correct
-- Validate cross-references and module relationships
-
-### Output Organization
-
-**Recommended directory structure:**
-```
-project_root/
-├── rtl/                    # Your RTL source files
-├── docs/                   # Generated documentation
-│   ├── markdown/           # Version-controlled docs
-│   └── googledocs/         # Shareable docs
-├── verification/           # Testbenches and verification
-└── tools/                  # Scripts and utilities
-```
-
-**Version control strategy:**
-- Include `docs/markdown/` in Git for developer access
-- Optionally exclude `docs/googledocs/` (binary files)
-- Use `.gitignore` patterns for temporary documentation files
+- Include `docs/markdown/` in version control
 
 ## Troubleshooting
 
-### Common Issues and Solutions
+### Common Issues
 
-**No documentation files generated:**
-- **Check logs**: Review `docs/logs/docagent_docs-*.log` for errors
-- **Parser issues**: Look for Slang parsing errors or missing artifacts
-- **Module discovery**: Verify modules are being discovered by the parser
-- **Permissions**: Ensure write permissions to the `docs/` directory
+**No documentation generated:**
+- Check logs in `docs/logs/docagent_docs-*.log`
+- Verify module names match discovered modules
+- Ensure write permissions to `docs/` directory
 
-**"Connection refused" to LLM service:**
-- **Start Visibl service**: Ensure the Visibl LLM service is running
-- **Check configuration**: Verify `VISIBL_BASE_URL` environment variable
-- **Network connectivity**: Test connection to your local Visibl server
-- **Service status**: Check if the Visibl service is accessible on the configured port
+**LLM service connection errors:**
+- Start the Visibl LLM service
+- Check `VISIBL_BASE_URL` environment variable
 
-**"No modules matched targets" error:**
-- **Verify module names**: Ensure target names match discovered top-level modules
-- **Check profile**: Review `docs/settings/targets.json` for correct module names
-- **Parser output**: Check if modules are being parsed correctly
-- **File paths**: Verify RTL files are in expected locations
+**Empty documentation:**
+- Ensure RTL files are syntactically correct
+- Add detailed comments to improve AI analysis
 
-**Empty or incomplete documentation:**
-- **RTL syntax**: Ensure source files are syntactically correct
-- **Module structure**: Verify modules have proper interfaces and structure
-- **Comments**: Add detailed comments to improve AI analysis quality
-- **Dependencies**: Include all required modules in your targets
+**DOCX export issues:**
+- Install Pandoc and ensure it's in PATH
 
-**DOCX export not working:**
-- **Install Pandoc**: Ensure Pandoc is installed and accessible in PATH
-- **Check logs**: Review conversion errors in the log files
-- **File permissions**: Verify write permissions to `docs/googledrive/`
-- **Pandoc version**: Ensure compatible Pandoc version is installed
+### Performance Tips
 
-### Performance Optimization
+- Use selective targeting for large projects
+- Run in background mode (default) for long operations
+- Generate documentation in smaller batches if needed
 
-**For large projects:**
-- **Selective targeting**: Use target profiles to focus on essential modules
-- **Incremental generation**: Generate documentation for specific modules first
-- **Background execution**: Use default background mode for long operations
-- **Resource monitoring**: Monitor system memory and CPU usage
+### Debugging
 
-**Memory management:**
-- **Batch processing**: Generate documentation in smaller batches
-- **Target optimization**: Remove unnecessary modules from targets
-- **System resources**: Ensure adequate RAM for large module analysis
-- **Process isolation**: Use background execution to prevent TUI blocking
-
-### Debugging Tips
-
-**Enable verbose logging:**
-- Check `docs/logs/` for detailed execution logs
-- Look for parser warnings and errors
-- Review LLM service connection status
-- Monitor file I/O operations
-
-**Validate parser output:**
-- Check `docs/slang/` for Slang artifacts (if available)
-- Review `output/dependency_graphs/` for fallback parser results
-- Verify module discovery and dependency analysis
-- Test with simple modules first
-
-**Test mode debugging:**
+Check logs in `docs/logs/` and use test mode for debugging:
 ```bash
-# Generate placeholder content for testing
 /docs module_name test
 ```
-- Isolates parser functionality from LLM processing
-- Faster iteration for debugging parser issues
-- Validates file generation and structure
-
-### Getting Help
-
-**Log analysis:**
-- Always check the latest log file in `docs/logs/`
-- Look for specific error messages and stack traces
-- Note the timestamp and operation that failed
-
-**System requirements:**
-- Ensure Visibl LLM service is properly configured
-- Verify sufficient disk space for documentation output
-- Check that all required dependencies are installed
-
-**Community support:**
-- Include log excerpts when reporting issues
-- Provide sample RTL files that demonstrate problems
-- Specify your system configuration and Visibl version
 
 ## Advanced Features
 
 ### Parser Backends
+- **Slang JSON Parser** (preferred): Uses `docs/slang/` artifacts for accurate analysis
+- **Regex Parser** (fallback): Basic extraction when Slang unavailable
 
-The documentation system uses intelligent parsing with automatic fallback:
-
-**Slang JSON Parser (Preferred):**
-- Uses precomputed Slang JSON artifacts from `docs/slang/`
-- Provides richer, more accurate module analysis
-- Faster processing for large projects
-- Automatically generated when Slang is available
-
-**Regex Parser (Fallback):**
-- Used when Slang artifacts are unavailable
-- Provides basic module structure extraction
-- Creates dependency graphs in `output/dependency_graphs/`
-- Ensures documentation generation always works
-
-### Execution Control
-
-**Overwrite Control:**
+### Execution Options
 ```bash
-# Force regeneration of existing documentation
-/docs all overwrite
+/docs all overwrite    # Force regeneration of existing docs
+/docs all test         # Generate placeholder content for testing
 ```
-- Without `overwrite`: unchanged files are left intact (idempotent)
-- With `overwrite`: all documentation is regenerated
 
-**Test Mode:**
-```bash
-# Generate placeholder content without LLM calls
-/docs all test
-```
-- Useful for testing parser functionality
-- Creates deterministic placeholder content
-- Faster execution for development/debugging
-
-### Background Process Management
-
-**Monitoring Active Runs:**
-- TUI displays live status of background documentation generation
-- Access to real-time logs through the interface
-- Progress indicators and completion notifications
-
-**Process Control:**
-- Stop active runs directly from the TUI
-- Automatic cleanup of background processes
-- Handles both foreground processes and tmux/screen sessions
-
-### Configuration and Setup
-
-**Automatic LLM Integration:**
-- No API keys required - uses Visibl LLM service automatically
-- Automatically discovers local Visibl server configuration
-- Enforces Visibl-only usage for security and consistency
-
-**Project Configuration:**
-- Target profiles stored in `docs/settings/targets.json`
-- Simple text format available in `docs/settings/targets.txt`
-- Configuration persists across documentation runs
+### Background Processing
+- Default background execution survives terminal drops
+- Live status and logs accessible through TUI
+- Automatic process cleanup
 
 ## Next Steps
 

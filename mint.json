@@ -20,6 +20,9 @@
     "library": "lucide"
   },
   "theme": "quill",
+  "customCSS": [
+    "styles.css"
+  ],
   "navbar": {
     "primary": {
       "type": "button",
@@ -29,8 +32,7 @@
   },
   "navigation": [
     {
-      "group": "Getting started",
-      "icon": "rocket",
+      "group": "Welcome to Visibl",
       "pages": [
         "getting-started"
       ]
@@ -48,8 +50,13 @@
       "pages": [
         "cli/overview",
         "cli/installation",
-        "cli/documentation",
         "cli/examples"
+      ]
+    },
+    {
+      "group": "Documentation Generation",
+      "pages": [
+        "cli/documentation"
       ]
     },
     {
