@@ -20,9 +20,6 @@
     "library": "lucide"
   },
   "theme": "quill",
-  "customCSS": [
-    "styles.css"
-  ],
   "navbar": {
     "primary": {
       "type": "button",
@@ -46,16 +43,11 @@
       ]
     },
     {
-      "group": "Documentation Generation",
-      "pages": [
-        "cli/documentation"
-      ]
-    },
-    {
       "group": "Visibl CLI Overview",
       "pages": [
         "cli/overview",
         "cli/installation",
+        "cli/documentation",
         "cli/examples"
       ]
     },

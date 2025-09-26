@@ -6,7 +6,11 @@ icon: "file-text"
 
 # Documentation Generation
 
-Generate comprehensive AI-powered documentation for your RTL modules and projects with Markdown and Google Docs output formats.
+Generate comprehensive AI-powered documentation for your RTL modules and projects using an advanced **4-agent agentic architecture**. This sophisticated multi-agent system analyzes your RTL code through multiple specialized AI agents working in coordination to produce professional-grade documentation in Markdown and Google Docs formats.
+
+<Info>
+**Advanced AI System**: Each module undergoes deep analysis by 4 specialized AI agents (~30 minutes to 1 hour per module), ensuring comprehensive coverage of functionality, interfaces, timing, performance, and design patterns. This is a long-running process that produces thorough, publication-ready documentation.
+</Info>
 
 ## Quick Start
 
@@ -19,7 +23,6 @@ visibl
 # Essential documentation commands:
 /docs all                    # Generate docs for configured modules
 /docs module1 module2        # Document specific modules
-/docs select-targets         # Browse and select modules
 /docs configure-targets      # Set up persistent targets
 ```
 
@@ -28,7 +31,6 @@ visibl
 <img
   src="/assets/module_selector.png"
   alt="Module Selector Interface"
-  style={{ borderRadius: '8px' }}
 />
 
 *Browse and select modules for immediate documentation generation.*
@@ -38,7 +40,6 @@ visibl
 <img
   src="/assets/configure_genration_targets.png"
   alt="Configure Generation Targets"
-  style={{ borderRadius: '8px' }}
 />
 
 *Set up which modules to include in your default documentation profile.*
@@ -48,22 +49,18 @@ visibl
 <img
   src="/assets/remove_generation_targets.png"
   alt="Remove Generation Targets"
-  style={{ borderRadius: '8px' }}
 />
 
 *Remove modules from your persistent target configuration.*
 
 ## Key Features
 
-- **AI-Powered Analysis** - Uses Visibl LLM service (no API keys required)
+- **4-Agent Agentic Architecture** - Specialized AI agents for comprehensive RTL analysis
+- **Deep Technical Analysis** - Covers functionality, interfaces, timing, performance, and design patterns
 - **Multiple Output Formats** - Markdown, Google Drive folders, optional DOCX export
-- **Background Execution** - Survives terminal drops with live logging
-- **Smart Parsing** - Uses Slang JSON artifacts when available
-
-## Execution Modes
-
-**Background (Default):** Runs in background, survives terminal drops
-**Foreground:** Use `/docs all --foreground` for inline execution
+- **Background Execution** - Long-running process survives terminal drops with live logging
+- **Smart Parsing** - Uses Slang JSON artifacts when available, falls back to regex parsing
+- **Publication-Ready Output** - Professional documentation suitable for design reviews and handoffs
 
 ## Target Configuration
 
@@ -89,11 +86,8 @@ your-project/
 │   │   ├── cpu_core.visibl.md
 │   │   ├── cache_controller.visibl.md
 │   │   └── memory_arbiter.visibl.md
-│   ├── googledrive/                 # Collaboration-ready copies
-│   │   ├── markdown/                # Mirror of markdown docs
-│   │   │   ├── cpu_core.visibl.md
-│   │   │   └── cache_controller.visibl.md
-│   │   ├── cpu_core.docx           # DOCX exports (if Pandoc available)
+│   ├── googledocs/                  # DOCX exports
+│   │   ├── cpu_core.docx
 │   │   └── cache_controller.docx
 │   ├── logs/                        # Execution logs
 │   │   └── docagent_docs-20240326-143022.log
@@ -166,24 +160,16 @@ Each module documentation file (`module_name.visibl.md`) contains:
 - Block diagrams and architectural overviews
 - Cross-referenced module relationships
 
-### Multiple Output Formats
+### Output Formats
 
-**Primary Markdown** (`docs/markdown/`):
+**Markdown** (`docs/markdown/`):
 - Version control friendly
 - GitHub/GitLab integration
 - Static site generator compatible
-- Easy diff and review process
 
-**Google Drive Mirror** (`docs/googledrive/markdown/`):
-- Identical content in collaboration-friendly location
-- Easy sharing with stakeholders
-- Corporate documentation system integration
-
-**DOCX Export** (`docs/googledrive/*.docx`):
-- Professional document formatting
-- Requires Pandoc installation
+**Google Docs** (`docs/googledocs/`):
+- DOCX exports (requires Pandoc installation)
 - Ready for collaborative editing
-- Compatible with corporate workflows
 
 
 ## Integration Workflows
