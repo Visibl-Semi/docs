@@ -171,8 +171,8 @@ your-project/
 │       ├── hierarchies/
 │       └── interfaces/
 └── output/                          # Fallback artifacts
-    └── dependency_graphs/
-        └── project_dependency_graph.json
+└── dependency_graphs/
+    └── project_dependency_graph.json
 ```
 
 ## Documentation Content
@@ -337,20 +337,20 @@ Automate documentation updates:
 # .github/workflows/docs.yml
 name: Update Documentation
 on:
-  push:
-    paths: ['rtl/**/*.sv', 'rtl/**/*.v']
-    
+push:
+  paths: ['rtl/**/*.sv', 'rtl/**/*.v']
+  
 jobs:
-  docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Generate Documentation
-        run: |
-          visibl /docs all
-          git add docs/
-          git commit -m "Auto-update documentation" || exit 0
-          git push
+docs:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v3
+    - name: Generate Documentation
+      run: |
+        visibl /docs all
+        git add docs/
+        git commit -m "Auto-update documentation" || exit 0
+        git push
 ```
 
 ### Team Collaboration
@@ -562,21 +562,21 @@ The documentation system uses intelligent parsing with automatic fallback:
 Ready to start generating documentation for your RTL projects?
 
 <CardGroup cols={2}>
-  <Card title="CLI Installation" icon="download" href="/cli/installation">
-    Install the Visibl CLI to start generating documentation
-  </Card>
-  
-  <Card title="More Examples" icon="code" href="/cli/examples">
-    See practical examples of CLI usage including documentation workflows
-  </Card>
-  
-  <Card title="LLM Service Setup" icon="server" href="/llm-service/overview">
-    Configure the AI service that powers documentation generation
-  </Card>
-  
-  <Card title="Get Support" icon="messages-square" href="mailto:support@visiblsemi.com">
-    Contact our team for help with documentation generation
-  </Card>
+<Card title="CLI Installation" icon="download" href="/cli/installation">
+Install the Visibl CLI to start generating documentation
+</Card>
+
+<Card title="More Examples" icon="code" href="/cli/examples">
+See practical examples of CLI usage including documentation workflows
+</Card>
+
+<Card title="LLM Service Setup" icon="server" href="/llm-service/overview">
+Configure the AI service that powers documentation generation
+</Card>
+
+<Card title="Get Support" icon="messages-square" href="mailto:support@visiblsemi.com">
+Contact our team for help with documentation generation
+</Card>
 </CardGroup>
 
 <Tip>
