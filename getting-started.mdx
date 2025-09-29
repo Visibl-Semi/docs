@@ -131,34 +131,17 @@ visibl run "Build functional coverage for my cache controller covering hit/miss 
 
 For best results, initialize Visibl in your RTL projects:
 
-<Steps>
-<Step title="Navigate to your project">
-```bash
-cd /path/to/your/rtl/project
-```
-</Step>
+1. **Navigate to your project**
+   ```bash
+   cd /path/to/your/rtl/project
+   ```
 
-<Step title="Initialize Visibl">
-```bash
-visibl init
-```
+2. **Initialize Visibl**
+   ```bash
+   visibl init
+   ```
 
-This creates `.visibl/` directory with project-specific configuration and context files.
-</Step>
-
-<Step title="Configure your project">
-Create `.visibl/config.json`:
-
-```json
-{
-  "language": "systemverilog",
-  "testbench_framework": "uvm",
-  "synthesis_tool": "design_compiler",
-  "simulator": "vcs"
-}
-```
-</Step>
-</Steps>
+This analyzes your codebase and generates an `AGENTS.md` file with project-specific guidelines.
 
 ## What's next?
 
