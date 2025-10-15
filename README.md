@@ -4,15 +4,18 @@ Professional documentation for Visibl's AI-powered silicon engineering platform.
 
 ## Structure
 
-- **overview.mdx** - Main overview of what Visibl does and how it works
-- **llm-service/** - Documentation for the local LLM infrastructure
-  - `overview.mdx` - Service features and architecture
-  - `installation.mdx` - Installation guide with one-line installer
-  - `usage.mdx` - API usage and management commands
-- **cli/** - Documentation for the AI-powered CLI tool
-  - `overview.mdx` - CLI features and capabilities  
+- **getting-started.mdx** - Quick start guide for installation and first use
+- **llm-service/** - Local LLM infrastructure
+  - `overview.mdx` - Service architecture and model options
+  - `installation.mdx` - One-line installer
+  - `usage.mdx` - Service management commands
+- **cli/** - AI-powered CLI tool
+  - `overview.mdx` - Features and capabilities
   - `installation.mdx` - Installation and configuration
-  - `silicon-examples.mdx` - Silicon engineering use cases and examples
+  - `chat.mdx` - Interactive chat interface
+  - `doc-gen.mdx` - Doc Agent for RTL documentation
+  - `examples.mdx` - Silicon engineering use cases
+- **changelog.mdx** - Release notes
 
 ## Key Features
 

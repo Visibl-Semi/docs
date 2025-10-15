@@ -1,473 +1,176 @@
 ---
 title: Examples
-description: Practical examples of using Visibl CLI for RTL design and verification
+description: Practical examples of using Visibl for silicon engineering
 ---
 
-Discover how the Visibl CLI accelerates common silicon engineering tasks with AI-powered assistance.
+Examples demonstrating Visibl's capabilities for complex RTL design and verification challenges.
 
-<Info>
-**New to Visibl?** Make sure you've completed the [Getting Started guide](/getting-started) to install and configure both the LLM service and CLI tool.
-</Info>
+## Clock Domain Crossing
 
-<Info>
-Safety and synthesis: Generated RTL and verification assets should be treated as drafts. Always review for coding standards, synthesizability, clock/reset safety, and verify with your toolchain.
-</Info>
-
-## RTL Design Examples
-
-### Creating a FIFO Module
-
-Generate a parameterized FIFO with proper error handling:
+Design a safe CDC circuit—demonstrates understanding of timing and metastability:
 
 ```bash
-visibl run "Create a parameterized FIFO module with the following specs:
-- Configurable width and depth
-- Standard FIFO interface (push, pop, full, empty)
-- Gray code pointers for clock domain crossing
-- Proper reset handling and assertions"
-```
-
-**Generated SystemVerilog:**
-```verilog
-module fifo #(
-    parameter WIDTH = 32,
-    parameter DEPTH = 16,
-    parameter ADDR_WIDTH = $clog2(DEPTH)
-) (
-    input  logic                clk,
-    input  logic                rst_n,
-    input  logic                push,
-    input  logic                pop,
-    input  logic [WIDTH-1:0]    data_in,
-    output logic [WIDTH-1:0]    data_out,
-    output logic                full,
-    output logic                empty,
-    output logic [ADDR_WIDTH:0] count
-);
-
-    logic [ADDR_WIDTH:0] wr_ptr, rd_ptr;
-    logic [ADDR_WIDTH:0] wr_ptr_next, rd_ptr_next;
-    logic [WIDTH-1:0] mem [0:DEPTH-1];
-    
-    // Gray code pointer generation
-    always_ff @(posedge clk or negedge rst_n) begin
-        if (!rst_n) begin
-            wr_ptr <= '0;
-            rd_ptr <= '0;
-        end else begin
-            if (push && !full) wr_ptr <= wr_ptr_next;
-            if (pop && !empty) rd_ptr <= rd_ptr_next;
-        end
-    end
-    
-    // Next pointer calculation
-    assign wr_ptr_next = (wr_ptr == DEPTH-1) ? '0 : wr_ptr + 1'b1;
-    assign rd_ptr_next = (rd_ptr == DEPTH-1) ? '0 : rd_ptr + 1'b1;
-    
-    // Status flags
-    assign full = (wr_ptr_next == rd_ptr);
-    assign empty = (wr_ptr == rd_ptr);
-    assign count = (wr_ptr >= rd_ptr) ? (wr_ptr - rd_ptr) : 
-                   (DEPTH - rd_ptr + wr_ptr);
-    
-    // Memory operations
-    always_ff @(posedge clk) begin
-        if (push && !full) begin
-            mem[wr_ptr[ADDR_WIDTH-1:0]] <= data_in;
-        end
-    end
-    
-    assign data_out = mem[rd_ptr[ADDR_WIDTH-1:0]];
-    
-    // Assertions
-    `ifdef SIMULATION
-        assert property (@(posedge clk) disable iff (!rst_n)
-            push && full |-> ##1 $stable(wr_ptr))
-        else $error("Push to full FIFO");
-        
-        assert property (@(posedge clk) disable iff (!rst_n)
-            pop && empty |-> ##1 $stable(rd_ptr))
-        else $error("Pop from empty FIFO");
-    `endif
-
-endmodule
-```
-
-### AXI4 Interface Implementation
-
-Create an AXI4-Lite slave interface:
-
-```bash
-visibl run "Generate an AXI4-Lite slave interface for a register bank with:
-- 32-bit data width
-- 16 registers with read/write capability
-- Proper response handling
-- Address decoding and error responses"
-```
-
-### Clock Domain Crossing
-
-Design a safe CDC circuit:
-
-```bash
-visibl run "Create a multi-bit clock domain crossing circuit using:
-- Gray code for counters
-- Two-flop synchronizer for control signals
-- Proper timing constraints
-- Formal verification properties"
-```
-
-## Verification Examples
-
-### UVM Testbench Creation
-
-Generate a complete UVM environment:
-
-```bash
-visibl run "Create a UVM testbench for my UART module including:
-- UVM agent with driver, monitor, sequencer
-- Scoreboard for data checking
-- Coverage model for protocol states
-- Base test class and directed tests"
-```
-
-**Generated Structure:**
-```
-uart_tb/
-├── uart_agent/
-│   ├── uart_driver.sv
-│   ├── uart_monitor.sv
-│   ├── uart_sequencer.sv
-│   └── uart_agent.sv
-├── uart_env/
-│   ├── uart_scoreboard.sv
-│   ├── uart_coverage.sv
-│   └── uart_env.sv
-├── sequences/
-│   └── uart_sequences.sv
-└── tests/
-    ├── uart_base_test.sv
-    └── uart_directed_tests.sv
-```
-
-### Assertion-Based Verification
-
-Create SVA properties:
-
-```bash
-visibl run "Generate SystemVerilog assertions for my AXI4 interface to check:
-- Valid/ready handshake protocol
-- Address alignment requirements
-- Response ordering rules
-- Burst transaction properties"
-```
-
-### Coverage Models
-
-Build functional coverage:
-
-```bash
-visibl run "Create a coverage model for my cache controller covering:
-- Cache hit/miss scenarios
-- Different request types (read/write)
-- Cache line states (MESI protocol)
-- Cross coverage between address ranges and operations"
-```
-
-## EDA Tool Integration
-
-### Synthesis Script Generation
-
-Create DC synthesis scripts:
-
-```bash
-visibl run "Generate a Design Compiler synthesis script for my processor core with:
-- Multi-corner timing constraints
-- Power optimization settings
-- Area constraints
-- Clock gating insertion"
-```
-
-### Timing Analysis
-
-Generate timing reports:
-
-```bash
-visibl run "Create a PrimeTime script to analyze timing for my design:
-- Setup and hold analysis
-- Clock skew analysis
-- Path group reporting
-- Critical path identification"
-```
-
-### Physical Design Constraints
-
-Create SDC constraints:
-
-```bash
-visibl run "Generate SDC constraints for my SoC design including:
-- Clock definitions and relationships
-- I/O timing constraints
-- False paths and multicycle paths
-- Power domain constraints"
-```
-
-## Debugging Examples
-
-### Simulation Debug
-
-Analyze waveforms and logs:
-
-```bash
-visibl run "Help me debug this simulation failure. The testbench is reporting:
-'ASSERTION FAILED: AXI write response timeout'
-Looking at the waveform, I see the AWVALID is high but AWREADY never goes high."
-```
-
-### Synthesis Issues
-
-Resolve synthesis warnings:
-
-```bash
-visibl run "My synthesis is reporting these warnings:
-'Warning: Latch inferred for signal data_reg'
-'Warning: Clock gating check failed'
-Help me identify and fix these issues in my RTL."
-```
-
-### Timing Closure
-
-Fix timing violations:
-
-```bash
-visibl run "I have setup timing violations on these paths:
-- CPU/ALU/adder_inst (slack: -0.5ns)
-- Memory_controller/arbiter (slack: -0.3ns)
-Suggest RTL modifications and constraint changes to fix these."
-```
-
-## Documentation Generation Examples
-
-### Generate Module Documentation
-
-Create comprehensive documentation for specific RTL modules through the TUI:
-
-**Method 1: Direct module targeting**
-```bash
-# Launch Visibl TUI
 visibl
-
-# Generate docs for specific modules
-/docs uart_controller
 ```
 
-**Method 2: Interactive target selection**
+```
+> I need a multi-bit clock domain crossing circuit for a 32-bit data bus
+> crossing from a 200MHz domain to a 100MHz domain. Requirements:
+> - Gray code encoding for pointer comparison
+> - Two-stage synchronizer for control signals
+> - Proper constraints for static timing analysis
+> - Formal verification properties to prove no metastability issues
+
+> Now add FIFO buffering with almost-full/empty thresholds
+> Set almost-full at 75% to provide back-pressure
+
+> Generate SVA properties to verify:
+> - No data loss during clock domain crossing
+> - Proper synchronization of all control signals
+> - Gray code pointer integrity
+```
+
+**Why this matters**: CDC failures are non-deterministic and escape functional simulation. Requires understanding of metastability windows, gray code mathematics, and formal verification.
+
+## AXI4 Protocol Implementation
+
+Generate a complete AXI4-Lite slave interface—shows protocol expertise:
+
 ```bash
-# Launch Visibl TUI
 visibl
-
-# Configure targets interactively, then generate
-/docs select-targets  # Configure targets interactively
-/docs uart_controller  # Generate for specific module
 ```
 
-**Method 3: File-based targeting**
-```bash
-# Create targets file
-echo "uart_controller" > docs/settings/targets.txt
-echo "memory_arbiter" >> docs/settings/targets.txt
+```
+> Create an AXI4-Lite slave interface for a register bank
+> 32-bit data width, 16 registers starting at address 0x1000
+> Registers 0-7 are read-write, 8-15 are read-only status registers
+
+> Add proper BVALID/BREADY handshaking with OKAY/SLVERR responses
+> Return SLVERR for any address outside the register range or misaligned access
+
+> Generate a UVM monitor to verify all AXI4-Lite protocol rules:
+> - VALID/READY handshaking requirements
+> - Write response ordering
+> - Address alignment
+> - No deadlocks
 ```
 
-**Generated documentation includes:**
-- Interface specifications with complete IO tables
-- Functional behavior analysis with timing diagrams
-- Protocol compliance and integration guidelines
-- Performance characteristics and resource utilization
-- Configuration parameters and design constraints
+**Why this matters**: AXI protocol compliance requires precise handshaking semantics. Subtle violations cause system-level integration failures that are expensive to debug post-tapeout.
 
-### Project-Wide Documentation
+## Complex Timing Closure
 
-Generate complete documentation for your entire RTL project:
+Analyze and resolve a real-world timing violation:
 
-**Method 1: Use saved target profiles**
 ```bash
-# Configure targets interactively (one-time setup)
 visibl
-/docs select-targets  # Save as 'default' profile
+```
 
-# Generate using default profile
+```
+> I have setup timing violations in my cache controller synthesized at 500MHz on 7nm:
+> 
+> Critical paths (from PrimeTime):
+> 1. tag_compare[3] -> way_select[1] -> data_mux -> cpu_data_out (-0.8ns slack)
+> 2. victim_buffer/lru_update -> victim_buffer/evict_addr (-0.4ns slack)
+> 
+> The tag comparator uses 4-way set associative with parallel comparison.
+> The LRU uses pseudo-LRU binary tree for victim selection.
+> 
+> Suggest RTL modifications to fix timing without changing the cache architecture.
+> Consider: pipeline stage insertion, logic restructuring, and critical path analysis.
+
+> Now update the cache testbench to verify the pipelined implementation
+> Make sure we test back-to-back hits, miss-hit-miss patterns, and hazards
+
+> Generate timing constraints (SDC) for the modified design
+> Include: cache clock definition, input/output delays, multicycle paths for LRU update
+```
+
+**Why this matters**: Timing closure at advanced nodes requires RTL restructuring without functional changes. Demonstrates critical path analysis, pipeline insertion trade-offs, and constraint methodology.
+
+## Cache Coherency Protocol
+
+Design a coherency protocol with state machine verification:
+
+```bash
 visibl
-/docs all
 ```
 
-**Method 2: Target specific modules**
+```
+> I'm implementing a MESI cache coherency protocol for a 4-core system
+> Help me design the cache line state machine for the L1 cache
+
+> Each cache needs to handle: local CPU requests, snoop requests from other caches,
+> and responses from the L2 cache. What are the state transitions and when do we
+> need to broadcast invalidates?
+
+> Now handle the race condition: what happens when a local write request and
+> a remote snoop invalidate arrive in the same cycle? How do we arbitrate?
+
+> Generate SystemVerilog assertions to verify MESI protocol invariants:
+> - Only one cache can be in Modified state for any cache line
+> - Shared state is consistent across all caches
+> - State transitions are legal
+> - No deadlocks in the coherency fabric
+```
+
+**Why this matters**: MESI coherency involves distributed state machines with race conditions. Data corruption bugs appear only under specific timing scenarios and are nearly impossible to debug in simulation.
+
+## Doc Agent
+
+Generate comprehensive documentation for RTL modules. See the [Doc Agent](/cli/doc-gen) section for complete details.
+
 ```bash
-# Launch TUI and generate documentation for specific modules
 visibl
-/docs cpu_core cache_controller memory_arbiter
+/docs uart_core
 ```
 
-**Method 3: File-based targeting**
+Or use headless mode:
 ```bash
-# Create comprehensive targets file
-cat > docs/settings/targets.txt << EOF
-# CPU subsystem
-cpu_core
-cache_controller
-memory_arbiter
-
-# Communication interfaces
-uart_controller
-spi_master
-axi_interconnect
-EOF
-
+visibl docs uart_core
 ```
 
-**Background execution (default behavior):**
-- All `/docs` commands run in background by default
-- Documentation generation continues even if terminal is closed
-- Monitor progress through TUI status panel
-- Access logs at `docs/logs/docagent_docs-*.log`
+## Multi-File Refactoring
 
-<Info>
-**Note**: `/docs all` now uses your default target profile instead of processing every module in the project. Use `/docs select-targets` to configure which modules are included in your default profile.
-</Info>
-
-**Output structure:**
-```
-./docs/
-├── markdown/
-│   ├── cpu_core.visibl.md
-│   ├── cache_controller.visibl.md
-│   ├── memory_arbiter.visibl.md
-│   └── axi_interconnect.visibl.md
-├── googledrive/
-│   ├── markdown/
-│   │   ├── cpu_core.visibl.md
-│   │   └── cache_controller.visibl.md
-│   ├── cpu_core.docx
-│   └── cache_controller.docx
-└── logs/
-    └── docagent_docs-20240326-143022.log
-```
-
-### Documentation Workflow Integration
-
-Integrate documentation generation into your development process:
+Complex refactoring across your entire design:
 
 ```bash
-# Generate docs after major design changes
-git checkout feature/new-cache-design
-
-# Launch TUI and generate specific module docs
 visibl
-/docs cache_controller overwrite
-
-# Commit the updated documentation
-git add docs/
-git commit -m "Update cache controller documentation"
 ```
 
-**Batch documentation updates:**
-```bash
-# Launch TUI
-visibl
+```
+> I need to add a new pipeline stage to my processor core between
+> the decode and execute stages. This affects:
+> - core/decode.sv
+> - core/execute.sv  
+> - core/hazard_unit.sv
+> - core/forwarding_unit.sv
+> - testbench/cpu_tb.sv
+> 
+> Walk me through the changes needed and update all files to maintain
+> correct hazard detection and data forwarding
 
-# Update target configuration
-/docs select-targets  # Add new modules to targets
-
+> Now we need to update the testbench to verify the new pipeline stage
+> Add test cases for data hazards with the additional pipeline stage
 ```
 
-## Advanced Workflows
-
-### Custom Agents
-
-Create specialized agents for your team:
-
-```bash
-visibl agent create "Create an agent specialized in PCIe protocol implementation with knowledge of:
-- PCIe TLP packet formats
-- Configuration space handling
-- Link training sequences
-- Error handling mechanisms"
-```
-
-### Project Templates
-
-Generate project structures:
-
-```bash
-visibl run "Create a complete RTL project structure for a RISC-V core including:
-- Directory organization
-- Makefile for simulation and synthesis
-- CI/CD pipeline configuration
-- Documentation templates"
-```
-
-### Code Review
-
-Automated code analysis:
-
-```bash
-visibl run "Review my SystemVerilog module for:
-- Coding standard compliance
-- Synthesis best practices
-- Potential timing issues
-- Security vulnerabilities"
-```
-
-## Interactive Sessions
-
-Start an interactive session for complex tasks:
-
-```bash
-# Start interactive mode
-visibl
-
-# Then have a conversation:
-> I'm designing a memory controller for DDR4. Can you help me with the refresh logic?
-
-> Now I need to add support for different burst lengths. How should I modify the state machine?
-
-> Can you generate testcases to verify the refresh timing requirements?
-```
-
-## Tips for Best Results
-
-### Provide Context
-- Include relevant files in your project
-- Specify your target technology and tools
-- Mention performance and area requirements
-
-### Be Specific
-- Use precise technical terminology
-- Specify interface standards and protocols
-- Include timing and constraint requirements
-
-### Iterate and Refine
-- Start with high-level requirements
-- Refine the implementation through conversation
-- Ask for specific optimizations or modifications
+**Why this matters**: Architectural changes require coordinated modifications across RTL, verification, and constraints. Maintaining correctness during refactoring is critical for tape-out schedules.
 
 ## Next Steps
 
-Ready to start using Visibl in your silicon engineering projects? The CLI integrates seamlessly with your existing EDA tools and development workflows.
-
 <CardGroup cols={2}>
-  <Card title="Documentation Generation" icon="file-text" href="/cli/documentation">
-    Learn how to automatically generate comprehensive documentation for your RTL projects
+  <Card title="Doc Agent" icon="file-text" href="/cli/doc-gen">
+    Generate comprehensive RTL documentation
+  </Card>
+  
+  <Card title="Chat" icon="messages" href="/cli/chat">
+    Learn about the interactive interface
   </Card>
   
   <Card title="CLI Overview" icon="terminal" href="/cli/overview">
-    Explore all CLI capabilities including RTL design, verification, and EDA integration
+    Explore all capabilities
   </Card>
   
-  <Card title="Installation Guide" icon="download" href="/cli/installation">
-    Get started with installing and configuring the Visibl CLI
-  </Card>
-  
-  <Card title="Get Support" icon="messages-square" href="mailto:support@visiblsemi.com">
-    Contact our team for technical support and assistance
+  <Card title="Installation" icon="download" href="/cli/installation">
+    Install and configure the CLI
   </Card>
 </CardGroup>

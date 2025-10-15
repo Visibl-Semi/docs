@@ -49,7 +49,6 @@
         "cli/installation",
         "cli/chat",
         "cli/doc-gen",
-        "cli/agent",
         "cli/examples"
       ]
     },
@@ -79,7 +78,7 @@
           },
           {
             "label": "Quick Start",
-            "url": "/quickstart"
+            "url": "/getting-started"
           }
         ]
       },
@@ -91,8 +90,8 @@
             "url": "/cli/examples"
           },
           {
-            "label": "Documentation",
-            "url": "/cli/documentation"
+            "label": "Doc Agent",
+            "url": "/cli/doc-gen"
           },
           {
             "label": "Installation",
@@ -104,7 +103,7 @@
           },
           {
             "label": "Support",
-            "url": "mailto:support@visiblsemi.com"
+            "url": "mailto:hi@visiblsemi.com"
           }
         ]
       },
@@ -117,7 +116,7 @@
           },
           {
             "label": "Contact",
-            "url": "mailto:support@visiblsemi.com"
+            "url": "mailto:hi@visiblsemi.com"
           }
         ]
       }

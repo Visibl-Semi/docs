@@ -1,302 +1,106 @@
 ---
-title: "Doc Gen"
-description: "Automatically generate comprehensive documentation for your RTL modules and projects"
+title: "Doc Agent"
+description: "Automatically generate comprehensive documentation for your RTL modules"
 ---
 
-# Doc Gen
-
-Generate comprehensive AI-powered documentation for your RTL modules and projects using an advanced **4-agent agentic architecture**. This sophisticated multi-agent system analyzes your RTL code through multiple specialized AI agents working in coordination to produce professional-grade documentation in Markdown and Google Docs formats.
-
-<Info>
-**Advanced AI System**: Each module undergoes deep analysis by 4 specialized AI agents (~30 minutes to 1 hour per module), ensuring comprehensive coverage of functionality, interfaces, timing, performance, and design patterns. This is a long-running process that produces thorough, publication-ready documentation.
-</Info>
+Generate comprehensive AI-powered documentation for your RTL modules. The Doc Agent analyzes your RTL code and produces professional documentation with interface tables, timing diagrams, and detailed descriptions.
 
 ## Quick Start
 
-Launch the Visibl TUI and use these key commands:
+### Interactive TUI Mode
 
 ```bash
-# Launch Visibl TUI
 visibl
 
-# Essential documentation commands:
-/docs all                    # Generate docs for configured modules
-/docs module1 module2        # Document specific modules
-/docs configure-targets      # Set up persistent targets
+# Generate for specific module
+/docs uart_core
 ```
 
-### Interactive Module Selection
+<Frame>
+  <img src="/assets/module_selector.png" alt="Module selection interface" />
+</Frame>
 
-<img
-  src="/assets/module_selector.png"
-  alt="Module Selector Interface"
-/>
+The Doc Agent runs in the background, so you can continue working while documentation generates.
 
-*Browse and select modules for immediate documentation generation.*
+<Frame>
+  <img src="/assets/doc_gen_flow2.png" alt="Documentation generation in progress" />
+</Frame>
 
-### Configure Persistent Targets
-
-<img
-  src="/assets/configure_genration_targets.png"
-  alt="Configure Generation Targets"
-/>
-
-*Set up which modules to include in your default documentation profile.*
-
-### Remove Targets
-
-<img
-  src="/assets/remove_generation_targets.png"
-  alt="Remove Generation Targets"
-/>
-
-*Remove modules from your persistent target configuration.*
-
-## Key Features
-
-- **4-Agent Agentic Architecture** - Specialized AI agents for comprehensive RTL analysis
-- **Deep Technical Analysis** - Covers functionality, interfaces, timing, performance, and design patterns
-- **Multiple Output Formats** - Markdown, Google Drive folders, optional DOCX export
-- **Background Execution** - Long-running process survives terminal drops with live logging
-- **Smart Parsing** - Uses Slang JSON artifacts when available, falls back to regex parsing
-- **Publication-Ready Output** - Professional documentation suitable for design reviews and handoffs
-
-## Target Configuration
-
-Edit `docs/settings/targets.txt` with one module name per line:
-```
-cpu_core
-cache_controller
-uart_controller
-```
-
-Configurations stored in:
-- `docs/settings/targets.json` - named profiles
-- `docs/settings/targets.txt` - default profile
-
-### Output Structure
-
-Documentation is generated in a structured format:
-
-```
-your-project/
-├── docs/
-│   ├── markdown/                    # Primary documentation
-│   │   ├── cpu_core.visibl.md
-│   │   ├── cache_controller.visibl.md
-│   │   └── memory_arbiter.visibl.md
-│   ├── googledocs/                  # DOCX exports
-│   │   ├── cpu_core.docx
-│   │   └── cache_controller.docx
-│   ├── logs/                        # Execution logs
-│   │   └── docagent_docs-20240326-143022.log
-│   ├── settings/                    # Target configurations
-│   │   ├── targets.json            # Profile storage
-│   │   └── targets.txt             # Simple text format
-│   └── slang/                       # Parser artifacts (when available)
-│       ├── modules/
-│       ├── hierarchies/
-│       └── interfaces/
-└── output/                          # Fallback artifacts
-└── dependency_graphs/
-    └── project_dependency_graph.json
-```
-
-## Documentation Content
-
-### Generated Documentation Structure
-
-Each module documentation file (`module_name.visibl.md`) contains:
-
-**Standard Sections:**
-- **Block Name** - Module identification and purpose
-- **Overview** - High-level functional description
-- **High-Level Requirements** - Design specifications and constraints
-- **Block Diagram** - Visual representation of module structure
-- **Top-Level Block Diagram Description** - Detailed diagram explanation
-
-**Interface Documentation:**
-- **IO Table** - Complete port descriptions with signal purposes
-- **Parameters and Typedefs** - Configuration parameters and custom types
-- **Interfaces** - Protocol and interface specifications
-- **Protocols** - Communication protocol details
-
-**Timing and Control:**
-- **Clocks** - Clock domain and timing requirements
-- **Resets** - Reset behavior and sequences
-- **Example Transactions** - Timing diagrams (often includes Wavedrom sketches)
-
-**Performance and Design:**
-- **Performance** - Throughput, latency, and resource utilization
-- **Arbitration/Fairness/QoS** - Resource management policies
-- **Forward Progress Guarantees** - Deadlock prevention and liveness
-- **Power** - Power consumption and optimization
-- **Physical Design** - Layout and placement considerations
-
-**Advanced Features:**
-- **CSRs** - Control and status register descriptions
-- **Performance Analysis** - Detailed performance characteristics
-- **Debugging** - Debug interfaces and methodologies
-- **Reliability** - Error handling and fault tolerance
-- **Implementation Details** - Low-level implementation specifics
-
-### Content Generation Features
-
-**Deterministic Content:**
-- IO Table and Parameters sections can be generated deterministically from parsed metadata
-- Ensures useful baseline documentation even without LLM processing
-- Provides structured information extraction from RTL source
-
-**AI-Enhanced Analysis:**
-- Functional behavior descriptions generated by AI analysis
-- Protocol compliance verification and documentation
-- Design pattern recognition and explanation
-- Integration guidance and best practices
-
-**Visual Elements:**
-- Automatic Table of Contents generation
-- Wavedrom timing diagrams for transaction examples
-- Block diagrams and architectural overviews
-- Cross-referenced module relationships
-
-### Output Formats
-
-**Markdown** (`docs/markdown/`):
-- Version control friendly
-- GitHub/GitLab integration
-- Static site generator compatible
-
-**Google Docs** (`docs/googledocs/`):
-- DOCX exports (requires Pandoc installation)
-- Ready for collaborative editing
-
-
-## Integration Workflows
-
-### Git Integration
-
-Include documentation generation in your development workflow:
+### Headless CLI Mode
 
 ```bash
-# Generate docs before commits
-visibl /docs all
-git add docs/
-git commit -m "Update module documentation"
+# Generate documentation for a module
+visibl docs uart_core
 ```
 
-### CI/CD Integration
+## Output
 
-Automate documentation updates:
+Documentation is generated in two formats:
+
+```
+your-project/docs/
+├── markdown/
+│   └── uart_core.visibl.md      # Version control friendly
+├── googledocs/
+│   └── uart_core.docx            # Design review ready
+└── logs/
+    └── docagent_docs-*.log       # Debug logs
+```
+
+**Markdown**: Interface tables, signal descriptions, functional behavior, protocol specifications
+
+**DOCX**: Rich formatting with timing diagrams, waveforms, block diagrams, and complete interface tables
+
+## CI/CD Integration
+
+Automate documentation generation in your pipeline:
 
 ```yaml
 # .github/workflows/docs.yml
 name: Update Documentation
 on:
-push:
-  paths: ['rtl/**/*.sv', 'rtl/**/*.v']
+  push:
+    paths: ['rtl/**/*.sv', 'rtl/**/*.v']
   
 jobs:
-docs:
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v3
-    - name: Generate Documentation
-      run: |
-        visibl /docs all
-        git add docs/
-        git commit -m "Auto-update documentation" || exit 0
-        git push
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Generate Documentation
+        run: |
+          visibl docs uart_core
+          git add docs/
+          git commit -m "Auto-update docs" || exit 0
+          git push
 ```
-
-### Team Collaboration
-
-Share documentation efficiently:
-
-1. **Markdown for developers** - Version controlled, easy to review
-2. **Google Docs for stakeholders** - Collaborative editing, comments
-3. **Automated updates** - Keep docs synchronized with code changes
-
-## Best Practices
-
-- Start with top-level modules and critical interfaces
-- Use `/docs configure-targets` for persistent project documentation
-- Use `/docs module_name` for specific components
-- Regenerate docs after significant RTL changes
-- Review AI-generated content for accuracy
-- Include `docs/markdown/` in version control
 
 ## Troubleshooting
 
-### Common Issues
+If documentation generation fails, the logs contain detailed error information:
 
-**No documentation generated:**
-- Check logs in `docs/logs/docagent_docs-*.log`
-- Verify module names match discovered modules
-- Ensure write permissions to `docs/` directory
-
-**LLM service connection errors:**
-- Start the Visibl LLM service
-- Check `VISIBL_BASE_URL` environment variable
-
-**Empty documentation:**
-- Ensure RTL files are syntactically correct
-- Add detailed comments to improve AI analysis
-
-**DOCX export issues:**
-- Install Pandoc and ensure it's in PATH
-
-### Performance Tips
-
-- Use selective targeting for large projects
-- Run in background mode (default) for long operations
-- Generate documentation in smaller batches if needed
-
-### Debugging
-
-Check logs in `docs/logs/` and use test mode for debugging:
 ```bash
-/docs module_name test
+# Logs are stored in your project
+docs/logs/docagent_docs-*.log
+
+# View the most recent log
+ls -lt docs/logs/ | head -n 2
+cat docs/logs/docagent_docs-<timestamp>.log
 ```
 
-## Advanced Features
-
-### Parser Backends
-- **Slang JSON Parser** (preferred): Uses `docs/slang/` artifacts for accurate analysis
-- **Regex Parser** (fallback): Basic extraction when Slang unavailable
-
-### Execution Options
-```bash
-/docs all overwrite    # Force regeneration of existing docs
-/docs all test         # Generate placeholder content for testing
-```
-
-### Background Processing
-- Default background execution survives terminal drops
-- Live status and logs accessible through TUI
-- Automatic process cleanup
+Send the log file to [hi@visiblsemi.com](mailto:hi@visiblsemi.com) along with:
+- The module name you tried to document
+- Your RTL file path
+- Any error messages shown in the CLI
 
 ## Next Steps
 
-Ready to start generating documentation for your RTL projects?
-
 <CardGroup cols={2}>
-<Card title="CLI Installation" icon="download" href="/cli/installation">
-Install the Visibl CLI to start generating documentation
-</Card>
-
-<Card title="More Examples" icon="code" href="/cli/examples">
-See practical examples of CLI usage including documentation workflows
-</Card>
-
-<Card title="LLM Service Setup" icon="server" href="/llm-service/overview">
-Configure the AI service that powers documentation generation
-</Card>
-
-<Card title="Get Support" icon="messages-square" href="mailto:support@visiblsemi.com">
-Contact our team for help with documentation generation
-</Card>
+  <Card title="Examples" icon="code" href="/cli/examples">
+    See documentation generation examples
+  </Card>
+  
+  <Card title="Chat" icon="messages" href="/cli/chat">
+    Learn about the interactive CLI
+  </Card>
 </CardGroup>
-
-<Tip>
-**Pro tip**: Start with a small set of target modules to familiarize yourself with the documentation generation process, then expand to cover your entire project systematically.
-</Tip>

@@ -1,184 +1,78 @@
 ---
-title: "Visibl LLM Service"
-description: "Enterprise-grade local AI infrastructure for silicon engineering teams"
+title: "LLM Service"
+description: "Local AI infrastructure for silicon engineering"
 ---
 
-
-The Visibl LLM Service provides secure, high-performance AI infrastructure specifically designed for silicon engineering workloads. It runs entirely on your hardware, ensuring complete data isolation while delivering GPU-optimized performance for RTL design, verification, and EDA tool integration.
+The Visibl LLM Service is the AI infrastructure that powers the Visibl CLI. Install once on your server, then interact through the CLI from your workstations.
 
 <Info>
-**Complete Security**: All AI processing happens locally on your infrastructure. No code, designs, or data ever leave your network, making it perfect for sensitive silicon engineering projects.
+**Set it and forget it**: The LLM service runs on your infrastructure as a background service. Once installed, users interact through the Visibl CLI—not directly with the LLM service.
 </Info>
 
-## Why local AI infrastructure?
+## Why Local AI?
 
-**Data Security**: Complete data isolation with zero external API calls. Perfect for classified and proprietary silicon designs.
+**Security**: All processing happens locally. No code or designs leave your network.
 
-**High Performance**: GPU-optimized models with tensor parallelism deliver low-latency responses for complex engineering queries.
+**Performance**: GPU-optimized for low-latency responses.
 
-**Full Control**: Deploy on your infrastructure with complete control over models, data, and performance characteristics.
+**Control**: Full control over deployment and data.
 
-## Model options
+## Model Options
 
-Choose the optimal model size for your silicon engineering workload:
+**Visibl Max-2 (Default)**
+- GPU: 2x A100-40GB
+- Context: 128K tokens
+- Use case: Agentic workflows, large codebases
 
-### Visibl Fast (7B)
+**Visibl Fast**
+- GPU: 24GB+ VRAM
+- Context: 64K tokens
+- Use case: Interactive development, low latency
 
-**Single GPU Deployment**
+**Visibl Expert**
+- GPU: 2x A100-40GB
+- Context: 128K tokens
+- Use case: Complex reasoning, extended context
 
-- **Hardware**: 24GB+ VRAM (RTX 4090, A6000, A100)
-- **Latency**: `<2s` response time for most queries  
-- **Use Cases**: Code completion, syntax help, quick debugging
-- **Throughput**: High concurrent request handling
+**Visibl Heavy**
+- GPU: 2x A100-40GB or 4x RTX 4090
+- Context: 128K tokens
+- Use case: Maximum reasoning capability
 
-**Ideal for**: Daily development tasks, interactive coding assistance
+## System Requirements
 
-### Visibl Heavy (70B)
-
-**Multi-GPU Deployment**
-
-- **Hardware**: 2x A100-40GB or 4x RTX 4090 (recommended)
-- **Latency**: 5-15s for complex multi-step reasoning
-- **Use Cases**: Architecture decisions, complex debugging, formal verification
-- **Throughput**: Lower concurrency, higher reasoning quality
-
-**Ideal for**: Complex design problems, architectural planning
-
-<Tip>
-**Model Selection**: Start with the Fast model for most workflows. The Heavy model excels at complex multi-step reasoning tasks like architectural planning and formal verification setup.
-</Tip>
-
-## System requirements
-
-### Minimum requirements
-
-For development and testing environments:
+### Minimum (Fast model)
 
 | Component | Specification |
 |-----------|--------------|
-| **OS** | RHEL 8.x, Ubuntu 20.04+, or compatible Linux |
-| **Docker** | Version 20.10+ with GPU support |
-| **GPU** | NVIDIA A100, H100, or RTX 4090 with 24GB+ VRAM |
-| **RAM** | 64GB+ system memory |
-| **Storage** | 100GB+ available space (SSD recommended) |
-| **Network** | Outbound HTTPS for initial model download |
+| **OS** | RHEL 8.x, Ubuntu 20.04+ |
+| **Docker** | Version 26.x |
+| **GPU** | NVIDIA 24GB+ VRAM |
+| **RAM** | 64GB+ |
+| **Storage** | 100GB+ SSD |
 
-<Info>
-**GPU Compatibility**: Requires NVIDIA GPUs with compute capability 7.0+ and CUDA 11.8+ support
-</Info>
-
-### Production recommendations
-
-For enterprise production deployments:
+### Production (Max-2/Expert/Heavy)
 
 | Component | Specification |
 |-----------|--------------|
-| **OS** | RHEL 8.x (certified and supported) |
-| **Docker** | Docker CE/EE 24.x with NVIDIA Container Runtime |
-| **GPU** | 2x NVIDIA A100-40GB or 4x RTX 4090 |
-| **RAM** | 128GB+ DDR4/DDR5 system memory |
-| **Storage** | 500GB+ NVMe SSD for models and cache |
+| **OS** | RHEL 8.x |
+| **Docker** | Version 26.x |
+| **GPU** | 2x NVIDIA A100-40GB |
+| **RAM** | 128GB+ |
+| **Storage** | 500GB+ NVMe SSD |
 
-## Enterprise features
-
-### Security & compliance
-
-- **Air-gapped deployment** - no internet required after setup
-- **Zero telemetry** - no usage statistics sent externally  
-- **Complete data isolation** - all processing on your hardware
-- **Network isolation** ready for classified environments
-- **Audit logging** for compliance requirements
-- **Docker container isolation** for process security
-
-```bash Security verification
-# Verify no external network access
-sudo netstat -tuln | grep :58180
-# Only local bindings should be shown
-
-# Check container isolation
-docker inspect visibl-llm | grep NetworkMode
-```
-
-### Production deployment
-
-- **Systemd integration** for reliable service management
-- **Health monitoring** with automatic recovery mechanisms
-- **Resource management** with intelligent memory allocation
-- **Load balancing** support for high availability setups
-- **Backup and recovery** procedures for model and config data
-- **Rolling updates** with zero downtime deployment
-
-```bash Service management
-# Production service control
-sudo systemctl enable visibl-llm
-sudo systemctl start visibl-llm
-sudo systemctl status visibl-llm
-
-# Monitor service health
-visibl-llm status
-visibl-llm logs -f
-```
-
-### Performance optimization
-
-- **Tensor parallelism** for large model distribution
-- **Automatic scaling** based on concurrent request load
-- **Memory optimization** for efficient GPU utilization
-- **Request batching** for improved throughput
-- **Model caching** for frequently accessed weights
-- **Custom quantization** support (AWQ, GPTQ)
-
-```bash Performance tuning
-# Optimize GPU memory utilization
-visibl-llm util 0.90
-
-# Enable custom all-reduce for multi-GPU
-visibl-llm custom-ar on
-
-# Adjust context length for workload
-visibl-llm len 32000
-```
-
-## Monitoring & observability
-
-The service includes comprehensive monitoring capabilities:
-
-### Health endpoints
-
-- `/health` - Service status and model info
-- `/metrics` - Performance and usage metrics  
-- `/v1/models` - Available model information
-- Real-time status monitoring
-
-### Logging & diagnostics
-
-- Request/response logging
-- Performance metrics tracking
-- Error diagnostics and stack traces
-- Integration with systemd journal
-
-## Ready to deploy?
+## Next Steps
 
 <CardGroup cols={2}>
-  <Card title="Installation Guide" icon="download" href="/llm-service/installation">
-    Step-by-step deployment instructions with automated installer
+  <Card title="Installation" icon="download" href="/llm-service/installation">
+    Install the LLM service on your server
   </Card>
   
-  <Card title="Usage Guide" icon="book-open" href="/llm-service/usage">
-    Service management, monitoring, and optimization best practices
+  <Card title="Usage" icon="book-open" href="/llm-service/usage">
+    Manage and switch models
   </Card>
   
-  <Card title="CLI Integration" icon="terminal" href="/cli/overview">
-    Learn how to connect the CLI tool to your LLM service
-  </Card>
-  
-  <Card title="Get Support" icon="messages-square" href="mailto:support@visiblsemi.com">
-    Contact our team for technical support and custom deployment assistance
+  <Card title="CLI" icon="terminal" href="/cli/overview">
+    Install the CLI to start working
   </Card>
 </CardGroup>
-
-## Support
-
-Need custom deployment assistance? Our team provides enterprise deployment support, including air-gapped installations, custom hardware configurations, and integration with existing infrastructure.
-
-Contact us at [support@visiblsemi.com](mailto:support@visiblsemi.com) for enterprise support.

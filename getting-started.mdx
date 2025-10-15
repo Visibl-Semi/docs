@@ -1,258 +1,144 @@
 ---
-title: "Visibl"
-description: "Deploy Visibl's AI-powered silicon engineering platform in minutes"
+title: "Get Started"
+description: "Install Visibl's local AI infrastructure for silicon engineering"
 ---
 
-Visibl is an AI-powered platform for silicon engineering teams. We provide enterprise-grade tools that accelerate chip design, verification, and documentation—while preserving security and control on your infrastructure.
+Visibl provides local AI infrastructure for silicon engineering teams. Install the LLM service once on your server (set it and forget it), then install the CLI on your workstations to start working.
 
+<Frame>
+  <img src="/assets/cli.png" alt="Visibl architecture: LLM service running on GPU server, CLI connecting from workstations" />
+</Frame>
 
-## Deploy the LLM service
+## Install LLM Service
 
-Start by deploying the AI infrastructure on your server. This provides the local, secure AI processing power.
-
-<Steps>
-<Step title="Choose and install your model">
-Select the model that best fits your needs:
-
-<Tabs>
-<Tab title="Visibl Fast (7B)">
-Perfect for day-to-day development:
+Deploy the AI infrastructure on your server:
 
 ```bash
-curl -fsSL "https://visiblsemi.com/api/install-llm?model=fast" | sudo bash
+curl -fsSL https://visiblsemi.com/api/install-llm | sudo bash
 ```
 
-- Single GPU (24GB+ VRAM)
-- Low latency responses
-- Code completion and debugging
-</Tab>
+This installs the service with GPU support and starts it on port 58180.
 
-<Tab title="Visibl Heavy (70B)">
-Best for complex reasoning:
-
+**Verify installation:**
 ```bash
-curl -fsSL "https://visiblsemi.com/api/install-llm?model=heavy" | sudo bash
+visibl-smi
 ```
 
-- Dual GPU (2x A100 recommended)
-- Advanced architecture decisions
-- Complex verification planning
-</Tab>
-</Tabs>
+You should see your GPU(s) listed with the running Visibl LLM service.
 
-This automatically validates system requirements, installs NVIDIA Container Toolkit, and starts the service on port 58180.
-</Step>
+## Install CLI
 
-<Step title="Verify deployment">
-Check that your service is running:
+Install the CLI on your development workstation:
 
 ```bash
-curl -s http://127.0.0.1:58180/health
-```
-
-<Check>
-You should see`{"status": "healthy", "model": "visibl-70b"}`from the health check.
-</Check>
-</Step>
-</Steps>
-
-## Install the CLI tool
-
-With the LLM service running, install the CLI on your development workstation:
-
-```bash
-# One-line installer
 curl -fsSL https://visiblsemi.com/api/install | bash
 ```
 
 The CLI automatically discovers and connects to your local LLM service.
 
-### Test the installation
-
-Verify everything is working:
-
+**Launch the CLI:**
 ```bash
-# Check version and connection
-visibl --version
-
-# Test AI assistance
-visibl run "Hello, can you help me with RTL design?"
-```
-
-<Check>
-You should get a helpful response about RTL design assistance, confirming the CLI is connected to your local AI service.
-</Check>
-
-## Start building with AI
-
-You're now ready to use Visibl for silicon engineering tasks:
-
-
-```bash
-cd your-workspace-root/
 visibl
 ```
 
-Then chat naturally:
-```
-> I'm designing a memory controller for DDR4. Can you help me with the refresh logic?
-> Now I need to add support for different burst lengths. How should I modify the state machine?
-> Can you generate testcases to verify the refresh timing requirements?
-```
+This opens the interactive TUI where you can chat with the AI about your silicon engineering tasks.
 
-### Generate RTL modules
+## Start Using Visibl
+
+Initialize your project for context-aware assistance:
 
 ```bash
-# Create a parameterized FIFO
-visibl run "Create a parameterized FIFO module with configurable width and depth, proper reset handling, and gray code pointers"
-
-# Generate an AXI interface
-visibl run "Generate an AXI4-Lite slave interface for a register bank with 16 32-bit registers"
-
-# Clock domain crossing
-visibl run "Create a safe multi-bit clock domain crossing circuit using gray code counters"
+cd your-rtl-project/
+visibl init  # Creates AGENTS.md with build flows, EDA tools, coding standards
 ```
 
-### Create verification assets
+Launch the TUI and start working:
 
 ```bash
-# UVM testbench
-visibl run "Create a UVM testbench for my UART module with agent, scoreboard, and coverage model"
-
-# SystemVerilog assertions
-visibl run "Generate SystemVerilog assertions for AXI4 handshake protocol validation"
-
-# Coverage model
-visibl run "Build functional coverage for my cache controller covering hit/miss scenarios"
+visibl
 ```
 
+```
+> Create a safe multi-bit clock domain crossing circuit using gray code
+> Generate SystemVerilog assertions for AXI4 handshake protocol validation
+> Help me debug this timing violation in my memory controller
+```
 
-## Project setup
+## Doc Agent
 
-For best results, initialize Visibl in your RTL projects:
+Generate comprehensive documentation for your RTL modules:
 
-1. **Navigate to your project**
-   ```bash
-   cd /path/to/your/rtl/project
-   ```
+**Interactive TUI:**
+```bash
+visibl
+/docs uart_core
+```
 
-2. **Initialize Visibl**
-   ```bash
-   visibl init
-   ```
+**Headless CLI:**
+```bash
+visibl docs uart_core
+```
 
-This analyzes your codebase and generates an `AGENTS.md` file with project-specific guidelines.
-
-## What's next?
-
-Now that you have Visibl running, here's the recommended learning path:
-
-<Steps>
-<Step title="Start with practical examples">
-  Jump into real silicon engineering tasks to see Visibl's capabilities in action.
-  
-  <Card title="Silicon Engineering Examples" icon="code" href="/cli/examples">
-    RTL generation, UVM testbenches, AXI interfaces, and EDA tool integration
-  </Card>
-</Step>
-
-<Step title="Master the CLI tool">
-  Learn advanced CLI features for your development workflow.
-  
-  <Card title="CLI Deep Dive" icon="terminal" href="/cli/overview">
-    Advanced features, project setup, and integration with your tools
-  </Card>
-</Step>
-
-<Step title="Optimize your deployment">
-  Fine-tune performance and explore enterprise features.
-  
-  <CardGroup cols={2}>
-    <Card title="Service Management" icon="server" href="/llm-service/usage">
-      Performance tuning and monitoring
-    </Card>
-    
-    <Card title="Advanced Deployment" icon="settings" href="/llm-service/installation">
-      Production setup and enterprise configuration
-    </Card>
-  </CardGroup>
-</Step>
-</Steps>
-
-<Tip>
-**Quick start tip**: Begin with `visibl run "Create a simple FIFO module"` to see immediate results, then explore the examples for more complex scenarios.
-</Tip>
+See the [Doc Agent guide](/cli/doc-gen) for details.
 
 ## Troubleshooting
 
 <AccordionGroup>
   <Accordion title="LLM service won't start">
-    **Check GPU visibility:**
+    Send us the following for support:
+    
+    1. Service logs:
     ```bash
-    nvidia-smi
+    visibl-llm logs -f
     ```
     
-    **Restart Docker service:**
+    2. Screenshot of:
     ```bash
-    sudo systemctl restart docker
+    visibl-smi
     ```
     
-    **Check service logs:**
-    ```bash
-    visibl-llm logs
-    ```
+    3. Description of the issue
+    
+    Email everything to [hi@visiblsemi.com](mailto:hi@visiblsemi.com)
   </Accordion>
   
   <Accordion title="CLI can't connect to service">
-    **Verify service is running:**
+    Send us the output when you try to run:
     ```bash
-    curl http://127.0.0.1:58180/health
+    visibl
     ```
     
-    **Check CLI configuration:**
-    ```bash
-    visibl config show
-    ```
+    The CLI has automatic binding logic that connects to the running LLM service. If it fails, the output will show us what went wrong.
     
-    **Manual configuration:**
-    ```bash
-    visibl config set-llm-endpoint YOUR_SERVER_IP:58180
-    ```
+    Email the output and description to [hi@visiblsemi.com](mailto:hi@visiblsemi.com)
   </Accordion>
   
-  <Accordion title="Out of memory errors">
-    **Switch to smaller model:**
-    ```bash
-    visibl-llm fast
-    ```
+  <Accordion title="Need help?">
+    Email [hi@visiblsemi.com](mailto:hi@visiblsemi.com) with:
     
-    **Reduce GPU utilization:**
-    ```bash
-    visibl-llm util 0.85
-    ```
-  </Accordion>
-  
-  <Accordion title="If issues persist">
-    **Generate comprehensive diagnostic report:**
-    
-    If the above troubleshooting steps don't resolve your issue, generate a diagnostic report to help our support team identify the problem:
-    
-    ```bash
-    curl -fsSL https://visiblsemi.com/api/diag-nl | sudo bash > diag-nl.log 2>&1
-    ```
-    
-    This command collects system information, service logs, and configuration details into a `diag-nl.log` file.
-    
-    **Send the diagnostic report:**
-    
-    Email the generated `diag-nl.log` file to [support@visiblsemi.com](mailto:support@visiblsemi.com) along with a description of the issue you're experiencing.
-    
-    <Warning>
-    The diagnostic script collects system information and service logs. Review the generated log file before sending to ensure it doesn't contain any sensitive information specific to your environment.
-    </Warning>
+    - Output from `visibl-llm logs -f`
+    - Screenshot from `visibl-smi`
+    - Output from running `visibl`
+    - Description of the issue
   </Accordion>
 </AccordionGroup>
 
-## Support
+## Next Steps
 
-Need help? Contact our team at [support@visiblsemi.com](mailto:support@visiblsemi.com) or visit [visiblsemi.com](https://visiblsemi.com) for more information.
+<CardGroup cols={2}>
+  <Card title="CLI Examples" icon="code" href="/cli/examples">
+    See practical examples for RTL design and verification
+  </Card>
+  
+  <Card title="LLM Service" icon="server" href="/llm-service/overview">
+    Learn about the local AI infrastructure
+  </Card>
+  
+  <Card title="Doc Agent" icon="file-text" href="/cli/doc-gen">
+    Generate comprehensive RTL documentation
+  </Card>
+  
+  <Card title="CLI Overview" icon="terminal" href="/cli/overview">
+    Explore all CLI capabilities
+  </Card>
+</CardGroup>

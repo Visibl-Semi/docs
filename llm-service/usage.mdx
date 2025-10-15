@@ -1,165 +1,44 @@
 ---
 title: Usage
-description: Using the Visibl LLM Service API and management tools
+description: Managing the Visibl LLM Service
 ---
 
-<Info>
-**Getting started?** Complete the [basic installation](/getting-started) first, then return here for advanced service management and monitoring.
-</Info>
+The LLM service runs as background infrastructure. Most users interact through the Visibl CLI, not directly with the service.
 
-Once installed, the Visibl LLM Service provides an OpenAI-compatible API for integration with various tools and clients.
+## Service Commands
 
-## API Endpoints
-
-The service exposes a standard OpenAI-compatible API on port `58180`:
-
-### Health Check
 ```bash
-curl http://127.0.0.1:58180/health
-```
+# Check status and GPU
+visibl-smi
 
-### List Available Models
-```bash
-curl http://127.0.0.1:58180/v1/models
-```
-
-### Chat Completions
-```bash
-curl -X POST http://127.0.0.1:58180/v1/chat/completions \
-  -H "Content-Type: application/json" \
-  -d '{
-    "model": "visibl-70b",
-    "messages": [
-      {"role": "user", "content": "Explain the difference between blocking and non-blocking assignments in Verilog"}
-    ],
-    "max_tokens": 500,
-    "temperature": 0.1
-  }'
-```
-
-## Service Management
-
-### Basic Operations
-```bash
-# Check service status
-visibl-llm status
-
-# View real-time logs
+# View logs
 visibl-llm logs -f
 
 # Restart service
 visibl-llm restart
+
+# Stop service
+visibl-llm stop
+
+# Start service
+visibl-llm start
 ```
 
-### Performance Monitoring
-```bash
-# Check current model configuration
-visibl-llm model
-
-# Run performance benchmark
-visibl-llm bench 16000 128  # 16K context, 128 output tokens
-```
-
-Example benchmark output:
-```
-ctx=15847  out=128  elapsed=2.341s  total_tps=68.2 tok/s
-```
-
-## Model Management
-
-### Switching Models
-
-**Quick Presets:**
-```bash
-visibl-llm fast     # Visibl-7B (single GPU, low latency)
-visibl-llm heavy    # Visibl-70B (dual GPU, best quality)
-```
-
-**Custom Models:**
-```bash
-# Use any HuggingFace model
-visibl-llm use microsoft/DialoGPT-large --served custom-model
-
-# With quantization
-visibl-llm use TheBloke/Llama-2-13B-Chat-AWQ --awq-marlin
-```
-
-### Performance Tuning
-
-**Context Length:**
-```bash
-visibl-llm len 32000    # Set maximum context to 32K tokens
-visibl-llm len 16000    # Reduce for memory-constrained systems
-```
-
-**GPU Memory Utilization:**
-```bash
-visibl-llm util 0.95    # Aggressive utilization (high performance)
-visibl-llm util 0.85    # Conservative (leaves headroom)
-```
-
-**Advanced Features:**
-```bash
-visibl-llm custom-ar on     # Enable custom all-reduce (multi-GPU)
-visibl-llm custom-ar off    # Disable for stability
-```
-
-## Monitoring & Maintenance
-
-### Log Analysis
-```bash
-# Recent errors
-visibl-llm logs | grep ERROR
-
-# Memory usage patterns
-visibl-llm logs | grep "memory"
-
-# Performance metrics
-visibl-llm logs | grep "tokens/s"
-```
-
-### Resource Monitoring
-```bash
-# GPU utilization
-nvidia-smi
-
-# Container stats
-docker stats visibl-llm
-
-# Service resource usage
-systemctl status visibl-llm
-```
-
-### Backup & Recovery
-```bash
-# Backup configuration
-sudo cp -r /etc/visibl /backup/visibl-config
-
-# View current settings
-cat /etc/visibl/model.env
-```
-
-## Security Considerations
-
-### Network Access
-The service binds to `0.0.0.0:58180` by default. For production:
+## Switch Models
 
 ```bash
-# Restrict to localhost only
-export HOST=127.0.0.1
-systemctl restart visibl-llm
+# Switch to Fast model
+visibl-llm fast
 
-# Use custom port
-export SERVICE_PORT=8080
-systemctl restart visibl-llm
+# Switch to Expert model
+visibl-llm expert
+
+# Switch to Heavy model
+visibl-llm heavy
 ```
 
-### Firewall Configuration
-```bash
-# Allow access from specific networks only
-sudo firewall-cmd --add-rich-rule='rule family="ipv4" source address="10.0.0.0/8" port port="58180" protocol="tcp" accept'
-```
+The service will restart with the new model. This may take a few minutes.
 
-## Next Steps
+## Advanced Configuration
 
-Ready to use the LLM service with the Visibl CLI? Check out the [CLI installation guide](/cli/installation).
+For advanced configuration or custom deployments, contact [hi@visiblsemi.com](mailto:hi@visiblsemi.com).

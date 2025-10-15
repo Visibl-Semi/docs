@@ -1,212 +1,53 @@
 ---
 title: Installation
-description: Advanced deployment and configuration of Visibl LLM Service
+description: Installing Visibl LLM Service
 ---
 
-<Info>
-For basic installation, see the [Getting Started guide](/getting-started) which covers the complete installation process in just a few steps.
-</Info>
+## Install
 
-This guide covers advanced deployment scenarios, production configuration, and enterprise-specific requirements.
-
-## Prerequisites
-
-<Warning>
-Ensure your server meets the minimum requirements and has GPU access configured. See [System Requirements](/llm-service/overview#system-requirements) for detailed specifications.
-</Warning>
-
-### Enterprise Prerequisites
-
-For production deployments:
-
-- **Security clearance** for classified environments
-- **Network isolation** planning for air-gapped deployment  
-- **Resource planning** for high-availability configurations
-- **Backup strategy** for model weights and configuration data
-
-## Advanced Installation Options
-
-### Air-Gapped Deployment
-
-For secure environments without internet access:
+Install the LLM service on your server:
 
 ```bash
-# Contact support for offline installation package
-# Install with offline flag
-sudo bash install-llm-offline.sh --model=heavy --config=production
-```
-
-<Info>
-Contact [support@visiblsemi.com](mailto:support@visiblsemi.com) for air-gapped installation packages and deployment assistance.
-</Info>
-
-### Custom Installation Paths
-
-```bash
-# Custom installation directory
-export VISIBL_INSTALL_DIR=/opt/visibl
 curl -fsSL https://visiblsemi.com/api/install-llm | sudo bash
+```
 
-# Custom service configuration
+The installer automatically:
+- Validates system requirements
+- Installs NVIDIA Container Toolkit
+- Downloads and installs the default model
+- Starts service on port 58180
+
+## Verification
+
+```bash
+visibl-smi
+```
+
+You should see your GPU(s) with the running Visibl LLM service.
+
+## Configuration
+
+### Custom Port
+
+```bash
 export SERVICE_PORT=8080
-export HOST=0.0.0.0
-sudo bash install-llm.sh --model=heavy
+curl -fsSL https://visiblsemi.com/api/install-llm | sudo bash
 ```
 
-## Production Configuration
+## Troubleshooting
 
-### Service Management
-
-The service integrates with systemd for production reliability:
+If issues occur, send us:
 
 ```bash
-# Enable automatic startup
-sudo systemctl enable visibl-llm
+# Service logs
+visibl-llm logs -f
 
-# Configure service limits
-sudo systemctl edit visibl-llm
-# Add:
-# [Service]
-# MemoryLimit=32G
-# CPUQuota=800%
+# GPU status
+visibl-smi
 ```
 
-### Advanced Model Configuration
+Email output and description to [hi@visiblsemi.com](mailto:hi@visiblsemi.com).
 
-```bash
-# Performance tuning
-visibl-llm len 32000        # Set context length for your workload
-visibl-llm util 0.90        # Optimize GPU memory utilization
-visibl-llm custom-ar on     # Enable custom all-reduce for multi-GPU
+## Advanced Setup
 
-# Custom quantization
-visibl-llm use microsoft/DialoGPT-large --served custom-model --awq-marlin
-```
-
-### Security Configuration
-
-```bash
-# Restrict network access
-export HOST=127.0.0.1
-export SERVICE_PORT=58180
-
-# Enable audit logging
-echo "AUDIT_LOG=true" >> /etc/visibl/model.env
-
-# Configure firewall rules
-sudo firewall-cmd --add-rich-rule='rule family="ipv4" source address="10.0.0.0/8" port port="58180" protocol="tcp" accept'
-```
-
-## High Availability Setup
-
-### Load Balancing Configuration
-
-For multiple service instances:
-
-```bash
-# Configure multiple service instances
-sudo systemctl enable visibl-llm@{1,2,3}
-
-# HAProxy configuration for load balancing
-# Contact support for detailed HA setup guides
-```
-
-### Backup and Recovery
-
-```bash
-# Backup service configuration
-sudo tar -czf visibl-backup-$(date +%Y%m%d).tar.gz \
-  /etc/visibl \
-  /var/lib/visibl \
-  /opt/visibl/models
-
-# Automated backup script
-sudo crontab -e
-# Add: 0 2 * * * /opt/visibl/scripts/backup.sh
-```
-
-## Performance Monitoring
-
-### Advanced Diagnostics
-
-```bash
-# Detailed performance metrics
-visibl-llm bench 16000 128  # Context length and output tokens
-visibl-llm stats --detailed
-
-# Resource monitoring
-nvidia-smi -l 1
-docker stats visibl-llm --format "table {{.Container}}\t{{.CPUPerc}}\t{{.MemUsage}}"
-```
-
-### Service Health Monitoring
-
-```bash
-# Health check endpoints for monitoring systems
-curl http://127.0.0.1:58180/health
-curl http://127.0.0.1:58180/metrics
-
-# Integration with monitoring systems
-# Prometheus metrics available at /metrics endpoint
-```
-
-## Advanced Troubleshooting
-
-### Memory Optimization
-
-```bash
-# For GPU memory issues
-visibl-llm util 0.85        # Reduce utilization
-visibl-llm fast             # Switch to smaller model
-
-# Check memory fragmentation
-nvidia-smi --query-gpu=memory.used,memory.free --format=csv
-```
-
-### Multi-GPU Issues
-
-```bash
-# Verify GPU topology
-nvidia-smi topo -m
-
-# Test multi-GPU communication
-visibl-llm test-comms
-
-# Custom all-reduce troubleshooting
-visibl-llm custom-ar off    # Disable if unstable
-```
-
-### Performance Issues
-
-```bash
-# Analyze request patterns
-visibl-llm logs | grep -E "(tokens/s|latency)"
-
-# Check for bottlenecks
-htop
-iostat -x 1
-```
-
-## Enterprise Support
-
-For production deployments requiring:
-- Custom hardware configurations
-- Integration with existing infrastructure  
-- 24/7 support and SLA agreements
-- Compliance and audit assistance
-
-Contact our enterprise team at [support@visiblsemi.com](mailto:support@visiblsemi.com).
-
-## Next Steps
-
-Once your advanced deployment is complete:
-
-<CardGroup cols={2}>
-  <Card title="Service Management" icon="settings" href="/llm-service/usage">
-    Learn advanced service management and monitoring techniques
-  </Card>
-  
-  <Card title="CLI Integration" icon="terminal" href="/cli/installation">
-    Configure the CLI tool for advanced usage scenarios
-  </Card>
-</CardGroup>
+For air-gapped installations, custom hardware, or production deployments, contact [hi@visiblsemi.com](mailto:hi@visiblsemi.com).
