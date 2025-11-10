@@ -53,6 +53,12 @@
       ]
     },
     {
+      "group": "Visibl IDE",
+      "pages": [
+        "ide/installation"
+      ]
+    },
+    {
       "group": "Updates",
       "pages": [
         "changelog"

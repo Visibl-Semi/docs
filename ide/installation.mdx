@@ -1,0 +1,70 @@
+---
+title: Visibl IDE
+description: AI-powered IDE for silicon engineering
+---
+
+![Visibl IDE interface showing SystemVerilog code editing with GPU monitoring](/assets/ide1.gif)
+
+## Administrator Setup (One-Time)
+
+Administrator downloads Visibl IDE:
+
+```bash
+cd ~/Downloads
+curl -O -J 'https://www.visiblsemi.com/api/enterprise/download-app?os=linux'
+```
+
+Or download from: `https://www.visiblsemi.com/enterprise`
+
+Administrator runs global installation:
+
+```bash
+curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash
+```
+
+This will:
+- Locate the downloaded AppImage in `~/Downloads`
+- Install Visibl to `/project/tools/visibl` (or custom path)
+- Create global launch commands
+- Set up user configuration script
+
+## User Setup
+
+Each user runs the setup script:
+
+```bash
+/project/tools/visibl/bin/visibl-setup-user
+```
+
+This will:
+- Add Visibl to your PATH
+- Configure application menu entry
+
+Launch from a new terminal:
+
+```bash
+vs
+```
+
+Or launch with:
+
+```bash
+visibl-gui
+```
+
+## vLLM Service Setup
+
+Administrator installs via GUI (one-time):
+
+1. Open Visibl Settings (gear icon)
+2. Navigate to Network → Install vLLM Service
+3. Click Install and enter administrator password
+4. Service starts automatically
+
+## Chat Interface
+
+Click the chip icon (upper right) and verify model is set to **Visibl Max**.
+
+## Support
+
+For assistance, contact [hi@visiblsemi.com](mailto:hi@visiblsemi.com).
