@@ -7,52 +7,51 @@ description: AI-powered IDE for silicon engineering
 
 ## Administrator Setup (One-Time)
 
-Administrator downloads Visibl IDE:
-
-```bash
-cd ~/Downloads
-curl -L -O https://github.com/Visibl-Semi/Releases/releases/download/linux-2.0.4/Visibl-2.0.4-linux-x64.AppImage
-```
-
-Or download from: `https://www.visiblsemi.com/enterprise`
-
-Administrator runs global installation:
+Install the latest version:
 
 ```bash
 curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash
 ```
 
-This will:
-- Locate the downloaded AppImage in `~/Downloads`
-- Install Visibl to `/project/tools/visibl` (or custom path)
-- Create global launch commands
-- Set up user configuration script
-
-## User Setup
-
-Each user runs the setup script:
+Install a specific version:
 
 ```bash
-/project/tools/visibl/bin/visibl-setup-user
+curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash -s -- --version 1.9.4
+```
+
+Install to a custom path:
+
+```bash
+curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash -s -- --install-dir /project/tools/visibl
 ```
 
 This will:
-- Add Visibl to your PATH
-- Configure application menu entry
+- Download the Visibl AppImage automatically
+- Install to `/opt/visibl` (or custom path)
+- Create system-wide PATH via `/etc/profile.d/`
+- Create symlinks in `/usr/local/bin/` for immediate access
 
-Launch from a new terminal:
+## Launch Visibl
+
+Any user can launch immediately:
 
 ```bash
 vs
 ```
 
-Or launch with:
+Or:
 
 ```bash
-visibl-gui
+visibl
 ```
 
-## vLLM Service Setup
+Optional desktop integration (run as user, not sudo):
+
+```bash
+visibl-setup-desktop
+```
+
+## Visibl LLM Service Setup
 
 Administrator installs via GUI (one-time):
 
