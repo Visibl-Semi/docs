@@ -7,33 +7,58 @@ description: AI-powered IDE for silicon engineering
 
 ## Administrator Setup (One-Time)
 
-Install the latest version:
-
-```bash
-curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash
-```
-
-Install a specific version:
-
-```bash
-curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash -s -- --version 1.9.4
-```
-
-Install to a custom path:
+### Install latest version to a custom path (recommended)
 
 ```bash
 curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash -s -- --install-dir /project/tools/visibl
 ```
 
 This will:
-- Download the Visibl AppImage automatically
-- Install to `/opt/visibl` (or custom path)
+- Download the latest Visibl AppImage automatically
+- Install to your specified path
 - Create system-wide PATH via `/etc/profile.d/`
 - Create symlinks in `/usr/local/bin/` for immediate access
 
+### Install latest version (default path)
+
+```bash
+curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash
+```
+
+Installs to `/opt/visibl` by default.
+
+### Install a specific version (optional)
+
+If you need to pin a specific version:
+
+```bash
+curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash -s -- --version <version> --install-dir /project/tools/visibl
+```
+
+For example:
+
+```bash
+curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash -s -- --version 2.0.4 --install-dir /project/tools/visibl
+```
+
+### Alternative: AppImage-Only Install (Per-Machine or Per-User)
+
+You can also run Visibl directly from the AppImage, without using the installer:
+
+1. Go to the [Visibl Releases page](https://github.com/Visibl-Semi/Releases/releases)
+2. Download the desired `Visibl-<version>-linux-x64.AppImage`
+3. Make it executable and run it:
+
+```bash
+chmod +x Visibl-2.0.4-linux-x64.AppImage
+./Visibl-2.0.4-linux-x64.AppImage
+```
+
+You can place the AppImage wherever your team prefers (e.g., a shared tools directory or a user's home directory) and create a desktop shortcut or alias if desired.
+
 ## Launch Visibl
 
-Any user can launch immediately:
+Once installed via the admin installer, any user can launch Visibl:
 
 ```bash
 vs
@@ -43,12 +68,6 @@ Or:
 
 ```bash
 visibl
-```
-
-Optional desktop integration (run as user, not sudo):
-
-```bash
-visibl-setup-desktop
 ```
 
 ## Visibl LLM Service Setup
@@ -62,7 +81,7 @@ Administrator installs via GUI (one-time):
 
 ## Chat Interface
 
-Click the chip icon (upper right) and verify model is set to **Visibl Max**.
+Toggle the right-hand side panel to open the chat. Verify the model is set to **Visibl Max**.
 
 ## Support
 
