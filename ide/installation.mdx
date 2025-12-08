@@ -43,15 +43,12 @@ curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bas
 
 ### Alternative: AppImage-Only Install (Per-Machine or Per-User)
 
-You can also run Visibl directly from the AppImage, without using the installer:
-
-1. Go to the [Visibl Releases page](https://github.com/Visibl-Semi/Releases/releases)
-2. Download the desired `Visibl-<version>-linux-x64.AppImage`
-3. Make it executable and run it:
+You can also download and run Visibl directly from the AppImage:
 
 ```bash
-chmod +x Visibl-2.0.4-linux-x64.AppImage
-./Visibl-2.0.4-linux-x64.AppImage
+curl -L -O https://github.com/Visibl-Semi/Releases/releases/download/linux-2.0.5/Visibl-2.0.5-linux-x64.AppImage
+chmod +x Visibl-2.0.5-linux-x64.AppImage
+./Visibl-2.0.5-linux-x64.AppImage
 ```
 
 You can place the AppImage wherever your team prefers (e.g., a shared tools directory or a user's home directory) and create a desktop shortcut or alias if desired.
