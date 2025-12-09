@@ -7,51 +7,29 @@ description: AI-powered IDE for silicon engineering
 
 ## Administrator Setup (One-Time)
 
-### Install latest version to a custom path (recommended)
-
 ```bash
 curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash -s -- --install-dir /project/tools/visibl
 ```
 
-This will:
-- Download the latest Visibl AppImage automatically
-- Install to your specified path
-- Create system-wide PATH via `/etc/profile.d/`
-- Create symlinks in `/usr/local/bin/` for immediate access
+This downloads the latest Visibl, installs it to your specified path, and configures system-wide access for all users.
 
-### Install latest version (default path)
+### Options
 
-```bash
-curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash
-```
+| Option | Description | Example |
+|--------|-------------|---------|
+| `--install-dir <path>` | Custom install location | `--install-dir /project/tools/visibl` |
+| `--version <version>` | Install an older version | `--version 1.9.4` |
+| *(no arguments)* | Installs latest to `/opt/visibl` | `sudo bash` |
 
-Installs to `/opt/visibl` by default.
+### Manual AppImage Install
 
-### Install a specific version (optional)
-
-If you need to pin a specific version:
-
-```bash
-curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash -s -- --version <version> --install-dir /project/tools/visibl
-```
-
-For example:
-
-```bash
-curl -s https://www.visiblsemi.com/api/visibl-installer/admin-install | sudo bash -s -- --version 2.0.4 --install-dir /project/tools/visibl
-```
-
-### Alternative: AppImage-Only Install (Per-Machine or Per-User)
-
-You can also download and run Visibl directly from the AppImage:
+Alternatively, download and run the AppImage directly:
 
 ```bash
 curl -L -O https://github.com/Visibl-Semi/Releases/releases/download/linux-2.0.5/Visibl-2.0.5-linux-x64.AppImage
 chmod +x Visibl-2.0.5-linux-x64.AppImage
 ./Visibl-2.0.5-linux-x64.AppImage
 ```
-
-You can place the AppImage wherever your team prefers (e.g., a shared tools directory or a user's home directory) and create a desktop shortcut or alias if desired.
 
 ## Launch Visibl
 
